@@ -1,0 +1,59 @@
+{
+  "character_type": "gif",
+  "height": 400,
+  "position": [
+    2176,
+    984
+  ],
+  "idle_animation": "笑",
+  "hover_animation": "害羞 2",
+  "auto_start": true,
+  "language": "zh",
+  "gif": {
+    "startup_sequence": [
+      "到达",
+      "PNGTuber 加载",
+      "PNGTuber 加载",
+      "枪"
+    ],
+    "idle": "笑",
+    "hover": "害羞 2",
+    "long_hover": "问号",
+    "click": "惊吓",
+    "dbl_click_seq": [
+      "生气",
+      "哭 1"
+    ],
+    "panel": "点头",
+    "close": "摇头",
+    "key_press": "打字(普通)",
+    "audio_playing": "唱歌",
+    "audio_muted": "静音 1",
+    "afk_enabled": true,
+    "afk_timeout_ms": 20000,
+    "afk_min_ms": 10000,
+    "afk_max_ms": 15000,
+    "afk_pool": [
+      "主意",
+      "像素墨镜反光",
+      "冒泡 2",
+      "加油",
+      "喷剂",
+      "复活节",
+      "庆祝",
+      "抓拍(摄像机)",
+      "拍蝇",
+      "摇铃",
+      "撬棍 2",
+      "汗",
+      "玫瑰",
+      "睡觉(普通)",
+      "笑",
+      "荧光棒 2",
+      "蛋糕",
+      "通知_提示 星星_收藏",
+      "通知_提示 点赞",
+      "通知_提示 爱心_喜欢"
+    ]
+  }
+}
