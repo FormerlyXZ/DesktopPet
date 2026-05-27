@@ -238,3 +238,10 @@ oid sha256:99e1
 [15:53:06.980] capture TEXT: len=65 preview=QFont::setPointSize: Point size <= 0 (-1), must be
 [15:53:29.918] capture TEXT: len=88 preview=QPropertyAnimation::updateState (opacity): Changin
 [16:29:51.532] capture TEXT: len=47 preview=https://pan.quark.cn/s/e468b793a50c#/list/share
+[16:52:37.436] capture TEXT: len=50 preview=Nanjing University of Aeronautics and Astronautics
+[16:54:01.875] capture TEXT: len=61 preview=Student at Nanjing University of Aeronautics and A
+[16:57:08.871] capture TEXT: len=10 preview=FormerlyXZ
+[16:57:16.264] capture TEXT: len=42 preview=$ git config --global user.name "John Doe"
+[16:57:28.758] capture TEXT: len=40 preview=git config --global user.name "John Doe"
+[16:58:25.950] capture TEXT: len=50 preview=git config --global user.email johndoe@example.com
+[16:59:30.477] capture TEXT: len=19 preview=xjj080215@gmail.com

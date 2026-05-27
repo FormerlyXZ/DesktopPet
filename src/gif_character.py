@@ -75,6 +75,7 @@ class GifCharacter(CharacterController):
         self._interaction_queue: list[str] = []
         self._dbl_click_step = 0
         self._active_action: str = ""  # 当前正在播放的动作名，用于优先级判断
+        self._audio_is_playing = False  # 音频是否仍在播放（用于交互结束后恢复）
 
         # AFK
         self._afk_enabled = True
@@ -219,6 +220,8 @@ class GifCharacter(CharacterController):
             elif self._interaction_queue:
                 next_action = self._interaction_queue.pop(0)
                 self._play_once(next_action)
+            elif self._audio_is_playing:
+                self._play_loop(self._audio_playing_action)
             else:
                 self._enter_idle()
         elif self._state == State.HOVER_IDLE:
@@ -238,7 +241,11 @@ class GifCharacter(CharacterController):
     def handle_mouse_leave(self):
         self._hover_timer.stop()
         if self._state == State.HOVER_IDLE:
-            self._enter_idle()
+            if self._audio_is_playing:
+                self._state = State.INTERACTING
+                self._play_loop(self._audio_playing_action)
+            else:
+                self._enter_idle()
 
     def _on_long_hover(self):
         """悬停达到 LONG_HOVER_MS → 问号"""
@@ -291,11 +298,13 @@ class GifCharacter(CharacterController):
             self._play_once(self._key_press_action)
 
     def handle_audio_playing(self):
+        self._audio_is_playing = True
         if self._state == State.IDLE:
             self._state = State.INTERACTING
             self._play_loop(self._audio_playing_action)
 
     def handle_audio_stopped(self):
+        self._audio_is_playing = False
         if self._state == State.INTERACTING and self._active_action == self._audio_playing_action:
             self._enter_idle()
 
