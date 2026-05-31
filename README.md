@@ -1,8 +1,8 @@
-# 🐾 DesktopPet-TaKagi-san — Windows 可交互桌面宠物
+# 🐾 DesktopPet-Takagi-san — Windows 可交互桌面宠物
 
 <div align="center">
 
-**一只住在你桌面上的高木同学（TaKagi），会对你的一举一动做出反应。**
+**一只住在你桌面上的高木同学（Takagi），会对你的一举一动做出反应。**
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)](https://www.python.org/)
 [![PySide6](https://img.shields.io/badge/PySide6-6.5+-green?logo=qt)](https://wiki.qt.io/Qt_for_Python)
@@ -22,18 +22,18 @@
   <br><em>▲ 默认服装角色 — 待机 / 挥手 / 打哈欠</em>
 </p>
 
-### Q版高木同学 / TaKagi (GIF 动图)
+### Q版高木同学 / Takagi (GIF 动图)
 
 <p align="center">
   <img src="./screenshots/demo2.gif" alt="Q版高木同学演示" width="350">
-  <br><em>▲ Q版高木同学（TaKagi）— 36 种动画，完整交互状态机</em>
+  <br><em>▲ Q版高木同学（Takagi）— 36 种动画，完整交互状态机</em>
 </p>
 
 ---
 
 ## 📖 项目简介
 
-**DesktopPet-TaKagi-san** 是一款 Windows 桌面宠物应用，使用 **Python + PySide6** 开发。它会在桌面上显示一只可爱的 **高木同学（TaKagi）** 角色——透明无边框窗口悬浮显示，支持两种角色类型，能够响应鼠标悬停、点击、拖拽，还能检测键盘输入和系统音频播放，做出丰富的互动反应。
+**DesktopPet-Takagi-san** 是一款 Windows 桌面宠物应用，使用 **Python + PySide6** 开发。它会在桌面上显示一只可爱的 **高木同学（Takagi）** 角色——透明无边框窗口悬浮显示，支持两种角色类型，能够响应鼠标悬停、点击、拖拽，还能检测键盘输入和系统音频播放，做出丰富的互动反应。
 
 项目采用**策略模式**设计角色系统，PNG 帧动画角色和 GIF 动图角色共享统一的抽象接口，可运行时热切换。
 
@@ -46,21 +46,21 @@
 | 角色 | 类型 | 播放引擎 | 素材来源 |
 |------|------|----------|----------|
 | **默认服装** | PNG 帧序列 | QTimer 驱动，5 秒循环 | `assets/默认服装/` |
-| **Q版高木同学 (TaKagi)** | GIF 动图 | QMovie 原生播放 | `素材库/高木同学Q版gif/` (36 个动画) |
+| **Q版高木同学 (Takagi)** | GIF 动图 | QMovie 原生播放 | `素材库/高木同学Q版gif/` (36 个动画) |
 
 <p align="center">
   <img src="./screenshots/demo1.gif" alt="默认服装 PNG 角色" width="250">
   <img src="./screenshots/demo2.gif" alt="Q版高木同学 GIF 角色" width="300">
-  <br><em>▲ 左：默认服装 (PNG) / 右：Q版高木同学 TaKagi (GIF)</em>
+  <br><em>▲ 左：默认服装 (PNG) / 右：Q版高木同学 Takagi (GIF)</em>
 </p>
 
 > **🔄 运行时热切换**：在设置窗口中选择角色类型，无需重启即可切换角色。
 
 ---
 
-### 🎬 GIF 角色交互系统（Q版高木同学 / TaKagi）
+### 🎬 GIF 角色交互系统（Q版高木同学 / Takagi）
 
-Q版高木同学（TaKagi）拥有完整的状态机，包含 **36 种动画**，能够对你的操作做出丰富反应：
+Q版高木同学（Takagi）拥有完整的状态机，包含 **36 种动画**，能够对你的操作做出丰富反应：
 
 ```
 启动序列 → 待机循环 ⇄ 互动状态
@@ -130,7 +130,7 @@ Q版高木同学（TaKagi）拥有完整的状态机，包含 **36 种动画**�
 
 <p align="center">
   <img src="./screenshots/设置面板.png" alt="设置窗口" width="350">
-  <br><em>▲ 设置窗口（Q版高木同学 / TaKagi 配置页）</em>
+  <br><em>▲ 设置窗口（Q版高木同学 / Takagi 配置页）</em>
 </p>
 
 | 设置区域 | 内容 |
@@ -181,28 +181,56 @@ Q版高木同学（TaKagi）拥有完整的状态机，包含 **36 种动画**�
 
 ---
 
-## 📦 安装
+## 📦 安装与运行
 
 ### 环境要求
 
 - **Windows 10 / 11**
-- **Python 3.10+**
-- Git（可选）
+- **Python 3.10+**（推荐 [python.org](https://www.python.org/downloads/) 下载安装）
+- Git（可选，也可直接下载 ZIP）
 
-### 从源码运行
+### 方式一：从源码运行（推荐开发者）
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/你的用户名/DesktopPet-TaKagi-san.git
-cd DesktopPet-TaKagi-san
+git clone https://github.com/FormerlyXZ/DesktopPet.git
+cd DesktopPet
 
-# 2. 安装依赖
+# 2. （推荐）创建虚拟环境
+python -m venv venv
+venv\Scripts\activate
+
+# 3. 安装依赖
 pip install -r requirements.txt
 
-# 3. 运行
+# 4. 运行
 python main.py
 # 或双击 DesktopPet.pyw（无终端窗口启动）
 ```
+
+### 方式二：下载 ZIP 包（推荐普通用户）
+
+1. 访问 https://github.com/FormerlyXZ/DesktopPet
+2. 点击绿色的 **Code** 按钮 → **Download ZIP**
+3. 解压到任意目录
+4. 打开命令行（在解压目录地址栏输入 `cmd` 回车）
+5. 执行 `pip install -r requirements.txt`
+6. 双击 `DesktopPet.pyw` 或执行 `python main.py`
+
+### 方式三：免安装 EXE（小白用户）
+
+在 [Releases](https://github.com/FormerlyXZ/DesktopPet/releases) 页面下载最新的 `DesktopPet-Takagi-san.zip`，解压后双击 `DesktopPet-Takagi-san.exe` 即可运行。无需安装 Python 或任何依赖。
+
+> 💡 EXE 首次启动较慢（5-10 秒解压），请耐心等待。所有数据保存在 EXE 同目录下。
+
+### 常见安装问题
+
+| 问题 | 解决方法 |
+|------|----------|
+| `pip` 不是内部命令 | Python 安装时勾选 "Add Python to PATH"，或手动添加环境变量 |
+| `pip install` 报错 | 使用国内镜像：`pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple` |
+| 双击 `.pyw` 没反应 | 右键 → 打开方式 → 选择 Python，或直接用命令行 `python main.py` 查看报错 |
+| 缺少 VC 运行库 | 下载安装 [VC++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) |
 
 ### 依赖项
 
@@ -228,13 +256,13 @@ python main.py
 | 操作 | 效果 |
 |------|------|
 | 🖱️ **鼠标悬停** (PNG) | 角色挥手 |
-| 🖱️ **鼠标悬停** (GIF / TaKagi) | 角色害羞 |
+| 🖱️ **鼠标悬停** (GIF / Takagi) | 角色害羞 |
 | 👆 **单击** | 弹出气泡面板 |
 | ✋ **拖拽** | 移动角色到任意位置 |
 | ⚙️ **面板 → 设置** | 打开设置窗口 |
 | 🚪 **面板 → 退出** | 关闭桌宠 |
 
-### GIF 角色（TaKagi / 高木同学）额外操作
+### GIF 角色（Takagi / 高木同学）额外操作
 
 | 操作 | 效果 |
 |------|------|
@@ -259,7 +287,7 @@ assets/
         └── ...
 ```
 
-#### GIF 角色（TaKagi / 高木同学）
+#### GIF 角色（Takagi / 高木同学）
 将 GIF 文件放入 `素材库/高木同学Q版gif/`，命名格式 `takagi_{动作名}_{时间戳}.gif`，重启后自动识别。
 
 ```
@@ -274,7 +302,7 @@ assets/
 ## 📁 项目结构
 
 ```
-DesktopPet-TaKagi-san/
+DesktopPet/
 ├── assets/                     # PNG 帧动画素材
 │   └── 默认服装/               # 默认角色
 │       ├── 默认待机/           # 51 帧
@@ -348,16 +376,21 @@ DesktopPet-TaKagi-san/
 
 ---
 
-## 🔧 打包为 EXE
+## 🔧 自行打包为 EXE
 
-使用 PyInstaller 打包为独立可执行文件：
+若需从源码自行打包为独立可执行文件：
 
 ```bash
+pip install pyinstaller
 pyinstaller build.spec
-# 输出: dist/DesktopPet.exe
+# 输出: dist/DesktopPet-Takagi-san.exe
 ```
 
-`build.spec` 已配置隐藏控制台窗口、包含 `assets/` 数据文件。
+`build.spec` 已配置：
+- 隐藏控制台窗口 (`console=False`)
+- 包含 `assets/` 和 `素材库/` 数据文件
+- 自动导入 `comtypes`、`pynput` 等隐藏依赖
+- EXE 数据路径自适应：读取素材从 `sys._MEIPASS`，写入配置从 `sys.executable` 同目录
 
 ---
 
@@ -421,7 +454,7 @@ pyinstaller build.spec
 
 ### 素材来源
 
-- 🎬 **Q版高木同学（TaKagi）GIF 表情包** 来源于 Bilibili 用户 [ALan_639263](https://space.bilibili.com/) 的视频：
+- 🎬 **Q版高木同学（Takagi）GIF 表情包** 来源于 Bilibili 用户 [ALan_639263](https://space.bilibili.com/) 的视频：
   > [【EmoteLab】高木同学表情包分享](https://www.bilibili.com/video/BV1qP93BZE9t/?share_source=copy_web&vd_source=15dedc6142046e01fdb0d28a612a6d2d)
 - 角色版权归原作者所有，本项目仅供个人学习使用。
 

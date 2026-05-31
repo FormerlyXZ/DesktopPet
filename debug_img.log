@@ -509,3 +509,40 @@ file:///D
 [16:59:57.052] capture TEXT: len=131 preview=【【EmoteLab】高木同学表情包分享】 https://www.bilibili.com/vid
 [17:53:18.064] capture TEXT: len=859 preview=Traceback (most recent call last):
   File "E:\AI P
+[18:06:53.803] capture TEXT: len=21 preview=DesktopPet-TaKagi-san
+[18:08:40.384] capture TEXT: len=42 preview=file:///E:/AI Program/DesktopPet/README.md
+[18:09:18.178] capture TEXT: len=22 preview="E:\AI Program\高木同学桌宠"
+[18:12:33.976] capture TEXT: len=48 preview=GitHub: https://github.com/FormerlyXZ/DesktopPet
+[18:34:01.521] capture TEXT: len=48 preview=GitHub: https://github.com/FormerlyXZ/DesktopPet
+[18:34:30.582] capture IMAGE: size=2560x1392
+[18:34:30.766]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780223670583.png
+[18:34:30.773]   file_hash=359ac221...
+[18:34:30.780]   store.add_or_update_image id=169
+[18:35:04.420] capture IMAGE: size=2560x1392
+[18:35:04.610]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780223704421.png
+[18:35:04.617]   file_hash=359ac221...
+[18:35:04.753]   store.add_or_update_image id=170
+[18:35:33.451] capture IMAGE: size=2560x1392
+[18:35:33.555]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780223733452.png
+[18:35:33.561]   file_hash=cf088b92...
+[18:35:33.794]   store.add_or_update_image id=171
+[18:40:50.317] capture IMAGE: size=2566x1391
+[18:40:50.446]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780224050318.png
+[18:40:50.454]   file_hash=fa22ef32...
+[18:40:50.686]   store.add_or_update_image id=172
+[18:44:34.350] capture IMAGE: size=722x821
+[18:44:34.378]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780224274351.png
+[18:44:34.384]   file_hash=3cd7d2d1...
+[18:44:34.568]   store.add_or_update_image id=173
+[18:45:16.522] capture IMAGE: size=720x1132
+[18:45:16.564]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780224316523.png
+[18:45:16.570]   file_hash=c40430fd...
+[18:45:16.803]   store.add_or_update_image id=174
+[18:47:29.561] capture IMAGE: size=992x998
+[18:47:29.588]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780224449561.png
+[18:47:29.594]   file_hash=cdec486e...
+[18:47:29.828]   store.add_or_update_image id=175
+[19:41:48.510] capture TEXT: len=10 preview=auraplayer
+[19:58:38.550] capture TEXT: len=48 preview=GitHub: https://github.com/FormerlyXZ/DesktopPet
+[20:05:41.813] capture TEXT: len=48 preview=GitHub: https://github.com/FormerlyXZ/DesktopPet
+[20:10:49.662] capture TEXT: len=19 preview=xjj080215@gmail.com
