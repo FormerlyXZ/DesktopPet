@@ -78,7 +78,10 @@ def main():
     app.setFont(font)
 
     config = load()
-    project_dir = os.path.dirname(__file__)
+    if getattr(sys, 'frozen', False):
+        project_dir = sys._MEIPASS
+    else:
+        project_dir = os.path.dirname(__file__)
 
     character = _create_character(config, project_dir)
     pet = PetWindow(character)

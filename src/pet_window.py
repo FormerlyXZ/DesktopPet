@@ -1,5 +1,6 @@
 """桌宠主窗口：透明、置顶、无边框，委托 CharacterController"""
 import os
+import sys
 from PySide6.QtWidgets import QLabel
 from PySide6.QtCore import Qt, QPoint, QTimer, Signal
 from PySide6.QtGui import QPixmap, QMouseEvent
@@ -9,6 +10,13 @@ from src.bubble_panel import BubblePanel
 from src.settings_window import SettingsWindow
 from src.gif_registry import GifRegistry
 from src.config import set_auto_start, save as save_config, load as load_config
+
+
+def _get_assets_base() -> str:
+    """获取素材根目录。PyInstaller 打包后素材在 sys._MEIPASS 中"""
+    if getattr(sys, 'frozen', False):
+        return sys._MEIPASS
+    return _get_assets_base()
 
 
 class PetWindow(QLabel):
@@ -206,7 +214,7 @@ class PetWindow(QLabel):
 
         # PNG 动画选项始终从 assets/ 读取，不受当前角色类型影响
         from src.animation import AnimationEngine
-        assets_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets")
+        assets_dir = os.path.join(_get_assets_base(), "assets")
         png_engine = AnimationEngine(assets_dir)
         png_animations = png_engine.get_animations()
         if char_type == "png":
@@ -219,7 +227,7 @@ class PetWindow(QLabel):
         self.settings.set_animations(png_animations, png_idle, png_hover)
 
         # 始终填充 GIF 设置页（GifRegistry 扫描 素材库/高木同学Q版gif/）
-        gif_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "素材库", "高木同学Q版gif")
+        gif_dir = os.path.join(_get_assets_base(), "素材库", "高木同学Q版gif")
         gif_registry = GifRegistry(gif_dir)
         gif_actions = gif_registry.list_actions()
         self.settings.set_gif_actions(gif_actions)

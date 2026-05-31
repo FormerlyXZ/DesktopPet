@@ -3,9 +3,18 @@ import hashlib
 import os
 import shutil
 import sqlite3
+import sys
 import time
 
-PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
+
+def _get_data_dir() -> str:
+    """数据存储目录。PyInstaller 打包后数据保存在 exe 同级目录"""
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.dirname(__file__))
+
+
+PROJECT_DIR = _get_data_dir()
 DATA_DIR = os.path.join(PROJECT_DIR, "data")
 DB_PATH = os.path.join(DATA_DIR, "clipboard.db")
 IMG_DIR = os.path.join(DATA_DIR, "clipboard_images")

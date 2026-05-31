@@ -1,6 +1,7 @@
 """剪贴板监控——QClipboard 信号 + 防抖"""
 import hashlib
 import os
+import sys
 from datetime import datetime
 from PySide6.QtCore import QTimer, Signal, QObject
 from PySide6.QtWidgets import QApplication
@@ -8,7 +9,14 @@ from PySide6.QtGui import QImage
 
 from src.clipboard_store import ClipboardStore
 
-_DEBUG_LOG = os.path.join(os.path.dirname(os.path.dirname(__file__)), "debug_img.log")
+
+def _get_debug_log_path() -> str:
+    if getattr(sys, 'frozen', False):
+        return os.path.join(os.path.dirname(sys.executable), "debug_img.log")
+    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "debug_img.log")
+
+
+_DEBUG_LOG = _get_debug_log_path()
 
 def _dbg(msg: str):
     try:

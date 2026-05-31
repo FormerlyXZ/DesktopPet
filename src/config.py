@@ -5,7 +5,15 @@ import os
 import sys
 import winreg
 
-CONFIG_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config.json")
+
+def _get_project_dir() -> str:
+    """项目根目录。PyInstaller 打包后数据保存在 exe 同级目录"""
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.dirname(__file__))
+
+
+CONFIG_FILE = os.path.join(_get_project_dir(), "config.json")
 
 DEFAULTS = {
     "character_type": "png",
@@ -77,12 +85,12 @@ def set_auto_start(enable: bool):
     """设置或取消开机自启（写入注册表 HKCU Run）"""
     key = r"Software\Microsoft\Windows\CurrentVersion\Run"
     app_name = "DesktopPet"
-    project_dir = os.path.dirname(os.path.dirname(__file__))
     try:
         if enable:
             if getattr(sys, 'frozen', False):
                 cmd = f'"{sys.executable}"'
             else:
+                project_dir = _get_project_dir()
                 pythonw = os.path.join(os.path.dirname(sys.executable), "pythonw.exe")
                 cmd = f'"{pythonw}" "{os.path.join(project_dir, "main.py")}"'
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER, key, 0, winreg.KEY_SET_VALUE) as reg:
