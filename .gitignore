@@ -1,0 +1,19 @@
+# PyInstaller build artifacts
+build/
+dist/
+*.spec.bak
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# Runtime data (user-specific)
+data/clipboard.db
+data/clipboard_images/
+debug_img.log
