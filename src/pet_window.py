@@ -16,7 +16,7 @@ def _get_assets_base() -> str:
     """获取素材根目录。PyInstaller 打包后素材在 sys._MEIPASS 中"""
     if getattr(sys, 'frozen', False):
         return sys._MEIPASS
-    return _get_assets_base()
+    return os.path.dirname(os.path.dirname(__file__))
 
 
 class PetWindow(QLabel):
