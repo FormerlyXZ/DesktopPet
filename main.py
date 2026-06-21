@@ -90,7 +90,9 @@ def main():
     pet.set_pet_height(config.get("height", 500))
     pet.auto_start = config.get("auto_start", False)
     pet.language = config.get("language", "zh")
-    pet.bubble.apply_language(pet.language)
+    pet.function_panel.apply_language(pet.language)
+    pet.system_panel.apply_language(pet.language)
+    pet.set_topmost(config.get("topmost", True))
 
     saved_pos = config.get("position")
     if saved_pos:
@@ -135,6 +137,7 @@ def main():
             "hover_animation": pet.character.get_hover_key(),
             "auto_start": pet.auto_start,
             "language": pet.language,
+            "topmost": pet._topmost,
         }
         if pet.character.character_type == "gif":
             data["gif"] = pet.character.get_settings()

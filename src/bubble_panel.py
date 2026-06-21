@@ -1,11 +1,39 @@
 """侧边气泡面板——亚克力半透明玻璃风格，带过渡动画"""
+import sys
+
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGraphicsOpacityEffect
 )
-from PySide6.QtCore import Qt, QEvent, Signal, QPoint
+from PySide6.QtCore import Qt, QEvent, Signal, QPoint, QPropertyAnimation, QEasingCurve
 from PySide6.QtGui import QPainter, QPen, QColor
-from src.panel_animator import animate_panel_show, animate_panel_hide
+from src.panel_animator import animate_panel_show, animate_panel_hide, _stop_anim
 from src.translations import tr
+
+
+def _force_raise_topmost(widget: QWidget):
+    """强制将窗口提升到 TOPMOST 层的最顶端（Windows）。
+
+    Qt 的 raise() 在 HWND_TOP 模式下对同属 WS_EX_TOPMOST 的窗口
+    无法可靠重排 z-order。这里用 Win32 API 先把窗口从 TOPMOST 层移除、
+    再重新插入，确保它排在 TOPMOST 层的最顶部。
+    """
+    if sys.platform != 'win32':
+        widget.raise_()
+        return
+    if not widget.winId():
+        return
+    import ctypes
+    hwnd = int(widget.winId())
+    HWND_TOPMOST = -1
+    HWND_NOTOPMOST = -2
+    SWP_NOMOVE = 0x0002
+    SWP_NOSIZE = 0x0001
+    SWP_NOACTIVATE = 0x0010
+    flags = SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE
+    # 1) 先移出 TOPMOST 层
+    ctypes.windll.user32.SetWindowPos(hwnd, HWND_NOTOPMOST, 0, 0, 0, 0, flags)
+    # 2) 重新插入 TOPMOST 层 → 自动排到该层最顶部
+    ctypes.windll.user32.SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, flags)
 
 STYLE = """
 QLabel#Item {
@@ -40,19 +68,23 @@ QLabel#CloseLabel:hover {
 
 
 class BubblePanel(QWidget):
-    settings_clicked = Signal()
-    clipboard_clicked = Signal()
-    exit_clicked = Signal()
+    item_clicked = Signal(str)  # 携带 item_id
 
-    def __init__(self, parent=None):
+    def __init__(self, items: list, parent=None):
+        """
+        items: [(item_id, translation_key), ...] 或
+               [(item_id, translation_key, {"checkable": True}), ...]
+        示例: [("clipboard", "bubble_clipboard")]
+        """
         super().__init__(parent)
         self._current_lang = "zh"
+        self._item_keys = items  # 保留原始定义
+        self._checked: dict[str, bool] = {}  # checkable 项的选中状态
         self.setObjectName("BubblePanel")
         self.setWindowFlags(
             Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool | Qt.SubWindow
         )
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setAttribute(Qt.WA_ShowWithoutActivating)
         self.setStyleSheet(STYLE)
         self.setFixedWidth(170)
 
@@ -73,24 +105,20 @@ class BubblePanel(QWidget):
         header.addWidget(close_label)
         main_layout.addLayout(header)
 
-        # ── 菜单项 ──
-        self._settings = QLabel("")
-        self._settings.setObjectName("Item")
-        self._settings.setCursor(Qt.PointingHandCursor)
-        self._settings.installEventFilter(self)
-        main_layout.addWidget(self._settings)
-
-        self._clipboard = QLabel("")
-        self._clipboard.setObjectName("Item")
-        self._clipboard.setCursor(Qt.PointingHandCursor)
-        self._clipboard.installEventFilter(self)
-        main_layout.addWidget(self._clipboard)
-
-        self._exit = QLabel("")
-        self._exit.setObjectName("Item")
-        self._exit.setCursor(Qt.PointingHandCursor)
-        self._exit.installEventFilter(self)
-        main_layout.addWidget(self._exit)
+        # ── 动态菜单项 ──
+        self._item_labels: dict[str, QLabel] = {}
+        for entry in items:
+            item_id = entry[0]
+            _tr_key = entry[1]
+            opts = entry[2] if len(entry) >= 3 else {}
+            if opts.get("checkable"):
+                self._checked[item_id] = False
+            label = QLabel("")
+            label.setObjectName("Item")
+            label.setCursor(Qt.PointingHandCursor)
+            label.installEventFilter(self)
+            self._item_labels[item_id] = label
+            main_layout.addWidget(label)
 
         self._apply_language()
         self.adjustSize()
@@ -101,10 +129,29 @@ class BubblePanel(QWidget):
 
     def _apply_language(self):
         lang = self._current_lang
-        self._settings.setText(tr("bubble_settings", lang))
-        self._clipboard.setText(tr("bubble_clipboard", lang))
-        self._exit.setText(tr("bubble_exit", lang))
+        for entry in self._item_keys:
+            item_id = entry[0]
+            tr_key = entry[1]
+            opts = entry[2] if len(entry) >= 3 else {}
+            label = self._item_labels.get(item_id)
+            if label is None:
+                continue
+            text = tr(tr_key, lang)
+            if opts.get("checkable"):
+                checked = self._checked.get(item_id, False)
+                text = ("✓ " if checked else "    ") + text
+            label.setText(text)
         self.adjustSize()
+
+    def set_item_checked(self, item_id: str, checked: bool):
+        """设置 checkable 项的选中状态并刷新文本"""
+        if item_id in self._checked:
+            self._checked[item_id] = checked
+            self._apply_language()
+
+    def is_item_checked(self, item_id: str) -> bool:
+        """查询 checkable 项的选中状态"""
+        return self._checked.get(item_id, False)
 
     def paintEvent(self, event):
         """绘制亚克力磨砂玻璃背景"""
@@ -131,30 +178,54 @@ class BubblePanel(QWidget):
             y = screen.bottom() - self.height() - 4
 
         self._popup_direction = direction
-        self.activateWindow()
         animate_panel_show(self, QPoint(x, y), direction)
+        self.raise_()
+        self.activateWindow()
+
+    def show_at(self, pos: QPoint):
+        """在指定屏幕坐标弹出（类系统菜单——无动画，直接出现）。
+        pos: 全局屏幕坐标，通常是 QCursor.pos()。
+        """
+        self.adjustSize()
+
+        # 偏移使面板在光标右下方弹出（类系统菜单习惯）
+        x = pos.x() + 4
+        y = pos.y() + 4
+
+        from PySide6.QtWidgets import QApplication
+        screen = QApplication.primaryScreen().availableGeometry()
+        if x + self.width() > screen.right():
+            x = screen.right() - self.width() - 4
+        if y + self.height() > screen.bottom():
+            y = screen.bottom() - self.height() - 4
+
+        self._popup_direction = "none"  # 标记为非滑入模式
+
+        _stop_anim(self)
+        self.move(QPoint(x, y))
+        self.show()
+        _force_raise_topmost(self)  # Win32: 强制排到 TOPMOST 层最顶部
 
     def hide_with_anim(self):
         """带动画隐藏面板"""
         if not self.isVisible():
             return
         direction = getattr(self, "_popup_direction", "right")
-        animate_panel_hide(self, direction)
+        if direction == "none":
+            # 无滑入模式 → 直接隐藏（系统菜单风格，无动画）
+            _stop_anim(self)
+            self.hide()
+        else:
+            animate_panel_hide(self, direction)
 
     def eventFilter(self, obj, event):
         if event.type() == QEvent.MouseButtonPress:
-            if obj is self._settings:
-                self.settings_clicked.emit()
-                self.hide_with_anim()
-                return True
-            elif obj is self._clipboard:
-                self.clipboard_clicked.emit()
-                self.hide_with_anim()
-                return True
-            elif obj is self._exit:
-                self.exit_clicked.emit()
-                return True
-            elif obj is self._close_btn:
+            for item_id, label in self._item_labels.items():
+                if obj is label:
+                    self.item_clicked.emit(item_id)
+                    self.hide_with_anim()
+                    return True
+            if obj is self._close_btn:
                 self.hide_with_anim()
                 return True
         return super().eventFilter(obj, event)

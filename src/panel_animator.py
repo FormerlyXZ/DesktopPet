@@ -105,5 +105,6 @@ def _stop_anim(widget):
     anim = getattr(widget, "_panel_anim", None)
     if anim is not None:
         anim.stop()
-        anim.clear()
+        if hasattr(anim, 'clear'):
+            anim.clear()
     widget.setGraphicsEffect(None)

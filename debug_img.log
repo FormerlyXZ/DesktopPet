@@ -546,3 +546,649 @@ file:///D
 [19:58:38.550] capture TEXT: len=48 preview=GitHub: https://github.com/FormerlyXZ/DesktopPet
 [20:05:41.813] capture TEXT: len=48 preview=GitHub: https://github.com/FormerlyXZ/DesktopPet
 [20:10:49.662] capture TEXT: len=19 preview=xjj080215@gmail.com
+[20:42:29.794] capture TEXT: len=19 preview=xjj080215@gmail.com
+[20:51:59.187] capture TEXT: len=4 preview=咒术回战
+[17:38:25.768] capture TEXT: len=19 preview=xjj080215@gmail.com
+[14:30:32.620] capture TEXT: len=15 preview=南航学生出国（境）交流管理系统
+[16:30:20.203] capture TEXT: len=67 preview=if(a>b){ 
+    p1=&a;p2=&b;
+    exchange(p1,p2);
+  
+[16:32:50.752] capture IMAGE: size=2048x1390
+[16:32:50.890]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780389170753.png
+[16:32:50.897]   file_hash=e7b4ae9e...
+[16:32:51.034]   store.add_or_update_image id=181
+[16:32:51.260] capture IMAGE: size=2048x1390
+[16:32:51.395]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780389171261.png
+[16:32:51.404]   file_hash=e7b4ae9e...
+[16:32:51.421]   store.add_or_update_image id=181
+[17:00:27.986] capture IMAGE: size=2468x53
+[17:00:27.988]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780390827986.png
+[17:00:27.995]   file_hash=93ca754e...
+[17:00:28.227]   store.add_or_update_image id=182
+[17:01:00.063] capture IMAGE: size=8044x53
+[17:01:00.069]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780390860064.png
+[17:01:00.075]   file_hash=b2fb2945...
+[17:01:00.308]   store.add_or_update_image id=183
+[17:01:25.091] capture IMAGE: size=7140x53
+[17:01:25.096]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780390885092.png
+[17:01:25.102]   file_hash=4185d9c7...
+[17:01:25.119]   store.add_or_update_image id=184
+[17:01:36.548] capture IMAGE: size=6137x53
+[17:01:36.553]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780390896549.png
+[17:01:36.558]   file_hash=2a9d7fbd...
+[17:01:36.574]   store.add_or_update_image id=185
+[17:01:44.558] capture IMAGE: size=6873x53
+[17:01:44.563]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780390904559.png
+[17:01:44.569]   file_hash=a72757e0...
+[17:01:44.801]   store.add_or_update_image id=186
+[17:01:50.822] capture IMAGE: size=1527x53
+[17:01:50.824]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780390910823.png
+[17:01:50.830]   file_hash=4602ba2e...
+[17:01:50.836]   store.add_or_update_image id=187
+[17:02:27.128] capture IMAGE: size=1527x53
+[17:02:27.130]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780390947129.png
+[17:02:27.131]   file_hash=4602ba2e...
+[17:02:27.316]   store.add_or_update_image id=188
+[17:06:57.239] capture TEXT: len=74 preview=3       65      4       5       23      77      12
+[17:07:48.274] capture IMAGE: size=2045x1385
+[17:07:48.407]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780391268275.png
+[17:07:48.414]   file_hash=28dc823e...
+[17:07:48.549]   store.add_or_update_image id=190
+[17:43:26.894] capture IMAGE: size=2554x1390
+[17:43:27.104]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780393406895.png
+[17:43:27.111]   file_hash=dfd9b651...
+[17:43:27.247]   store.add_or_update_image id=191
+[17:43:27.482] capture IMAGE: size=2554x1390
+[17:43:27.662]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780393407483.png
+[17:43:27.669]   file_hash=dfd9b651...
+[17:43:27.684]   store.add_or_update_image id=191
+[17:48:35.816] capture TEXT: len=1880 preview=#include <stdio.h>
+#include <string.h>
+
+struct boo
+[17:53:40.179] capture TEXT: len=749 preview=#include <stdio.h>
+
+//(1)统计函数：通过指针带回正数、负数个数
+void s
+[17:56:15.177] capture IMAGE: size=2009x1383
+[17:56:15.297]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394175177.png
+[17:56:15.304]   file_hash=9ef85863...
+[17:56:15.441]   store.add_or_update_image id=194
+[17:56:15.668] capture IMAGE: size=2009x1383
+[17:56:15.797]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394175668.png
+[17:56:15.806]   file_hash=9ef85863...
+[17:56:15.823]   store.add_or_update_image id=194
+[17:57:09.243] capture TEXT: len=692 preview=#include <stdio.h>
+#include <string.h>
+#define N 2
+[18:02:01.738] capture TEXT: len=17 preview=pear apple banana
+[18:03:25.860] capture IMAGE: size=2042x1388
+[18:03:26.006]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394605861.png
+[18:03:26.014]   file_hash=eb88027d...
+[18:03:26.176]   store.add_or_update_image id=197
+[18:03:26.399] capture IMAGE: size=2042x1388
+[18:03:26.531]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394606400.png
+[18:03:26.538]   file_hash=eb88027d...
+[18:03:26.554]   store.add_or_update_image id=197
+[18:04:13.613] capture TEXT: len=522 preview=#include <stdio.h>
+
+//提取s1里所有数字字符存入s2
+void getDigi
+[18:04:55.485] capture TEXT: len=14 preview=a34bb 12ck9 zy
+[18:05:59.022] capture IMAGE: size=2041x1393
+[18:05:59.148]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394759023.png
+[18:05:59.154]   file_hash=cb1ed121...
+[18:05:59.290]   store.add_or_update_image id=200
+[18:05:59.513] capture IMAGE: size=2041x1393
+[18:05:59.631]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394759513.png
+[18:05:59.637]   file_hash=cb1ed121...
+[18:05:59.650]   store.add_or_update_image id=200
+[18:06:36.928] capture TEXT: len=770 preview=#include <stdio.h>
+
+//辅助1：判断是否为字母，是返回1，否则0
+int isL
+[18:07:29.141] capture TEXT: len=36 preview=there are five apples in the basket.
+[18:08:10.823] capture IMAGE: size=2048x1391
+[18:08:10.964]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394890824.png
+[18:08:10.971]   file_hash=b041a2e7...
+[18:08:11.106]   store.add_or_update_image id=203
+[18:08:11.329] capture IMAGE: size=2048x1391
+[18:08:11.449]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780394891330.png
+[18:08:11.455]   file_hash=b041a2e7...
+[18:08:11.461]   store.add_or_update_image id=203
+[18:08:51.358] capture TEXT: len=843 preview=#include <stdio.h>
+#include <ctype.h>
+#include <st
+[18:11:26.176] capture TEXT: len=14 preview=Madam,I'm Adam
+[18:11:31.891] capture TEXT: len=9 preview=abc123def
+[18:13:40.852] capture IMAGE: size=2039x1379
+[18:13:40.984]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780395220853.png
+[18:13:40.993]   file_hash=a7f16668...
+[18:13:41.129]   store.add_or_update_image id=207
+[18:13:41.352] capture IMAGE: size=2039x1379
+[18:13:41.474]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780395221353.png
+[18:13:41.480]   file_hash=a7f16668...
+[18:13:41.498]   store.add_or_update_image id=207
+[18:14:06.003] capture IMAGE: size=1492x314
+[18:14:06.027]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780395246003.png
+[18:14:06.034]   file_hash=1da94eec...
+[18:14:06.265]   store.add_or_update_image id=208
+[23:21:41.851] capture TEXT: len=96 preview=https://msub.xn--m7r52rosihxm.com/api/v1/client/su
+[16:48:39.980] capture IMAGE: size=1174x447
+[16:48:40.025]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780562920010.png
+[16:48:40.031]   file_hash=ea6c93fd...
+[16:48:40.097]   store.add_or_update_image id=210
+[16:49:03.515] capture TEXT: len=9 preview=AI创新与数据科学
+[16:55:05.164] capture TEXT: len=381 preview=我希望通过本次首尔大学 AI 创新与数据科学访学项目，系统提升 AI 领域专业能力与国际视野，为后续
+[17:28:14.400] capture TEXT: len=17 preview=C语言程序设计_第1-6章作业汇总
+[17:29:54.490] capture TEXT: len=11 preview=j>=0 &&j<=9
+[17:29:58.057] capture TEXT: len=11 preview=j>=0 &&j<=9
+[17:30:05.259] capture TEXT: len=11 preview=j>=0 &&j<=9
+[17:33:06.860] capture TEXT: len=17 preview=C语言程序设计_第1-6章作业汇总
+[17:33:09.144] capture TEXT: len=17 preview=C语言程序设计_第1-6章作业汇总
+[17:33:19.752] capture TEXT: len=17 preview=C语言程序设计_第7-9章作业汇总
+[17:33:21.835] capture TEXT: len=17 preview=C语言程序设计_第7-9章作业汇总
+[17:34:33.908] capture TEXT: len=430 preview=SessionStart:startup hook error                   
+[17:37:16.071] capture TEXT: len=173 preview=https://mooc1.chaoxing.com/mooc-ans/mooc2/work/vie
+[17:38:08.741] capture TEXT: len=17 preview="E:\大学学习\大一下\C语言"
+[18:24:07.283] capture TEXT: len=35 preview=sk-0128ef3759e54a1ea7c9b502b274c59d
+[22:34:12.022] capture TEXT: len=22 preview=老师讲的特别好，也非常细致，知识点讲的很到位
+[22:43:10.272] capture TEXT: len=40 preview=老师的舞蹈教的特别好，也非常细致，就是考试有点点难度，但是学习啦啦操也让我很开心
+[22:43:39.038] capture TEXT: len=22 preview=老师讲的特别好，也非常细致，知识点讲的很到位
+[22:47:56.424] capture TEXT: len=55 preview=老师讲的特别好，也非常细致，知识点讲的很到位，让我对航空航天类的专业有了新的认知，对后续的专业分流有
+[22:49:46.505] capture TEXT: len=22 preview=老师讲的特别好，也非常细致，知识点讲的很到位
+[11:04:53.631] capture TEXT: len=9 preview=出国行前教育告知书
+[11:08:30.208] capture TEXT: len=17 preview=赴海外学习学生及家长告知书.pdf
+[13:52:35.834] capture TEXT: len=351 preview=C语言程序设计”结课考试考纲：
+1.基本穷举算法或递推算法，10分
+找出某范围内的所有素数，或满足某
+[14:34:50.913] capture TEXT: len=1467 preview=file:///C:/Users/FormerlyXZ/Downloads/c语言课设《学生成绩管理
+[14:38:43.273] capture TEXT: len=25152 preview=#include<stdio.h>
+#include<stdlib.h>
+#include<time
+[14:38:46.192] capture TEXT: len=25152 preview=#include<stdio.h>
+#include<stdlib.h>
+#include<time
+[23:19:53.636] capture TEXT: len=48 preview=https://youtu.be/IurBXe0jpVg?si=RXrLg4vfoDdg1xVt
+[23:21:21.811] capture TEXT: len=2464 preview="%PROGRAMFILES%\VideoLAN\VLC\vlc.exe" --input-slav
+[23:21:32.146] capture TEXT: len=2464 preview="%PROGRAMFILES%\VideoLAN\VLC\vlc.exe" --input-slav
+[23:22:15.132] capture TEXT: len=2477 preview="%PROGRAMFILES%\VideoLAN\VLC\vlc.exe" --input-slav
+[23:24:12.491] capture TEXT: len=48 preview=https://youtu.be/IurBXe0jpVg?si=RXrLg4vfoDdg1xVt
+[23:24:48.299] capture TEXT: len=48 preview=https://youtu.be/IurBXe0jpVg?si=8P856PUFmbyPnxSk
+[23:25:33.011] capture TEXT: len=37 preview=Video 'IurBXe0jpVg' is not available.
+[23:29:21.033] capture TEXT: len=48 preview=https://youtu.be/IurBXe0jpVg?si=8P856PUFmbyPnxSk
+[23:35:16.240] capture TEXT: len=34 preview=文革發動60週年：那十年，中國經歷了什麼？－ BBC News 中文
+[23:35:18.837] capture TEXT: len=34 preview=文革發動60週年：那十年，中國經歷了什麼？－ BBC News 中文
+[16:13:14.696] capture TEXT: len=8984 preview=# 选题三：成绩管理系统(难度等级A)
+## 一、系统功能
+成绩管理系统要求实现学生成绩管理的基本功
+[16:13:46.008] capture TEXT: len=6 preview=成绩管理系统
+[16:14:11.532] capture TEXT: len=23 preview=Grade Management System
+[16:14:14.392] capture TEXT: len=23 preview=Grade Management System
+[16:14:58.741] capture TEXT: len=8984 preview=# 选题三：成绩管理系统(难度等级A)
+## 一、系统功能
+成绩管理系统要求实现学生成绩管理的基本功
+[16:21:38.000] capture TEXT: len=5921 preview=下面是我根据图片内容整理出的 **Markdown 版文字**（尽量保持原书格式与内容，不包含代码实
+[16:25:58.820] capture TEXT: len=33 preview=新增功能（可选）
+例如：增加一个菜单项，如求某几门课程的平均分等
+
+[16:26:18.847] capture TEXT: len=68 preview=源程序中必须带有注释
+如：
+1．每个函数的功能需做注释，例如函数的总体功能、变量的意义，函数返回值的
+[16:27:52.284] capture TEXT: len=68 preview=源程序中必须带有注释
+如：
+1．每个函数的功能需做注释，例如函数的总体功能、变量的意义，函数返回值的
+[16:28:21.971] capture TEXT: len=39 preview=一、新增功能要求
+在原有成绩管理系统基础上，新增独立菜单项，实现统计分析类功能
+[16:31:13.455] capture TEXT: len=117 preview=新增功能
+例如：增加一个菜单项，如求某几门课程的平均分等
+源程序中必须带有注释
+如：
+1．每个函数的
+[16:32:05.518] capture TEXT: len=392 preview=## 四、其他要求
+
+### 1. 新增功能
+
+在原有成绩管理系统功能的基础上，增加至少一个新的功能
+[16:32:10.582] capture TEXT: len=664 preview=````markdown
+## 四、其他要求
+
+### 1. 新增功能
+
+在原有成绩管理系统功能的基
+[16:33:01.978] capture TEXT: len=392 preview=## 四、其他要求
+
+### 1. 新增功能
+
+在原有成绩管理系统功能的基础上，增加至少一个新的功能
+[16:40:57.305] capture TEXT: len=32 preview=file:///D:/Programs/code/.vscode
+[16:42:13.068] capture TEXT: len=7 preview=选题要求.md
+[16:49:47.002] capture TEXT: len=113 preview=init函数原型中第三个数组参数类型写的是Score sclist]，但从语义
+上看（选课信息)，这
+[16:50:45.165] capture TEXT: len=53 preview=结构体数组的最大容量(如MAXSTUDENT,MAX_COURSE等)需
+求中没有明确指定，你希望设
+[17:14:56.738] capture TEXT: len=12 preview=grade_system
+[17:17:25.897] capture TEXT: len=172 preview=file:///E:/AI Program/Grade Management System/stud
+[17:26:20.005] capture TEXT: len=29 preview=6VPJ7-H3CXH-HBTPT-X4T74-3YVY7
+[17:26:21.316] capture TEXT: len=29 preview=6VPJ7-H3CXH-HBTPT-X4T74-3YVY7
+[17:27:34.868] capture TEXT: len=12 preview=grade_system
+[17:28:37.226] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[17:30:21.177] capture TEXT: len=172 preview=file:///E:/AI Program/Grade Management System/sele
+[17:35:58.207] capture TEXT: len=3894 preview=1>------ 已启动生成: 项目: grade_system, 配置: Debug Win32 
+[17:44:45.611] capture TEXT: len=16 preview=grade_management
+[17:45:07.601] capture TEXT: len=237 preview=file:///E:/AI Program/Grade Management System/cour
+[17:47:32.464] capture TEXT: len=7 preview=2024001
+[17:48:47.460] capture TEXT: len=7 preview=2024001
+[19:34:09.188] capture IMAGE: size=3840x2160
+[19:34:10.749]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1780918449189.png
+[19:34:10.766]   file_hash=62d3974f...
+[19:34:10.774]   store.add_or_update_image id=257
+[16:13:09.932] capture TEXT: len=148 preview=请仔细阅读教材，完成以下问题：
+
+
+
+（1）结合大学生活场景，系统阐述当代大学生常见的法律风险类型，
+[22:51:06.817] capture TEXT: len=48 preview=https://youtu.be/ZMYdaHOcrQA?si=DtGI7uRfAU6dRVqg
+[13:43:54.926] capture TEXT: len=55 preview=file:///C:/Users/FormerlyXZ/Downloads/小七独家精选四六级作文思
+[13:22:08.960] capture TEXT: len=35 preview=Spicy Fried Pork with Chili Peppers
+[13:25:13.751] capture TEXT: len=808 preview=Spicy Fried Pork with Chili Peppers is one of the 
+[13:28:15.897] capture TEXT: len=6 preview=staple
+[13:37:56.835] capture TEXT: len=9 preview=182511910
+[13:38:42.378] capture TEXT: len=9 preview=182511910
+[13:39:52.691] capture TEXT: len=9 preview=182511910
+[13:40:10.335] capture TEXT: len=9 preview=182511911
+[13:40:21.789] capture TEXT: len=7 preview=2024002
+[13:40:26.754] capture TEXT: len=9 preview=182511911
+[13:40:33.799] capture TEXT: len=9 preview=182511912
+[13:40:44.819] capture TEXT: len=9 preview=182511913
+[13:41:01.705] capture TEXT: len=9 preview=182511914
+[13:41:28.362] capture TEXT: len=9 preview=182511915
+[13:41:48.084] capture TEXT: len=9 preview=182511916
+[13:41:58.242] capture TEXT: len=9 preview=182511917
+[13:42:06.018] capture TEXT: len=9 preview=182511918
+[13:42:16.472] capture TEXT: len=9 preview=182511919
+[13:42:29.210] capture TEXT: len=9 preview=182511920
+[13:42:37.916] capture TEXT: len=9 preview=182511921
+[13:42:40.644] capture TEXT: len=9 preview=182511921
+[14:46:32.757] capture TEXT: len=335 preview=[{
+	"resource": "/e:/AI Program/Grade Management S
+[14:47:12.610] capture TEXT: len=14 preview=local_sccount2
+[14:49:48.992] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[14:50:26.208] capture TEXT: len=135 preview=file:///C:/ProgramData/Microsoft/Windows/Start Men
+[14:52:18.330] capture TEXT: len=135 preview=file:///C:/ProgramData/Microsoft/Windows/Start Men
+[14:57:08.551] capture TEXT: len=201 preview=file:///D:/Programs/Microsoft Visual Studio/VS2010
+[15:07:07.206] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[15:17:27.753] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[15:34:01.878] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[15:36:34.524] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[15:41:38.117] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[15:41:40.583] capture TEXT: len=64 preview=file:///E:/AI Program/Grade Management System/grad
+[15:46:03.722] capture TEXT: len=74399 preview=/*
+ * ============================================
+[15:48:11.743] capture TEXT: len=57 preview=file:///E:/AI Program/Grade Management System/课程设计
+[15:51:27.852] capture TEXT: len=57 preview=file:///E:/AI Program/Grade Management System/课程设计
+[15:51:55.118] capture TEXT: len=57 preview=file:///E:/AI Program/Grade Management System/课程设计
+[16:04:33.426] capture TEXT: len=8 preview=七、附录：源程序
+[16:04:45.707] capture TEXT: len=8 preview=七、附录：源程序
+[16:07:17.597] capture TEXT: len=74399 preview=/*
+ * ============================================
+[16:08:58.576] capture TEXT: len=5 preview=- 1 -
+[16:09:04.881] capture TEXT: len=5 preview=- 1 -
+[16:34:12.267] capture TEXT: len=74399 preview=/*
+ * ============================================
+[16:34:12.798] capture TEXT: len=74399 preview=/*
+ * ============================================
+[16:38:40.492] capture TEXT: len=8 preview=1825119班
+[16:38:43.637] capture TEXT: len=8 preview=1825119班
+[16:38:55.941] capture TEXT: len=8 preview=1825119班
+[16:39:08.727] capture TEXT: len=13 preview=_____________
+[16:39:11.085] capture TEXT: len=13 preview=_____________
+[16:39:13.033] capture TEXT: len=13 preview=_____________
+[16:39:22.525] capture TEXT: len=13 preview=_____________
+[16:39:25.178] capture TEXT: len=13 preview=_____________
+[16:39:33.583] capture TEXT: len=13 preview=_____________
+[16:39:36.910] capture TEXT: len=13 preview=_____________
+[16:40:30.364] capture TEXT: len=13 preview=_____________
+[16:40:50.660] capture TEXT: len=71 preview=file:///D:/Programs/Microsoft Visual Studio/VS2010
+[00:12:48.118] capture TEXT: len=71 preview=file:///D:/Programs/Microsoft Visual Studio/VS2010
+[16:28:30.663] capture TEXT: len=220 preview=https://mooc1.chaoxing.com/mooc-ans/mooc2/work/dow
+[16:38:00.807] capture TEXT: len=78 preview=http://127.0.0.1:18789/#token=21330f27aa2154c14eea
+[16:47:16.012] capture TEXT: len=51 preview=在空间解析几何中，向量共面的条件是什么？如何证明三个向量共面？请详细说明各种判定方法和它们之间的联系
+[16:47:42.479] capture TEXT: len=85 preview=谢谢解答！能否举一个具体例子，用坐标行列式法验证向量a=(1,2,3), b=(2,4,6),
+  
+[16:49:16.968] capture IMAGE: size=1574x2124
+[16:49:17.163]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513356969.png
+[16:49:17.176]   file_hash=fda2896f...
+[16:49:17.184]   store.add_or_update_image id=292
+[16:49:17.411] capture IMAGE: size=1574x2124
+[16:49:17.566]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513357411.png
+[16:49:17.574]   file_hash=fda2896f...
+[16:49:17.591]   store.add_or_update_image id=292
+[16:50:17.106] capture IMAGE: size=1520x1332
+[16:50:17.185]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513417107.png
+[16:50:17.191]   file_hash=e2583e64...
+[16:50:17.199]   store.add_or_update_image id=293
+[16:50:17.415] capture IMAGE: size=1520x1332
+[16:50:17.490]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513417415.png
+[16:50:17.496]   file_hash=e2583e64...
+[16:50:17.512]   store.add_or_update_image id=293
+[16:50:34.693] capture IMAGE: size=1578x1786
+[16:50:34.799]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513434694.png
+[16:50:34.806]   file_hash=d2567284...
+[16:50:34.812]   store.add_or_update_image id=294
+[16:50:35.030] capture IMAGE: size=1578x1786
+[16:50:35.143]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513435031.png
+[16:50:35.150]   file_hash=d2567284...
+[16:50:35.166]   store.add_or_update_image id=294
+[16:50:58.007] capture IMAGE: size=1582x2162
+[16:50:58.133]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513458008.png
+[16:50:58.141]   file_hash=04c5dc94...
+[16:50:58.147]   store.add_or_update_image id=295
+[16:50:58.367] capture IMAGE: size=1582x2162
+[16:50:58.492]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513458368.png
+[16:50:58.500]   file_hash=04c5dc94...
+[16:50:58.517]   store.add_or_update_image id=295
+[16:51:16.798] capture TEXT: len=78 preview=多元函数中，如何判断一个二元函数在某点是否连续？二重极限与累次极限有什么区别？请举例说明它们之间的关
+[16:54:14.791] capture TEXT: len=77 preview=能否具体分析一下f(x,y)=(x²y)/(x⁴+y²)在(0,0)点处的极限情况？用不同路径逼近的
+[16:55:09.546] capture IMAGE: size=1576x1819
+[16:55:09.694]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513709547.png
+[16:55:09.701]   file_hash=c87bdfd7...
+[16:55:09.923]   store.add_or_update_image id=298
+[16:55:10.142] capture IMAGE: size=1576x1819
+[16:55:10.299]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513710143.png
+[16:55:10.306]   file_hash=c87bdfd7...
+[16:55:10.323]   store.add_or_update_image id=298
+[16:55:26.159] capture IMAGE: size=1559x1508
+[16:55:26.252]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513726160.png
+[16:55:26.261]   file_hash=8a307d01...
+[16:55:26.268]   store.add_or_update_image id=299
+[16:55:26.481] capture IMAGE: size=1559x1508
+[16:55:26.589]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513726481.png
+[16:55:26.597]   file_hash=8a307d01...
+[16:55:26.615]   store.add_or_update_image id=299
+[16:55:38.249] capture IMAGE: size=1445x1538
+[16:55:38.334]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513738250.png
+[16:55:38.342]   file_hash=fad84ffa...
+[16:55:38.359]   store.add_or_update_image id=300
+[16:55:38.575] capture IMAGE: size=1445x1538
+[16:55:38.654]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513738575.png
+[16:55:38.661]   file_hash=fad84ffa...
+[16:55:38.679]   store.add_or_update_image id=300
+[16:55:50.420] capture IMAGE: size=1586x1655
+[16:55:50.555]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513750421.png
+[16:55:50.565]   file_hash=aa9deaa4...
+[16:55:50.702]   store.add_or_update_image id=301
+[16:55:50.919] capture IMAGE: size=1586x1655
+[16:55:51.054]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513750919.png
+[16:55:51.061]   file_hash=aa9deaa4...
+[16:55:51.078]   store.add_or_update_image id=301
+[16:56:05.949] capture IMAGE: size=1577x2178
+[16:56:06.092]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513765950.png
+[16:56:06.099]   file_hash=ac01cfa1...
+[16:56:06.331]   store.add_or_update_image id=302
+[16:56:06.561] capture IMAGE: size=1577x2178
+[16:56:06.698]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781513766561.png
+[16:56:06.706]   file_hash=ac01cfa1...
+[16:56:06.714]   store.add_or_update_image id=302
+[16:56:30.067] capture TEXT: len=71 preview=在多元函数微分学中，可微、偏导数存在、偏导数连续、方向导数存在这几个概念之间有什么关系？请详细说明它
+[16:59:48.090] capture TEXT: len=54 preview=能否举一个例子说明：一个函数在某点偏导数存在，但不可微？并用全微分的定义验证一下，说明不满足可微条件
+[17:01:02.433] capture IMAGE: size=1009x1573
+[17:01:02.517]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514062433.png
+[17:01:02.525]   file_hash=2bd94046...
+[17:01:02.661]   store.add_or_update_image id=305
+[17:01:02.872] capture IMAGE: size=1009x1573
+[17:01:02.952]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514062873.png
+[17:01:02.959]   file_hash=2bd94046...
+[17:01:02.976]   store.add_or_update_image id=305
+[17:01:19.931] capture IMAGE: size=993x1432
+[17:01:19.997]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514079931.png
+[17:01:20.005]   file_hash=e82f11de...
+[17:01:20.145]   store.add_or_update_image id=306
+[17:01:20.352] capture IMAGE: size=993x1432
+[17:01:20.414]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514080353.png
+[17:01:20.422]   file_hash=e82f11de...
+[17:01:20.438]   store.add_or_update_image id=306
+[17:01:37.346] capture IMAGE: size=997x1600
+[17:01:37.413]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514097347.png
+[17:01:37.421]   file_hash=08cd2c44...
+[17:01:37.611]   store.add_or_update_image id=307
+[17:01:37.818] capture IMAGE: size=997x1600
+[17:01:37.883]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514097819.png
+[17:01:37.889]   file_hash=08cd2c44...
+[17:01:37.905]   store.add_or_update_image id=307
+[17:01:54.647] capture IMAGE: size=986x2133
+[17:01:54.736]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514114647.png
+[17:01:54.744]   file_hash=d7ae1798...
+[17:01:54.760]   store.add_or_update_image id=308
+[17:01:54.979] capture IMAGE: size=986x2133
+[17:01:55.068]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514114979.png
+[17:01:55.076]   file_hash=d7ae1798...
+[17:01:55.095]   store.add_or_update_image id=308
+[17:02:18.953] capture TEXT: len=70 preview=在多元函数积分学中，二重积分化为累次积分时，如何根据积分区域确定积分次序和积分限？什么情况下交换积分
+[17:03:33.124] capture TEXT: len=80 preview=谢谢！请帮我计算一个具体的例子：求二重积分∬D (x²+y²)dxdy，其中D是由y=x, y=2x
+[17:05:18.512] capture IMAGE: size=446x941
+[17:05:18.535]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514318513.png
+[17:05:18.542]   file_hash=250979ef...
+[17:05:18.679]   store.add_or_update_image id=311
+[17:05:51.629] capture IMAGE: size=433x1073
+[17:05:51.651]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514351629.png
+[17:05:51.657]   file_hash=70713be8...
+[17:05:51.890]   store.add_or_update_image id=312
+[17:06:12.266] capture IMAGE: size=448x973
+[17:06:12.283]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514372266.png
+[17:06:12.290]   file_hash=5ee16e53...
+[17:06:12.307]   store.add_or_update_image id=313
+[17:06:48.200] capture TEXT: len=65 preview=常微分方程中，一阶线性微分方程的通解公式是如何推导出来的？常数变易法的核心思想是什么？请详细说明并与
+[17:07:45.888] capture TEXT: len=78 preview=能否用常数变易法帮我求解方程 dy/dx + (2/x)y =
+  ▎ x³，并验证结果是否正确？顺
+[17:09:40.374] capture IMAGE: size=605x810
+[17:09:40.407]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514580374.png
+[17:09:40.413]   file_hash=500cdf02...
+[17:09:40.644]   store.add_or_update_image id=316
+[17:09:52.127] capture IMAGE: size=497x977
+[17:09:52.151]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514592127.png
+[17:09:52.158]   file_hash=0d6a6ae2...
+[17:09:52.391]   store.add_or_update_image id=317
+[17:10:03.893] capture IMAGE: size=585x1127
+[17:10:03.921]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781514603893.png
+[17:10:03.928]   file_hash=e0912dc1...
+[17:10:04.161]   store.add_or_update_image id=318
+[13:02:58.822] capture TEXT: len=44 preview=file:///C:/Users/FormerlyXZ/Desktop/缴费截图.jpg
+[16:17:35.524] capture TEXT: len=3 preview=冷雪飞
+[16:18:07.712] capture TEXT: len=2 preview=华冰
+[16:18:45.492] capture TEXT: len=2 preview=郁丰
+[16:19:46.965] capture TEXT: len=3 preview=都延丽
+[17:00:06.196] capture TEXT: len=2 preview=谢征
+[17:00:35.419] capture TEXT: len=3 preview=丁庆军
+[17:01:07.529] capture TEXT: len=3 preview=李华峰
+[17:01:48.105] capture TEXT: len=2 preview=郭健
+[17:02:14.899] capture TEXT: len=3 preview=赵振华
+[17:03:04.582] capture IMAGE: size=663x760
+[17:03:04.632]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781686984583.png
+[17:03:04.640]   file_hash=3c30c480...
+[17:03:04.648]   store.add_or_update_image id=329
+[17:18:49.346] capture TEXT: len=42 preview=https://store.steampowered.com/sub/808
+474
+[22:09:18.328] capture TEXT: len=7 preview=来杯好茶摇一摇
+[22:35:28.564] capture IMAGE: size=1920x1080
+[22:35:29.168]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793328566.png
+[22:35:29.181]   file_hash=254a69b7...
+[22:35:29.189]   store.add_or_update_image id=332
+[22:35:54.393] capture IMAGE: size=1920x1080
+[22:35:54.900]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793354394.png
+[22:35:54.912]   file_hash=5e4c1df3...
+[22:35:54.921]   store.add_or_update_image id=333
+[22:36:39.943] capture IMAGE: size=1920x1080
+[22:36:40.415]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793399944.png
+[22:36:40.426]   file_hash=d3324408...
+[22:36:40.432]   store.add_or_update_image id=334
+[22:37:51.803] capture IMAGE: size=1920x1080
+[22:37:52.265]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793471804.png
+[22:37:52.275]   file_hash=79c68465...
+[22:37:52.283]   store.add_or_update_image id=335
+[22:42:40.179] capture IMAGE: size=1920x1080
+[22:42:40.669]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793760180.png
+[22:42:40.680]   file_hash=8d9d9dfb...
+[22:42:40.751]   store.add_or_update_image id=336
+[22:45:03.475] capture IMAGE: size=1920x1080
+[22:45:03.933]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793903476.png
+[22:45:03.944]   file_hash=f5cbeb40...
+[22:45:03.961]   store.add_or_update_image id=337
+[22:45:52.788] capture IMAGE: size=1920x1080
+[22:45:53.203]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793952789.png
+[22:45:53.213]   file_hash=6889430b...
+[22:45:53.228]   store.add_or_update_image id=338
+[22:46:34.828] capture IMAGE: size=692x695
+[22:46:35.109]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793994829.png
+[22:46:35.118]   file_hash=d6b719e6...
+[22:46:35.134]   store.add_or_update_image id=339
+[22:46:35.351] capture IMAGE: size=692x695
+[22:46:35.587]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781793995352.png
+[22:46:35.596]   file_hash=d6b719e6...
+[22:46:35.614]   store.add_or_update_image id=339
+[22:47:33.797] capture IMAGE: size=1920x1080
+[22:47:34.123]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794053798.png
+[22:47:34.133]   file_hash=14f5b256...
+[22:47:34.270]   store.add_or_update_image id=340
+[22:48:01.521] capture IMAGE: size=1920x1080
+[22:48:01.766]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794081522.png
+[22:48:01.777]   file_hash=15c2d613...
+[22:48:01.914]   store.add_or_update_image id=341
+[22:48:12.492] capture IMAGE: size=1920x1080
+[22:48:12.880]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794092493.png
+[22:48:12.891]   file_hash=24094274...
+[22:48:12.907]   store.add_or_update_image id=342
+[22:49:26.587] capture IMAGE: size=1920x1080
+[22:49:27.179]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794166588.png
+[22:49:27.189]   file_hash=b222e47e...
+[22:49:27.197]   store.add_or_update_image id=343
+[22:50:41.689] capture IMAGE: size=1920x1080
+[22:50:42.357]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794241689.png
+[22:50:42.368]   file_hash=2d29769d...
+[22:50:42.384]   store.add_or_update_image id=344
+[22:52:45.460] capture IMAGE: size=1160x765
+[22:52:45.775]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794365460.png
+[22:52:45.785]   file_hash=678338d7...
+[22:52:45.799]   store.add_or_update_image id=345
+[22:54:05.805] capture IMAGE: size=1275x717
+[22:54:06.244]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794445805.png
+[22:54:06.254]   file_hash=3aff85eb...
+[22:54:06.268]   store.add_or_update_image id=346
+[22:54:55.116] capture IMAGE: size=674x895
+[22:54:55.398]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794495117.png
+[22:54:55.406]   file_hash=35d05561...
+[22:54:55.422]   store.add_or_update_image id=347
+[22:55:48.301] capture IMAGE: size=1906x995
+[22:55:48.727]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794548302.png
+[22:55:48.737]   file_hash=1eaf9f6d...
+[22:55:48.754]   store.add_or_update_image id=348
+[22:56:41.280] capture IMAGE: size=1920x1080
+[22:56:41.856]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794601281.png
+[22:56:41.866]   file_hash=dfd5eb8f...
+[22:56:42.002]   store.add_or_update_image id=349
+[22:57:32.325] capture IMAGE: size=618x834
+[22:57:32.534]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794652327.png
+[22:57:32.541]   file_hash=98eecfb3...
+[22:57:32.547]   store.add_or_update_image id=350
+[22:57:47.987] capture IMAGE: size=471x587
+[22:57:48.098]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794667988.png
+[22:57:48.104]   file_hash=1612b8a7...
+[22:57:48.110]   store.add_or_update_image id=351
+[22:58:13.896] capture IMAGE: size=1906x995
+[22:58:14.014]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794693897.png
+[22:58:14.022]   file_hash=c2745098...
+[22:58:14.030]   store.add_or_update_image id=352
+[22:59:29.078] capture IMAGE: size=869x376
+[22:59:29.194]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794769078.png
+[22:59:29.202]   file_hash=8150a14c...
+[22:59:29.206]   store.add_or_update_image id=353
+[22:59:29.409] capture IMAGE: size=869x376
+[22:59:29.518]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781794769409.png
+[22:59:29.525]   file_hash=8150a14c...
+[22:59:29.540]   store.add_or_update_image id=353
+[23:12:04.092] capture IMAGE: size=3840x2160
+[23:12:05.450]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781795524093.png
+[23:12:05.465]   file_hash=eb26f26b...
+[23:12:05.472]   store.add_or_update_image id=354
+[23:24:10.381] capture IMAGE: size=1588x1180
+[23:24:11.222]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781796250382.png
+[23:24:11.233]   file_hash=5b71e3b3...
+[23:24:11.249]   store.add_or_update_image id=355
+[23:25:43.185] capture IMAGE: size=1250x936
+[23:25:43.754]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781796343186.png
+[23:25:43.764]   file_hash=3a362e7a...
+[23:25:43.780]   store.add_or_update_image id=356
+[23:26:40.514] capture IMAGE: size=1248x941
+[23:26:41.040]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781796400515.png
+[23:26:41.052]   file_hash=3b3fc245...
+[23:26:41.058]   store.add_or_update_image id=357
+[23:28:53.965] capture IMAGE: size=1670x683
+[23:28:54.504]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781796533966.png
+[23:28:54.512]   file_hash=1ef375c4...
+[23:28:54.529]   store.add_or_update_image id=358
+[23:30:15.582] capture IMAGE: size=1670x930
+[23:30:16.333]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781796615583.png
+[23:30:16.343]   file_hash=e5427fa8...
+[23:30:16.358]   store.add_or_update_image id=359
+[23:31:34.728] capture IMAGE: size=1667x936
+[23:31:35.519]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781796694729.png
+[23:31:35.528]   file_hash=d63c511a...
+[23:31:35.544]   store.add_or_update_image id=360
+[23:33:05.520] capture IMAGE: size=1668x938
+[23:33:06.202]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781796785521.png
+[23:33:06.211]   file_hash=725f48b7...
+[23:33:06.347]   store.add_or_update_image id=361
+[23:52:35.328] capture IMAGE: size=1000x1000
+[23:52:35.633]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1781797955329.png
+[23:52:35.643]   file_hash=c52fa40a...
+[23:52:35.660]   store.add_or_update_image id=362
+[17:20:56.384] capture TEXT: len=545 preview=Error calling Python override of QWidget::eventFil
+[15:04:03.816] capture TEXT: len=30 preview=https://cfmoontv.melodyxz.top/
+[15:04:45.314] capture TEXT: len=15 preview=获得更丰富的影视信息和推荐内容
+[15:05:19.149] capture TEXT: len=119 preview=For personal video resource websites, in order to 
+[15:05:22.900] capture TEXT: len=119 preview=For personal video resource websites, in order to 
+[15:06:48.836] capture TEXT: len=32 preview=710ca085f86b5b320835dd78c6257f55
+[15:24:13.157] capture TEXT: len=11 preview=ADMIN_TOKEN
+[15:24:44.903] capture TEXT: len=5 preview=TOKEN
+[15:29:51.422] capture TEXT: len=26 preview=cname-china.vercel-dns.com
+[15:31:55.712] capture TEXT: len=30 preview=danmuapi-alpha-gray.vercel.app
+[15:32:57.196] capture TEXT: len=30 preview=danmuapi-alpha-gray.vercel.app
+[15:33:27.635] capture TEXT: len=18 preview=danmu.melodyxz.top
+[15:34:06.139] capture TEXT: len=27 preview=https://danmu.melodyxz.top/
+[16:26:36.698] capture TEXT: len=6 preview=mgnacg
+[16:48:54.906] capture TEXT: len=5 preview=pgxdy
+[17:24:56.880] capture TEXT: len=29 preview=file:///E:/娱乐/视频源/config.json
+[17:28:44.076] capture TEXT: len=9195 preview={
+  "cache_time": 7200,
+  "api_site": {
+    "feifa
+[17:55:11.812] capture TEXT: len=35 preview=sk-4c41fe1afeb14d0998d8f22a3c3e7e66
+[17:55:27.452] capture TEXT: len=24 preview=https://api.deepseek.com
+[17:55:54.686] capture TEXT: len=18 preview=	deepseek-v4-flash
+[17:56:06.825] capture TEXT: len=35 preview=sk-4c41fe1afeb14d0998d8f22a3c3e7e66
+[17:56:13.999] capture TEXT: len=17 preview=deepseek-v4-flash
+[17:56:59.462] capture TEXT: len=39 preview=你好！我是MoonTVPlus的AI影视助手。想看什么电影或剧集？需要推荐吗？
+[17:59:38.587] capture TEXT: len=35 preview=sk-4c41fe1afeb14d0998d8f22a3c3e7e66
+[17:59:43.274] capture TEXT: len=24 preview=https://api.deepseek.com
+[17:59:46.918] capture TEXT: len=17 preview=deepseek-v4-flash
+[18:00:36.336] capture TEXT: len=39 preview=你好！我是MoonTVPlus的AI影视助手。想看什么电影或剧集？需要推荐吗？
+[18:03:09.933] capture TEXT: len=8962 preview={
+  "cache_time": 7200,
+  "api_site": {
+    "feifa
+[18:03:25.340] capture TEXT: len=8962 preview={
+  "cache_time": 7200,
+  "api_site": {
+    "feifa
+[18:35:58.275] capture TEXT: len=58 preview=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
+[18:46:28.040] capture TEXT: len=21 preview=cfmoontv.melodyxz.top
+[18:57:48.164] capture TEXT: len=39 preview=你好！我是MoonTVPlus的AI影视助手。想看什么电影或剧集？需要推荐吗？
+[20:22:00.218] capture TEXT: len=5 preview=你一句别怂
+[20:22:05.167] capture TEXT: len=6 preview=我就敢往前冲
+[20:30:47.669] capture TEXT: len=16 preview=jd-1wa.pages.dev
+[21:21:54.305] capture TEXT: len=51 preview=http://119.29.11.197:88/mb/sxys/api.php/provide/vo
+[21:22:33.830] capture TEXT: len=124 preview=    "suonisd": {
+      "api": "https://xsd.sdzyapi
+[21:23:37.258] capture TEXT: len=51 preview=http://119.29.11.197:88/mb/sxys/api.php/provide/vo
+[21:57:27.884] capture TEXT: len=51 preview=http://119.29.11.197:88/mb/sxys/api.php/provide/vo

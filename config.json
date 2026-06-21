@@ -2,13 +2,14 @@
   "character_type": "gif",
   "height": 400,
   "position": [
-    2062,
-    971
+    2166,
+    865
   ],
   "idle_animation": "笑",
   "hover_animation": "害羞 2",
   "auto_start": true,
   "language": "zh",
+  "topmost": false,
   "gif": {
     "startup_sequence": [
       "到达",
@@ -26,9 +27,9 @@
     ],
     "panel": "点头",
     "close": "摇头",
-    "key_press": "打字(普通)",
-    "audio_playing": "唱歌",
-    "audio_muted": "静音 1",
+    "key_press": true,
+    "audio_playing": true,
+    "audio_muted": true,
     "afk_enabled": true,
     "afk_timeout_ms": 20000,
     "afk_min_ms": 10000,

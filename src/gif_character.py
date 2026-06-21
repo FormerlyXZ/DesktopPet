@@ -49,9 +49,12 @@ class GifCharacter(CharacterController):
         self._dbl_click_seq: list[str] = list(self.DBL_CLICK_SEQ)
         self._panel_key: str = self.DEFAULT_PANEL
         self._close_key: str = self.DEFAULT_CLOSE
-        self._key_press_action: str = self.DEFAULT_KEY_PRESS
+        self._key_press_action: str = self.DEFAULT_KEY_PRESS       # 触发时播放的动画名
         self._audio_playing_action: str = self.DEFAULT_AUDIO_PLAYING
         self._audio_muted_action: str = self.DEFAULT_AUDIO_MUTED
+        self._key_press_enabled: bool = True      # 行为检测开关
+        self._audio_playing_enabled: bool = True
+        self._audio_muted_enabled: bool = True
 
         # 从待机 GIF 的尺寸计算原生宽高比
         idle_path = self._registry.get_path(self._idle_key)
@@ -288,6 +291,8 @@ class GifCharacter(CharacterController):
     # ── 行为检测 ──
 
     def handle_key_press(self):
+        if not self._key_press_enabled:
+            return
         if self._state == State.IDLE:
             self._state = State.INTERACTING
             self._play_once(self._key_press_action)
@@ -298,6 +303,8 @@ class GifCharacter(CharacterController):
             self._play_once(self._key_press_action)
 
     def handle_audio_playing(self):
+        if not self._audio_playing_enabled:
+            return
         self._audio_is_playing = True
         if self._state == State.IDLE:
             self._state = State.INTERACTING
@@ -309,6 +316,8 @@ class GifCharacter(CharacterController):
             self._enter_idle()
 
     def handle_audio_muted(self):
+        if not self._audio_muted_enabled:
+            return
         if self._state == State.IDLE:
             self._state = State.INTERACTING
             self._play_once(self._audio_muted_action)
@@ -346,9 +355,9 @@ class GifCharacter(CharacterController):
             "dbl_click_seq": list(self._dbl_click_seq),
             "panel": self._panel_key,
             "close": self._close_key,
-            "key_press": self._key_press_action,
-            "audio_playing": self._audio_playing_action,
-            "audio_muted": self._audio_muted_action,
+            "key_press": self._key_press_enabled,
+            "audio_playing": self._audio_playing_enabled,
+            "audio_muted": self._audio_muted_enabled,
             "afk_enabled": self._afk_enabled,
             "afk_timeout_ms": self._afk_timeout_ms,
             "afk_min_ms": self._afk_min_ms,
@@ -373,12 +382,28 @@ class GifCharacter(CharacterController):
             self._panel_key = settings["panel"]
         if "close" in settings and self._registry.has(settings["close"]):
             self._close_key = settings["close"]
-        if "key_press" in settings and self._registry.has(settings["key_press"]):
-            self._key_press_action = settings["key_press"]
-        if "audio_playing" in settings and self._registry.has(settings["audio_playing"]):
-            self._audio_playing_action = settings["audio_playing"]
-        if "audio_muted" in settings and self._registry.has(settings["audio_muted"]):
-            self._audio_muted_action = settings["audio_muted"]
+        if "key_press" in settings:
+            v = settings["key_press"]
+            if isinstance(v, bool):
+                self._key_press_enabled = v
+            elif isinstance(v, str) and self._registry.has(v):
+                # 旧格式：动画名 → 视为启用
+                self._key_press_action = v
+                self._key_press_enabled = True
+        if "audio_playing" in settings:
+            v = settings["audio_playing"]
+            if isinstance(v, bool):
+                self._audio_playing_enabled = v
+            elif isinstance(v, str) and self._registry.has(v):
+                self._audio_playing_action = v
+                self._audio_playing_enabled = True
+        if "audio_muted" in settings:
+            v = settings["audio_muted"]
+            if isinstance(v, bool):
+                self._audio_muted_enabled = v
+            elif isinstance(v, str) and self._registry.has(v):
+                self._audio_muted_action = v
+                self._audio_muted_enabled = True
         if "afk_enabled" in settings:
             self._afk_enabled = settings["afk_enabled"]
         if "afk_timeout_ms" in settings:

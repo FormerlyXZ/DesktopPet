@@ -141,7 +141,7 @@ class GifSettingsPage(QScrollArea):
         ly.setSpacing(6)
         self._combo_idle = self._add_mapping_row(ly, "idle_action")
 
-    # ── 行为检测映射 ──
+    # ── 行为检测映射（勾选启用，取消禁用）──
 
     def _build_behavior_section(self):
         self._behavior_gb = QGroupBox("")
@@ -149,9 +149,28 @@ class GifSettingsPage(QScrollArea):
         ly = QVBoxLayout(self._behavior_gb)
         ly.setSpacing(6)
 
-        self._combo_key_press = self._add_mapping_row(ly, "key_press")
-        self._combo_audio_play = self._add_mapping_row(ly, "audio_play")
-        self._combo_audio_muted = self._add_mapping_row(ly, "audio_muted")
+        chk_style = (
+            "QCheckBox { font-size: 12px; color: #424242;"
+            "font-family: 'Microsoft YaHei'; spacing: 6px; }"
+        )
+        self._chk_key_press = QCheckBox("")
+        self._chk_key_press.setStyleSheet(chk_style)
+        ly.addWidget(self._chk_key_press)
+
+        self._chk_audio_play = QCheckBox("")
+        self._chk_audio_play.setStyleSheet(chk_style)
+        ly.addWidget(self._chk_audio_play)
+
+        self._chk_audio_muted = QCheckBox("")
+        self._chk_audio_muted.setStyleSheet(chk_style)
+        ly.addWidget(self._chk_audio_muted)
+
+        # 保存引用以支持语言切换
+        self._behavior_checkboxes = [
+            (self._chk_key_press, "key_press"),
+            (self._chk_audio_play, "audio_play"),
+            (self._chk_audio_muted, "audio_muted"),
+        ]
 
     def _add_mapping_row(self, parent_layout, tr_key):
         row = QHBoxLayout()
@@ -311,6 +330,8 @@ class GifSettingsPage(QScrollArea):
         self._afk_max_spin.setSuffix(sec)
         for lbl, key in self._mapping_labels:
             lbl.setText(tr(key, lang))
+        for chk, key in self._behavior_checkboxes:
+            chk.setText(tr(key, lang))
 
     # ── 公共接口 ──
 
@@ -319,7 +340,6 @@ class GifSettingsPage(QScrollArea):
         self._all_actions = list(actions)
         combos = [
             self._startup_add_combo, self._combo_idle,
-            self._combo_key_press, self._combo_audio_play, self._combo_audio_muted,
             self._combo_hover, self._combo_long_hover, self._combo_click,
             self._combo_panel, self._combo_close,
             self._combo_dbl_1, self._combo_dbl_2,
@@ -362,10 +382,13 @@ class GifSettingsPage(QScrollArea):
         # 待机
         _select(self._combo_idle, settings.get("idle", ""))
 
-        # 行为映射
-        _select(self._combo_key_press, settings.get("key_press", ""))
-        _select(self._combo_audio_play, settings.get("audio_playing", ""))
-        _select(self._combo_audio_muted, settings.get("audio_muted", ""))
+        # 行为检测——勾选框（向后兼容：旧格式字符串值视为启用）
+        kp = settings.get("key_press", True)
+        self._chk_key_press.setChecked(kp if isinstance(kp, bool) else bool(kp))
+        ap = settings.get("audio_playing", True)
+        self._chk_audio_play.setChecked(ap if isinstance(ap, bool) else bool(ap))
+        am = settings.get("audio_muted", True)
+        self._chk_audio_muted.setChecked(am if isinstance(am, bool) else bool(am))
 
         # 鼠标映射
         _select(self._combo_hover, settings.get("hover", ""))
@@ -411,9 +434,9 @@ class GifSettingsPage(QScrollArea):
             "dbl_click_seq": dbl_seq,
             "panel": self._combo_panel.currentText(),
             "close": self._combo_close.currentText(),
-            "key_press": self._combo_key_press.currentText(),
-            "audio_playing": self._combo_audio_play.currentText(),
-            "audio_muted": self._combo_audio_muted.currentText(),
+            "key_press": self._chk_key_press.isChecked(),
+            "audio_playing": self._chk_audio_play.isChecked(),
+            "audio_muted": self._chk_audio_muted.isChecked(),
             "afk_enabled": self._afk_enabled_check.isChecked(),
             "afk_timeout_ms": self._afk_timeout_spin.value() * 1000,
             "afk_min_ms": self._afk_min_spin.value() * 1000,

@@ -24,6 +24,15 @@ TR = {
     "bubble_clipboard": {"zh": "  📋  历史粘贴板",  "en": "  📋  Clipboard",      "ja": "  📋  クリップボード"},
     "bubble_exit":      {"zh": "  🚪  退出",        "en": "  🚪  Exit",           "ja": "  🚪  終了"},
 
+    # ── 系统面板（右键）──
+    "sys_topmost":       {"zh": "  窗口置顶",        "en": "  Always on Top",      "ja": "  常に最前面"},
+    "sys_desktop_level": {"zh": "  桌面层级",        "en": "  Desktop Level",      "ja": "  デスクトップレベル"},
+    "sys_minimize_tray": {"zh": "  最小化到托盘",    "en": "  Minimize to Tray",   "ja": "  トレイに最小化"},
+
+    # ── 托盘图标 ──
+    "tray_show": {"zh": "显示桌宠", "en": "Show Pet", "ja": "ペットを表示"},
+    "tray_exit": {"zh": "退出",     "en": "Exit",     "ja": "終了"},
+
     # ── GIF 设置页 ──
     "startup_group":   {"zh": "启动序列",           "en": "Startup Sequence",      "ja": "起動シーケンス"},
     "idle_group":      {"zh": "待机循环",           "en": "Idle Loop",             "ja": "待機ループ"},
@@ -31,9 +40,9 @@ TR = {
     "mouse_group":     {"zh": "鼠标交互",           "en": "Mouse Interaction",     "ja": "マウス操作"},
     "afk_group":       {"zh": "AFK 随机播放",       "en": "AFK Random",            "ja": "AFKランダム"},
     "idle_action":     {"zh": "  待机动画:",         "en": "  Idle Action:",       "ja": "  待機アクション:"},
-    "key_press":       {"zh": "  按键打字:",         "en": "  Key Press:",         "ja": "  キー入力:"},
-    "audio_play":      {"zh": "  音频播放:",         "en": "  Audio Play:",        "ja": "  オーディオ再生:"},
-    "audio_muted":     {"zh": "  系统静音:",         "en": "  System Muted:",      "ja": "  システムミュート:"},
+    "key_press":       {"zh": "按键打字",         "en": "Key Press",         "ja": "キー入力"},
+    "audio_play":      {"zh": "音频播放",         "en": "Audio Play",        "ja": "オーディオ再生"},
+    "audio_muted":     {"zh": "系统静音",         "en": "System Muted",      "ja": "システムミュート"},
     "hover_action":    {"zh": "  悬停:",             "en": "  Hover:",             "ja": "  ホバー:"},
     "long_hover":      {"zh": "  长悬停:",           "en": "  Long Hover:",        "ja": "  長押しホバー:"},
     "click_action":    {"zh": "  单击:",             "en": "  Click:",             "ja": "  クリック:"},

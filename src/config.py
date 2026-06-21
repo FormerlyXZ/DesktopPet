@@ -23,6 +23,7 @@ DEFAULTS = {
     "hover_animation": "默认服装/挥手",
     "auto_start": False,
     "language": "zh",
+    "topmost": True,
     # ── Q版 默认设置 ──
     "gif": {
         "startup_sequence": ["到达", "PNGTuber 加载", "加油"],

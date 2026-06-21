@@ -1,15 +1,17 @@
 """桌宠主窗口：透明、置顶、无边框，委托 CharacterController"""
 import os
 import sys
-from PySide6.QtWidgets import QLabel
+from PySide6.QtWidgets import QLabel, QSystemTrayIcon, QMenu
 from PySide6.QtCore import Qt, QPoint, QTimer, Signal
-from PySide6.QtGui import QPixmap, QMouseEvent
+from PySide6.QtGui import QCursor
+from PySide6.QtGui import QPixmap, QMouseEvent, QIcon, QAction
 
 from src.character_base import CharacterController
 from src.bubble_panel import BubblePanel
 from src.settings_window import SettingsWindow
 from src.gif_registry import GifRegistry
 from src.config import set_auto_start, save as save_config, load as load_config
+from src.translations import tr
 
 
 def _get_assets_base() -> str:
@@ -51,11 +53,30 @@ class PetWindow(QLabel):
         # 启动角色
         character.start()
 
-        # 气泡面板
-        self.bubble = BubblePanel()
-        self.bubble.settings_clicked.connect(self._on_settings)
-        self.bubble.clipboard_clicked.connect(self._on_clipboard)
-        self.bubble.exit_clicked.connect(self._on_exit)
+        self.auto_start = False
+        self.language = "zh"
+
+        # 集成功能面板（左键）——目前只有历史粘贴板
+        self.function_panel = BubblePanel([
+            ("clipboard", "bubble_clipboard"),
+            # 后续可在此处添加更多功能，例如:
+            # ("notes", "function_notes"),
+        ])
+        self.function_panel.item_clicked.connect(self._on_panel_item)
+
+        # 系统面板（右键）——设置 + 托盘 + 层级
+        self.system_panel = BubblePanel([
+            ("topmost", "sys_topmost", {"checkable": True}),
+            ("desktop_level", "sys_desktop_level", {"checkable": True}),
+            ("minimize_tray", "sys_minimize_tray"),
+            ("settings", "bubble_settings"),
+            ("exit", "bubble_exit"),
+        ])
+        self.system_panel.item_clicked.connect(self._on_panel_item)
+        self._topmost = True  # 默认置顶
+
+        # ── 系统托盘图标 ──
+        self._tray_icon = self._create_tray_icon()
 
         # 历史粘贴板窗口（单例，延迟创建）
         self._clipboard_window = None
@@ -68,9 +89,6 @@ class PetWindow(QLabel):
         self.settings.animations_changed.connect(self._on_animations_changed)
         self.settings.save_clicked.connect(self._on_save_settings)
         self.settings.close_without_save.connect(self._on_close_without_save)
-
-        self.auto_start = False
-        self.language = "zh"
 
         # 拖拽
         self._dragging = False
@@ -160,6 +178,9 @@ class PetWindow(QLabel):
             self._press_pos = event.globalPosition().toPoint()
             self._drag_start_pos = event.globalPosition().toPoint() - self.frameGeometry().topLeft()
             event.accept()
+        elif event.button() == Qt.RightButton:
+            self._press_pos = event.globalPosition().toPoint()
+            event.accept()
 
     def mouseMoveEvent(self, event: QMouseEvent):
         if self._dragging:
@@ -167,8 +188,10 @@ class PetWindow(QLabel):
             new_pos = event.globalPosition().toPoint() - self._drag_start_pos
             self.move(new_pos)
             delta = new_pos - old_pos
-            if self.bubble.isVisible():
-                self.bubble.move(self.bubble.pos() + delta)
+            if self.function_panel.isVisible():
+                self.function_panel.move(self.function_panel.pos() + delta)
+            if self.system_panel.isVisible():
+                self.system_panel.move(self.system_panel.pos() + delta)
             if self.settings.isVisible():
                 self.settings.move(self.settings.pos() + delta)
             event.accept()
@@ -189,7 +212,13 @@ class PetWindow(QLabel):
                 else:
                     # PNG：无双击检测，立即触发单击
                     self.character.handle_single_click()
-                    self._toggle_bubble()
+                    self._toggle_function_panel()
+            event.accept()
+        elif event.button() == Qt.RightButton:
+            delta = event.globalPosition().toPoint() - self._press_pos
+            if delta.manhattanLength() < 5:
+                self.character.handle_single_click()
+                self._toggle_system_panel()
             event.accept()
 
     def _on_single_click_timeout(self):
@@ -197,13 +226,131 @@ class PetWindow(QLabel):
         if self._click_pending:
             self._click_pending = False
             self.character.handle_single_click()
-            self._toggle_bubble()
+            self._toggle_function_panel()
 
-    def _toggle_bubble(self):
-        if self.bubble.isVisible():
-            self.bubble.hide_with_anim()
+    def _on_panel_item(self, item_id: str):
+        """统一路由面板项点击"""
+        if item_id == "settings":
+            self._on_settings()
+        elif item_id == "clipboard":
+            self._on_clipboard()
+        elif item_id == "exit":
+            self._on_exit()
+        elif item_id == "topmost":
+            self._on_toggle_topmost()
+        elif item_id == "desktop_level":
+            self._on_toggle_desktop_level()
+        elif item_id == "minimize_tray":
+            self._on_minimize_to_tray()
+
+    def _toggle_function_panel(self):
+        """切换集成功能面板（左键）"""
+        if self.function_panel.isVisible():
+            self.function_panel.hide_with_anim()
         else:
-            self.bubble.popup_at(self.frameGeometry())
+            if self.system_panel.isVisible():
+                self.system_panel.hide_with_anim()
+            self.function_panel.popup_at(self.frameGeometry())
+
+    def _toggle_system_panel(self):
+        """切换系统面板（右键）——在鼠标位置弹出，类系统菜单"""
+        if self.system_panel.isVisible():
+            self.system_panel.hide_with_anim()
+        else:
+            if self.function_panel.isVisible():
+                self.function_panel.hide_with_anim()
+            # 弹出前刷新 checkable 项的选中状态
+            self.system_panel.set_item_checked("topmost", self._topmost)
+            self.system_panel.set_item_checked("desktop_level", not self._topmost)
+            self.system_panel.show_at(QCursor.pos())
+
+    # ─── 系统托盘 ───
+
+    def _create_tray_icon(self) -> QSystemTrayIcon:
+        """创建系统托盘图标"""
+        # 从素材加载图标（缩放到合适大小）
+        assets_base = _get_assets_base()
+        icon_path = os.path.join(assets_base, "assets", "默认服装", "默认待机", "001.png")
+        pixmap = QPixmap(icon_path)
+        if pixmap.isNull():
+            # fallback：创建一个简单的图标
+            pixmap = QPixmap(32, 32)
+            pixmap.fill(Qt.transparent)
+        icon = QIcon(pixmap)
+
+        tray = QSystemTrayIcon(icon, self)
+        tray.setToolTip("DesktopPet")
+
+        # 右键菜单（保存引用以便语言切换）
+        menu = QMenu()
+        lang = self.language
+        self._tray_show_action = QAction(tr("tray_show", lang), menu)
+        self._tray_show_action.triggered.connect(self._on_tray_show)
+        menu.addAction(self._tray_show_action)
+
+        menu.addSeparator()
+        self._tray_exit_action = QAction(tr("tray_exit", lang), menu)
+        self._tray_exit_action.triggered.connect(self._on_exit)
+        menu.addAction(self._tray_exit_action)
+
+        self._tray_menu = menu
+        tray.setContextMenu(menu)
+        # 左键点击托盘图标 → 显示桌宠
+        tray.activated.connect(self._on_tray_activated)
+        tray.show()
+        return tray
+
+    def _on_tray_activated(self, reason: QSystemTrayIcon.ActivationReason):
+        """托盘图标被点击"""
+        if reason in (QSystemTrayIcon.Trigger, QSystemTrayIcon.DoubleClick):
+            self._on_tray_show()
+
+    def _on_tray_show(self):
+        """从托盘恢复显示"""
+        self.show()
+        self.activateWindow()
+        self.character.handle_panel_button_clicked()
+
+    def _on_minimize_to_tray(self):
+        """最小化到系统托盘"""
+        self.hide()
+        self.character.handle_settings_close()
+
+    def set_topmost(self, enabled: bool):
+        """设置窗口是否置顶（外部调用，如启动时恢复配置）"""
+        self._topmost = enabled
+        self._apply_window_level()
+
+    def _on_toggle_topmost(self):
+        """切换窗口置顶"""
+        self._topmost = True
+        self._apply_window_level()
+        self._save_topmost()
+
+    def _on_toggle_desktop_level(self):
+        """切换到桌面层级（普通窗口，可被遮挡）"""
+        self._topmost = False
+        self._apply_window_level()
+        self._save_topmost()
+
+    def _save_topmost(self):
+        """即时保存窗口层级到配置文件"""
+        from src.config import load as cfg_load, save as cfg_save
+        cfg = cfg_load()
+        cfg["topmost"] = self._topmost
+        cfg_save(cfg)
+
+    def _apply_window_level(self):
+        """应用窗口层级设置"""
+        was_visible = self.isVisible()
+        flags = self.windowFlags()
+        if self._topmost:
+            flags |= Qt.WindowStaysOnTopHint
+        else:
+            flags &= ~Qt.WindowStaysOnTopHint
+        self.setWindowFlags(flags)
+        if was_visible:
+            self.show()  # setWindowFlags 后需重新 show
 
     # ─── 设置相关 ───
 
@@ -255,7 +402,12 @@ class PetWindow(QLabel):
 
     def _on_language_changed(self, lang: str):
         self.language = lang
-        self.bubble.apply_language(lang)
+        self.function_panel.apply_language(lang)
+        self.system_panel.apply_language(lang)
+        # 更新托盘菜单文本
+        if hasattr(self, '_tray_show_action'):
+            self._tray_show_action.setText(tr("tray_show", lang))
+            self._tray_exit_action.setText(tr("tray_exit", lang))
 
     def _on_save_settings(self):
         """保存并退出 → 点头"""
@@ -271,6 +423,7 @@ class PetWindow(QLabel):
             "hover_animation": self.character.get_hover_key(),
             "auto_start": self.auto_start,
             "language": self.language,
+            "topmost": self._topmost,
             "gif": gif_settings,
         }
         save_config(data)
