@@ -1192,3 +1192,37 @@ int isL
       "api": "https://xsd.sdzyapi
 [21:23:37.258] capture TEXT: len=51 preview=http://119.29.11.197:88/mb/sxys/api.php/provide/vo
 [21:57:27.884] capture TEXT: len=51 preview=http://119.29.11.197:88/mb/sxys/api.php/provide/vo
+[19:43:55.380] capture TEXT: len=14 preview=574 Egan Drive
+[19:44:00.246] capture TEXT: len=6 preview=Juneau
+[19:44:10.403] capture TEXT: len=6 preview=Juneau
+[20:15:57.736] capture TEXT: len=58 preview=近期我需要使用这个账号在美国购买东西，所以我需要使用美国账户进行支付，所以我需要把我的账户更改为美国
+[20:35:54.160] capture IMAGE: size=1644x1089
+[20:35:54.375]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1782131754161.png
+[20:35:54.386]   file_hash=b7bd8327...
+[20:35:54.394]   store.add_or_update_image id=394
+[20:36:13.109] capture TEXT: len=8 preview=服了，这油管无论
+[20:37:31.969] capture IMAGE: size=1644x1089
+[20:37:32.122]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1782131851970.png
+[20:37:32.129]   file_hash=b7bd8327...
+[20:37:32.145]   store.add_or_update_image id=396
+[20:37:39.090] capture TEXT: len=8 preview=服了，这油管无论
+[20:44:14.826] capture IMAGE: size=405x354
+[20:44:14.886]   QImage.save=True path=E:\AI Program\DesktopPet\data\clipboard_images\1782132254827.png
+[20:44:14.893]   file_hash=bbc50603...
+[20:44:15.242]   store.add_or_update_image id=397
+[22:25:01.434] capture TEXT: len=48 preview=https://youtu.be/_Zh8dL2s7Kc?si=h75DyPtnzW9EOdZr
+[23:02:44.467] capture TEXT: len=89 preview=https://47.112.97.173:5000/api/v1/client/subscribe
+[00:11:49.236] capture TEXT: len=135 preview=file:///C:/Users/FormerlyXZ/Downloads/IMG_20260619
+[15:45:27.041] capture TEXT: len=89 preview=https://47.242.128.61:5000/api/v1/client/subscribe
+[16:22:10.875] capture TEXT: len=89 preview=https://47.242.128.61:5000/api/v1/client/subscribe
+[16:37:43.663] capture TEXT: len=45 preview=file:///E:/大学学习/大一下/其他/Dujiangyan_Legacy.pptx
+[16:38:00.536] capture TEXT: len=31 preview=file:///E:/大学学习/大一下/其他/projects
+[16:40:47.680] capture TEXT: len=71 preview=file:///C:/Users/FormerlyXZ/Downloads/Traditional 
+[16:41:14.655] capture TEXT: len=277 preview=file:///C:/Users/FormerlyXZ/Downloads/Documents/20
+[16:42:16.366] capture TEXT: len=142 preview=file:///C:/Users/FormerlyXZ/Downloads/Documents/试卷
+[16:43:38.725] capture TEXT: len=128 preview=file:///C:/Users/FormerlyXZ/Downloads/Documents/中国
+[16:45:37.061] capture TEXT: len=39 preview="E:\大学学习\大一下\中国文化（英语）\复习 名词解释释2026.pdf"
+[19:36:27.444] capture TEXT: len=49 preview=file:///C:/Users/FormerlyXZ/Desktop/高木同学/高木头像.png
+[19:36:28.641] capture TEXT: len=49 preview=file:///C:/Users/FormerlyXZ/Desktop/高木同学/高木头像.png
+[22:46:55.926] capture TEXT: len=53 preview=https://nuaayouth.nuaa.edu.cn/zhgqt/index/course?i
+[22:54:11.158] capture TEXT: len=145 preview=方法总结： 该网站虽然有前端反快进机制（拖动进度条会被还原），但后端 API index/cours

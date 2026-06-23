@@ -270,7 +270,7 @@ class PetWindow(QLabel):
         """创建系统托盘图标"""
         # 从素材加载图标（缩放到合适大小）
         assets_base = _get_assets_base()
-        icon_path = os.path.join(assets_base, "assets", "默认服装", "默认待机", "001.png")
+        icon_path = os.path.join(assets_base, "素材库", "高木头像.png")
         pixmap = QPixmap(icon_path)
         if pixmap.isNull():
             # fallback：创建一个简单的图标
