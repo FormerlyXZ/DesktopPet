@@ -3,7 +3,7 @@ import os
 import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFont
-from src.pet_window import PetWindow
+from src.pet_window import PetWindow, ensure_position_on_screen
 from src.config import load, save
 
 
@@ -96,7 +96,11 @@ def main():
 
     saved_pos = config.get("position")
     if saved_pos:
-        pet.move(*saved_pos)
+        x, y = ensure_position_on_screen(
+            saved_pos[0], saved_pos[1],
+            pet.width(), pet.pet_height,
+        )
+        pet.move(x, y)
     else:
         pet.move_to_bottom_right()
 

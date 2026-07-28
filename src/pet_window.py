@@ -21,6 +21,43 @@ def _get_assets_base() -> str:
     return os.path.dirname(os.path.dirname(__file__))
 
 
+def ensure_position_on_screen(pos_x: int, pos_y: int,
+                              window_width: int = 100,
+                              window_height: int = 100):
+    """校验窗口坐标是否在任一已连接屏幕范围内。
+
+    若坐标落在所有屏幕之外（如拔掉外接显示器后保存的坐标失效），
+    则回退到光标当前所在屏幕的右下角。无法获取光标位置时使用主屏幕。
+    返回保证可见的 (x, y)。
+    """
+    from PySide6.QtWidgets import QApplication
+    from PySide6.QtCore import QRect
+
+    app = QApplication.instance()
+    if app is None:
+        return (pos_x, pos_y)
+
+    screens = app.screens()
+    if not screens:
+        return (pos_x, pos_y)
+
+    # 窗口矩形是否与任一屏幕有交集？
+    window_rect = QRect(pos_x, pos_y, window_width, window_height)
+    for screen in screens:
+        if screen.availableGeometry().intersects(window_rect):
+            return (pos_x, pos_y)
+
+    # ── 坐标失效：回退到光标所在屏幕右下角 ──
+    target_screen = app.screenAt(QCursor.pos())
+    if target_screen is None:
+        target_screen = app.primaryScreen()
+
+    geom = target_screen.availableGeometry()
+    x = geom.right() - window_width - 20
+    y = geom.bottom() - window_height - 20
+    return (x, y)
+
+
 class PetWindow(QLabel):
     character_swap_needed = Signal(str, object)  # new_char_type, gif_settings
 
@@ -151,11 +188,17 @@ class PetWindow(QLabel):
         character.start()
 
     def move_to_bottom_right(self):
+        """将宠物放在光标所在屏幕的右下角（fallback: 主屏）"""
         from PySide6.QtWidgets import QApplication
 
-        screen = QApplication.primaryScreen().availableGeometry()
-        x = screen.right() - self.width() - 20
-        y = screen.bottom() - self.pet_height - 20
+        app = QApplication.instance()
+        target_screen = app.screenAt(QCursor.pos()) if app else None
+        if target_screen is None:
+            target_screen = QApplication.primaryScreen()
+
+        geom = target_screen.availableGeometry()
+        x = geom.right() - self.width() - 20
+        y = geom.bottom() - self.pet_height - 20
         self.move(x, y)
 
     # ─── 鼠标悬停 / 离开 ───
