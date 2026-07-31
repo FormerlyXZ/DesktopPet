@@ -1,9 +1,9 @@
 {
   "character_type": "gif",
-  "height": 300,
+  "height": 200,
   "position": [
-    1418,
-    702
+    1509,
+    815
   ],
   "idle_animation": "笑",
   "hover_animation": "害羞 2",
