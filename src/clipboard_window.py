@@ -225,6 +225,10 @@ class ClipboardWindow(QWidget):
 
         self._list_container = QWidget()
         self._list_container.setStyleSheet("background: transparent;")
+        # 横向策略 Ignored：容器宽度始终等于视口宽度，不被子项 sizeHint 撑大。
+        # 否则长文本（如无空格的 URL/API key）会让容器宽度膨胀到 1400px+，
+        # 横向滚动条被禁用后卡片右侧（置顶/删除按钮）会被裁掉。
+        self._list_container.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         self._list_layout = QVBoxLayout(self._list_container)
         self._list_layout.setContentsMargins(0, 0, 0, 0)
         self._list_layout.setSpacing(6)
@@ -378,6 +382,9 @@ class ClipboardWindow(QWidget):
             text_preview = QLabel(text)
             text_preview.setObjectName("TextPreview")
             text_preview.setWordWrap(True)
+            # 垂直顶对齐：QLabel 默认 AlignVCenter，内容被限高裁剪时会整块居中绘制，
+            # 导致折叠后显示的是中间几行、开头被裁掉。置顶后折叠只露出文字最上面 3 行。
+            text_preview.setAlignment(Qt.AlignLeft | Qt.AlignTop)
             text_preview.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
             fm = text_preview.fontMetrics()
             line_h = fm.lineSpacing()
@@ -501,13 +508,15 @@ class ClipboardWindow(QWidget):
             pix = QPixmap(image_path)
             if not pix.isNull():
                 orig_w, orig_h = pix.width(), pix.height()
-                max_w = 470
+                # 可用宽度 = 卡片内容区宽度（视口 - 卡片左右内边距 12+12），
+                # 避免窗口较窄或出现纵向滚动条时图片超出卡片被右侧裁剪。
+                avail_w = max(self._scroll.viewport().width() - 24, 100)
+                max_w = min(avail_w, 470)
                 max_h = 350
-                if orig_w <= max_w and orig_h <= max_h:
-                    pass  # 小图用原分辨率
-                else:
+                if orig_w > max_w or orig_h > max_h:
                     pix = pix.scaled(max_w, max_h, Qt.KeepAspectRatio, Qt.SmoothTransformation)
                 label.setPixmap(pix)
+                label.setMaximumWidth(max_w)
                 label.setStyleSheet("background: transparent;")
                 loaded = True
         if not loaded:
