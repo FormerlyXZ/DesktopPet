@@ -30,8 +30,9 @@ TR = {
     "sys_minimize_tray": {"zh": "  最小化到托盘",    "en": "  Minimize to Tray",   "ja": "  トレイに最小化"},
 
     # ── 托盘图标 ──
-    "tray_show": {"zh": "显示桌宠", "en": "Show Pet", "ja": "ペットを表示"},
-    "tray_exit": {"zh": "退出",     "en": "Exit",     "ja": "終了"},
+    "tray_show":      {"zh": "显示桌宠",   "en": "Show Pet",        "ja": "ペットを表示"},
+    "tray_clipboard": {"zh": "历史粘贴板", "en": "Clipboard",       "ja": "クリップボード"},
+    "tray_exit":      {"zh": "退出",       "en": "Exit",            "ja": "終了"},
 
     # ── GIF 设置页 ──
     "startup_group":   {"zh": "启动序列",           "en": "Startup Sequence",      "ja": "起動シーケンス"},

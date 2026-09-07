@@ -46,6 +46,9 @@ DEFAULTS = {
     # ── 历史粘贴板 ──
     "clipboard": {
         "cleanup_days": 7,
+        "font_size": 13,            # 粘贴板全局字体大小（10-20）
+        "wallpaper_path": "",       # 用户上传的背景壁纸图片路径（空=纯白磨砂底）
+        "acrylic_opacity": 55,      # 亚克力磨砂叠层不透明度（0-100，越小越透）
     },
 }
 
@@ -74,8 +77,23 @@ def load() -> dict:
 
 
 def save(data: dict):
-    """保存配置到 JSON 文件"""
-    to_save = dict(data)
+    """保存配置到 JSON 文件。
+
+    传入的 data 可能与已有配置是「部分更新」（如只含角色/窗口信息，不含 clipboard）。
+    为避免覆盖未传入的键（如历史粘贴板的 wallpaper/font 设置），
+    先将 data 合并到已有配置之上，再写盘。
+    """
+    merged = dict(data)
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+            if isinstance(existing, dict):
+                merged = deep_merge(existing, data)
+        except Exception:
+            pass
+
+    to_save = dict(merged)
     if to_save.get("position") is not None:
         to_save["position"] = list(to_save["position"])
     with open(CONFIG_FILE, "w", encoding="utf-8") as f:

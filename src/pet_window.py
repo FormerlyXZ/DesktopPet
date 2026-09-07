@@ -331,6 +331,10 @@ class PetWindow(QLabel):
         self._tray_show_action.triggered.connect(self._on_tray_show)
         menu.addAction(self._tray_show_action)
 
+        self._tray_clipboard_action = QAction(tr("tray_clipboard", lang), menu)
+        self._tray_clipboard_action.triggered.connect(self._on_clipboard)
+        menu.addAction(self._tray_clipboard_action)
+
         menu.addSeparator()
         self._tray_exit_action = QAction(tr("tray_exit", lang), menu)
         self._tray_exit_action.triggered.connect(self._on_exit)
@@ -450,6 +454,7 @@ class PetWindow(QLabel):
         # 更新托盘菜单文本
         if hasattr(self, '_tray_show_action'):
             self._tray_show_action.setText(tr("tray_show", lang))
+            self._tray_clipboard_action.setText(tr("tray_clipboard", lang))
             self._tray_exit_action.setText(tr("tray_exit", lang))
 
     def _on_save_settings(self):
@@ -485,7 +490,7 @@ class PetWindow(QLabel):
         self.character.handle_settings_close()
 
     def _on_clipboard(self):
-        """打开历史粘贴板窗口（单例）"""
+        """打开历史粘贴板窗口（单例，正常窗口逻辑）"""
         if self._clipboard_window is None:
             from src.clipboard_window import ClipboardWindow
             from src.clipboard_store import ClipboardStore
@@ -498,7 +503,13 @@ class PetWindow(QLabel):
                 screen.center().x() - self._clipboard_window.width() // 2,
                 screen.center().y() - self._clipboard_window.height() // 2,
             )
-        self._clipboard_window.show_with_fade()
+        # 若已最小化（任务栏），先还原
+        if self._clipboard_window.isMinimized():
+            self._clipboard_window.showNormal()
+            self._clipboard_window.setWindowOpacity(1.0)
+        else:
+            self._clipboard_window.show_with_fade()
+        self._clipboard_window.raise_()
         self._clipboard_window.activateWindow()
         self._clipboard_window.refresh()
 

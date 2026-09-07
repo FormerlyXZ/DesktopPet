@@ -103,7 +103,7 @@ Windows 桌面宠物应用，使用 Python + PySide6 开发。支持两种角色
 |------|------|
 | `clipboard_store.py` | SQLite 存储后端（建表、CRUD、搜索、过期清理） |
 | `clipboard_monitor.py` | QTimer + QClipboard 轮询检测剪贴板变化 |
-| `clipboard_window.py` | 历史窗口 UI（搜索栏、时间筛选、卡片列表、置顶/删除） |
+| `clipboard_window.py` | 历史窗口 UI（搜索栏、时间筛选、卡片列表、置顶/删除），正常窗口逻辑（任务栏+鼠标缩放+最小化+专属图标）；⚙ 设置对话框（背景样式+壁纸库缩略图管理+字体大小+自动清理） |
 
 ---
 

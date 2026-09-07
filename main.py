@@ -77,6 +77,23 @@ def main():
     font.setFamilies(["Microsoft YaHei", "Segoe UI Emoji", "sans-serif"])
     app.setFont(font)
 
+    # ── 应用级图标 + Windows AppUserModelID ──
+    # Windows 任务栏图标通常取自应用级图标 / AppUserModelID，
+    # 单独对窗口 setWindowIcon 在无边框窗口上可能不生效。
+    try:
+        from src.clipboard_window import _make_window_icon
+        app.setWindowIcon(_make_window_icon())
+    except Exception:
+        pass
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+                "FormerlyXZ.DesktopPet"
+            )
+        except Exception:
+            pass
+
     config = load()
     if getattr(sys, 'frozen', False):
         project_dir = sys._MEIPASS
