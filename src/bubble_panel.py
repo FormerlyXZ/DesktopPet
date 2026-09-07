@@ -183,21 +183,45 @@ class BubblePanel(QWidget):
         self.activateWindow()
 
     def show_at(self, pos: QPoint):
-        """在指定屏幕坐标弹出（类系统菜单——无动画，直接出现）。
+        """在指定屏幕坐标弹出（类系统菜单——面板一角对准鼠标，无动画，直接出现）。
+
         pos: 全局屏幕坐标，通常是 QCursor.pos()。
+
+        定位规则（对齐 Windows / 常见软件"面板一角对准光标"的习惯）：
+        1. 默认让面板**左上角**对准鼠标；
+        2. 面板超出屏幕右边界 → 整体翻转到鼠标**左侧**（右上角对准鼠标）；
+        3. 面板超出屏幕下边界 → 整体翻转到鼠标**上方**（左下角对准鼠标）；
+        4. 两轴同时翻转时，鼠标位于面板**右下角**；
+        5. 极端情况下仍越界 → 夹紧到该屏幕可用区域内。
+
+        支持多显示器：优先使用鼠标所在的屏幕，避免在副屏上弹出错位。
         """
         self.adjustSize()
 
-        # 偏移使面板在光标右下方弹出（类系统菜单习惯）
-        x = pos.x() + 4
-        y = pos.y() + 4
-
         from PySide6.QtWidgets import QApplication
-        screen = QApplication.primaryScreen().availableGeometry()
-        if x + self.width() > screen.right():
-            x = screen.right() - self.width() - 4
-        if y + self.height() > screen.bottom():
-            y = screen.bottom() - self.height() - 4
+        app = QApplication.instance()
+        if app is None:
+            return
+        # 优先取鼠标所在屏幕（多显示器时用鼠标当前屏幕），否则回落主屏
+        screen = app.screenAt(pos) or app.primaryScreen()
+        geom = screen.availableGeometry()
+
+        w, h = self.width(), self.height()
+
+        # 默认：左上角对准鼠标
+        x = pos.x()
+        y = pos.y()
+
+        # 超出右边界 → 翻转到鼠标左侧（右上角对准鼠标）
+        if x + w > geom.right() + 1:
+            x = pos.x() - w
+        # 超出下边界 → 翻转到鼠标上方（左下角对准鼠标）
+        if y + h > geom.bottom() + 1:
+            y = pos.y() - h
+
+        # 极端越界兜底：夹紧到屏幕可用区域
+        x = max(geom.left(), min(x, geom.right() - w + 1))
+        y = max(geom.top(), min(y, geom.bottom() - h + 1))
 
         self._popup_direction = "none"  # 标记为非滑入模式
 

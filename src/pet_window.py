@@ -296,7 +296,7 @@ class PetWindow(QLabel):
             self.function_panel.popup_at(self.frameGeometry())
 
     def _toggle_system_panel(self):
-        """切换系统面板（右键）——在鼠标位置弹出，类系统菜单"""
+        """切换系统面板（右键）——在鼠标位置弹出，面板一角对准鼠标，类系统菜单"""
         if self.system_panel.isVisible():
             self.system_panel.hide_with_anim()
         else:
