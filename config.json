@@ -2,8 +2,8 @@
   "character_type": "gif",
   "height": 300,
   "position": [
-    2222,
-    1012
+    2250,
+    1018
   ],
   "idle_animation": "笑",
   "hover_animation": "害羞 2",
@@ -60,7 +60,7 @@
   "clipboard": {
     "cleanup_days": 7,
     "font_size": 15,
-    "wallpaper_path": "E:\\AI Program\\DesktopPet\\data\\clipboard_wallpaper\\wallpaper_1788796838298_ec648f22.png",
-    "acrylic_opacity": 46
+    "wallpaper_path": "E:\\AI Program\\DesktopPet\\data\\clipboard_wallpaper\\wallpaper_1788843558417_378dc5cc.png",
+    "acrylic_opacity": 55
   }
 }

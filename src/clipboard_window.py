@@ -26,6 +26,10 @@ _CARD_BORDER = QColor(187, 222, 251, 120)  # 淡蓝描边
 # 可缩放边框宽度（px）
 _RESIZE_MARGIN = 8
 
+# 壁纸库缩略图尺寸（统一宽高比，图片 center-crop 填满）
+_LIB_THUMB_W = 96
+_LIB_THUMB_H = 64
+
 # 字体大小范围
 FONT_MIN = 10
 FONT_MAX = 20
@@ -1157,18 +1161,21 @@ class SettingsDialog(QDialog):
         self._lib_list = QListWidget()
         self._lib_list.setFlow(QListWidget.LeftToRight)
         self._lib_list.setWrapping(False)
-        self._lib_list.setFixedHeight(92)
-        self._lib_list.setIconSize(QSize(72, 72))
+        self._lib_list.setFixedHeight(84)
+        self._lib_list.setIconSize(QSize(_LIB_THUMB_W, _LIB_THUMB_H))
+        self._lib_list.setGridSize(QSize(_LIB_THUMB_W + 10, _LIB_THUMB_H + 10))
         self._lib_list.setSpacing(6)
         self._lib_list.setSelectionMode(QListWidget.SingleSelection)
         self._lib_list.setViewMode(QListWidget.IconMode)
+        self._lib_list.setUniformItemSizes(True)
         self._lib_list.setStyleSheet(
             "QListWidget { background: rgba(245,245,245,0.5); border: 1px solid #E0E0E0; "
             "border-radius: 6px; padding: 4px; }"
-            "QListWidget::item { background: transparent; border-radius: 4px; }"
-            "QListWidget::item:selected { background: rgba(66,165,245,0.2); "
-            "border: 1px solid #42A5F5; }"
-            "QListWidget::item:hover { background: rgba(66,165,245,0.10); }"
+            "QListWidget::item { background: #FFFFFF; border: 1px solid #EEEEEE; "
+            "border-radius: 4px; }"
+            "QListWidget::item:selected { border: 2px solid #42A5F5; "
+            "background: rgba(66,165,245,0.12); }"
+            "QListWidget::item:hover { border: 1px solid #90CAF9; }"
         )
         self._lib_list.itemClicked.connect(self._on_library_clicked)
         box.addWidget(self._lib_list)
@@ -1254,14 +1261,29 @@ class SettingsDialog(QDialog):
             pix = QPixmap(path)
             if pix.isNull():
                 continue
-            thumb = pix.scaled(72, 72, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            item = QListWidgetItem(QIcon(thumb), os.path.basename(path))
+            thumb = self._thumbnail_pixmap(pix, _LIB_THUMB_W, _LIB_THUMB_H)
+            # 不显示文件名，避免展示板上方出现长文件名
+            item = QListWidgetItem(QIcon(thumb), "")
             item.setData(Qt.UserRole, path)
             item.setToolTip(path)
+            item.setSizeHint(QSize(_LIB_THUMB_W + 4, _LIB_THUMB_H + 4))
             # 当前壁纸高亮
             if path == current:
                 item.setSelected(True)
             self._lib_list.addItem(item)
+
+    @staticmethod
+    def _thumbnail_pixmap(pix: QPixmap, w: int, h: int) -> QPixmap:
+        """生成统一尺寸的缩略图——center-crop 填满整个区域，不变形。
+
+        等比放大至 cover 后居中裁剪到 (w, h)，保证任意比例的图都铺满且比例统一。
+        """
+        if pix.isNull() or w <= 0 or h <= 0:
+            return QPixmap(w, h)
+        scaled = pix.scaled(w, h, Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+        x = (scaled.width() - w) // 2
+        y = (scaled.height() - h) // 2
+        return scaled.copy(x, y, w, h)
 
     def _on_library_clicked(self, item: QListWidgetItem):
         """单击壁纸库缩略图 → 设为当前壁纸"""
