@@ -2,8 +2,8 @@
   "character_type": "gif",
   "height": 300,
   "position": [
-    2250,
-    1018
+    2225,
+    1043
   ],
   "idle_animation": "笑",
   "hover_animation": "害羞 2",
@@ -55,7 +55,10 @@
       "通知_提示 星星_收藏",
       "通知_提示 点赞",
       "通知_提示 爱心_喜欢"
-    ]
+    ],
+    "sleep_enabled": true,
+    "sleep_prep_action": "睡觉(准备阶段1)",
+    "sleep_normal_action": "睡觉(普通)"
   },
   "clipboard": {
     "cleanup_days": 7,

@@ -42,6 +42,10 @@ DEFAULTS = {
         "afk_min_ms": 60000,
         "afk_max_ms": 180000,
         "afk_pool": [],
+        # ── 夜间睡眠待机 ──
+        "sleep_enabled": False,
+        "sleep_prep_action": "睡觉(准备阶段1)",   # 23:00-24:00
+        "sleep_normal_action": "睡觉(普通)",       # 0:00-6:00
     },
     # ── 历史粘贴板 ──
     "clipboard": {

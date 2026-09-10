@@ -140,6 +140,12 @@ class GifSettingsPage(QScrollArea):
         ly = QVBoxLayout(self._idle_gb)
         ly.setSpacing(6)
         self._combo_idle = self._add_mapping_row(ly, "idle_action")
+        # 夜间睡眠待机仅保留开关（时段固定：23:00-24:00 准备 / 0:00-6:00 睡觉）
+        self._chk_sleep_enabled = QCheckBox("")
+        self._chk_sleep_enabled.setStyleSheet(
+            "QCheckBox { font-size: 12px; color: #424242; font-family: 'Microsoft YaHei'; spacing: 6px; }"
+        )
+        ly.addWidget(self._chk_sleep_enabled)
 
     # ── 行为检测映射（勾选启用，取消禁用）──
 
@@ -320,6 +326,7 @@ class GifSettingsPage(QScrollArea):
         self._add_btn.setText(tr("add_btn", lang))
         self._remove_btn.setText(tr("remove_btn", lang))
         self._dbl_label.setText(tr("dbl_click_seq", lang))
+        self._chk_sleep_enabled.setText(tr("sleep_enable", lang))
         self._afk_enabled_check.setText(tr("afk_enable", lang))
         self._afk_timeout_label.setText(tr("afk_timeout", lang))
         self._afk_interval_label.setText(tr("afk_interval", lang))
@@ -413,6 +420,9 @@ class GifSettingsPage(QScrollArea):
         for action, cb in self._afk_checkboxes.items():
             cb.setChecked(action in pool)
 
+        # 夜间睡眠（仅开关）
+        self._chk_sleep_enabled.setChecked(settings.get("sleep_enabled", False))
+
     def get_settings(self) -> dict:
         """收集当前 UI 值，返回 settings dict"""
         startup = []
@@ -442,4 +452,5 @@ class GifSettingsPage(QScrollArea):
             "afk_min_ms": self._afk_min_spin.value() * 1000,
             "afk_max_ms": self._afk_max_spin.value() * 1000,
             "afk_pool": pool,
+            "sleep_enabled": self._chk_sleep_enabled.isChecked(),
         }

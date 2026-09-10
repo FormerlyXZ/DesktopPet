@@ -1,7 +1,7 @@
 """GifCharacter——QMovie 播放 + 启动序列 + 交互状态机"""
 from enum import Enum, auto
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QTimer, QTime
 from PySide6.QtGui import QMovie, QPixmap
 
 from src.character_base import CharacterController
@@ -90,6 +90,14 @@ class GifCharacter(CharacterController):
         self._afk_timer.setSingleShot(True)
         self._afk_timer.timeout.connect(self._on_afk_tick)
 
+        # 夜间睡眠待机（23:00-24:00 睡觉准备阶段，0:00-6:00 睡觉）
+        self._sleep_enabled = False
+        self._sleep_prep_action = "睡觉(准备阶段1)"
+        self._sleep_normal_action = "睡觉(普通)"
+        self._schedule_timer = QTimer(self)
+        self._schedule_timer.setInterval(60000)  # 每分钟检查一次时段
+        self._schedule_timer.timeout.connect(self._on_schedule_tick)
+
     # ── 身份 ──
 
     @property
@@ -109,6 +117,7 @@ class GifCharacter(CharacterController):
     def start(self):
         self._state = State.STARTUP
         self._seq_index = 0
+        self._schedule_timer.start()
         if self._startup_seq:
             self._play_once(self._startup_seq[0])
         else:
@@ -118,10 +127,11 @@ class GifCharacter(CharacterController):
         self._movie.stop()
         self._hover_timer.stop()
         self._afk_timer.stop()
+        self._schedule_timer.stop()
         self._state = State.INACTIVE
 
     def get_current_pixmap(self) -> QPixmap | None:
-        path = self._registry.get_path(self._idle_key)
+        path = self._registry.get_path(self._resolve_idle_key())
         if path:
             return QPixmap(path)
         return None
@@ -141,6 +151,36 @@ class GifCharacter(CharacterController):
     def set_hover_key(self, key: str):
         if self._registry.has(key):
             self._hover_key = key
+
+    # ── 夜间睡眠待机 ──
+
+    def _sleep_key_for_now(self) -> str | None:
+        """返回当前时刻应当使用的睡眠待机动画名；不在睡眠时段返回 None。"""
+        if not self._sleep_enabled:
+            return None
+        hour = QTime.currentTime().hour()
+        if hour == 23:            # 23:00-24:00 → 睡觉(准备阶段1)
+            return self._sleep_prep_action
+        if 0 <= hour < 6:         # 0:00-6:00 → 睡觉(普通)
+            return self._sleep_normal_action
+        return None
+
+    def _resolve_idle_key(self) -> str:
+        """当前应播放的待机动画：睡眠时段优先，否则用用户配置的 idle。"""
+        sleep_key = self._sleep_key_for_now()
+        if sleep_key and self._registry.has(sleep_key):
+            return sleep_key
+        return self._idle_key
+
+    def _on_schedule_tick(self):
+        """周期检测时段：处于待机时，若睡眠时段切换则更新待机动画。"""
+        if self._state != State.IDLE:
+            return
+        target = self._resolve_idle_key()
+        if target != self._active_action:
+            self._play_loop(target)
+            if self._afk_enabled and self._afk_pool:
+                self._afk_timer.start(self._afk_timeout_ms)
 
     def get_available_animations(self) -> list[str]:
         return self._registry.list_actions()
@@ -181,7 +221,7 @@ class GifCharacter(CharacterController):
 
     def _enter_idle(self):
         self._state = State.IDLE
-        self._play_loop(self._idle_key)
+        self._play_loop(self._resolve_idle_key())
         if self._afk_enabled and self._afk_pool:
             self._afk_timer.start(self._afk_timeout_ms)
 
@@ -363,6 +403,9 @@ class GifCharacter(CharacterController):
             "afk_min_ms": self._afk_min_ms,
             "afk_max_ms": self._afk_max_ms,
             "afk_pool": list(self._afk_pool),
+            "sleep_enabled": self._sleep_enabled,
+            "sleep_prep_action": self._sleep_prep_action,
+            "sleep_normal_action": self._sleep_normal_action,
         }
 
     def apply_settings(self, settings: dict):
@@ -414,3 +457,9 @@ class GifCharacter(CharacterController):
             self._afk_max_ms = settings["afk_max_ms"]
         if "afk_pool" in settings:
             self._afk_pool = [s for s in settings["afk_pool"] if self._registry.has(s)]
+        if "sleep_enabled" in settings:
+            self._sleep_enabled = bool(settings["sleep_enabled"])
+        if "sleep_prep_action" in settings and self._registry.has(settings["sleep_prep_action"]):
+            self._sleep_prep_action = settings["sleep_prep_action"]
+        if "sleep_normal_action" in settings and self._registry.has(settings["sleep_normal_action"]):
+            self._sleep_normal_action = settings["sleep_normal_action"]

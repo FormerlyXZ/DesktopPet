@@ -41,6 +41,7 @@ TR = {
     "mouse_group":     {"zh": "鼠标交互",           "en": "Mouse Interaction",     "ja": "マウス操作"},
     "afk_group":       {"zh": "AFK 随机播放",       "en": "AFK Random",            "ja": "AFKランダム"},
     "idle_action":     {"zh": "  待机动画:",         "en": "  Idle Action:",       "ja": "  待機アクション:"},
+    "sleep_enable":    {"zh": "启用夜间睡眠待机 (23:00-24:00 准备 / 0:00-6:00 睡觉)", "en": "Enable Night Sleep (23:00-24:00 prep / 0:00-6:00 sleep)", "ja": "夜間睡眠を有効にする (23:00-24:00 準備 / 0:00-6:00 睡眠)"},
     "key_press":       {"zh": "按键打字",         "en": "Key Press",         "ja": "キー入力"},
     "audio_play":      {"zh": "音频播放",         "en": "Audio Play",        "ja": "オーディオ再生"},
     "audio_muted":     {"zh": "系统静音",         "en": "System Muted",      "ja": "システムミュート"},
