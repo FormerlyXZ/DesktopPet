@@ -16,4 +16,7 @@ __pycache__/
 # Runtime data (user-specific)
 data/clipboard.db
 data/clipboard_images/
+data/nurture.json
+data/nurture.json.tmp
+data/nurture.json.bad-*
 debug_img.log

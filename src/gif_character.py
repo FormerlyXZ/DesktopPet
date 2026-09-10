@@ -71,6 +71,10 @@ class GifCharacter(CharacterController):
         self._once_started = False
         self._state = State.INACTIVE
         self._seq_index = 0
+        #: 养成动作（喂食等）播放期间置 True —— 期间**所有**交互入口直接 return，
+        #: 连启动序列都能被打断的既有逻辑在这里被"锁"住。解锁只有两条路：
+        #: 动画播完（`_on_movie_finished` 的 INTERACTING 分支）或 `release_lock()`。
+        self._locked = False
         self._hover_timer = QTimer(self)
         self._hover_timer.setSingleShot(True)
         self._hover_timer.timeout.connect(self._on_long_hover)
@@ -129,6 +133,7 @@ class GifCharacter(CharacterController):
         self._afk_timer.stop()
         self._schedule_timer.stop()
         self._state = State.INACTIVE
+        self._locked = False          # 切角色/退出时不留下悬空的锁
 
     def get_current_pixmap(self) -> QPixmap | None:
         path = self._registry.get_path(self._resolve_idle_key())
@@ -184,6 +189,60 @@ class GifCharacter(CharacterController):
 
     def get_available_animations(self) -> list[str]:
         return self._registry.list_actions()
+
+    # ── 养成系统扩展（Nurture）──
+
+    def play_action(self, action: str, lock: bool = True) -> bool:
+        """播一段养成动作（喂食 / 摸头 / 送礼）。
+
+        **不做动作名的兜底**：调用方（`NurtureController`）先用 `nurture_model.resolve_anim()`
+        把动作名解析成素材库里真有的名字，这里拿到的应该是已解析过的。
+        传进来的名字不存在时返回 `False`，让上层知道"这次没播成"。
+
+        拒绝的三种情况：已在锁定期 / 还在启动序列 / 动作名不存在。
+        """
+        if self._locked:
+            return False
+        if self._state == State.STARTUP:
+            return False
+        if not action or not self._registry.has(action):
+            return False
+
+        self._locked = bool(lock)
+        self._state = State.INTERACTING
+        self._dbl_click_step = 0
+        self._interaction_queue.clear()   # 排队中的交互会插到喂食动画后面，一律丢掉
+        self._hover_timer.stop()
+        self._afk_timer.stop()            # 吃东西期间不启动 AFK（播完回待机时自然重启）
+        self._play_once(action)
+        return True
+
+    def is_busy(self) -> bool:
+        """正在播开场序列或养成动作（不可打断）→ `True`。
+
+        启动序列用状态判断而不是 `_locked`：那个阶段本来就该抑制悬停菜单。
+        """
+        return bool(self._locked) or self._state == State.STARTUP
+
+    def release_lock(self) -> None:
+        """解除锁定并回到待机（切换角色/退出前的兜底）。"""
+        if not self._locked:
+            return
+        self._locked = False
+        if self._state == State.INTERACTING:
+            self._enter_idle()
+
+    def speech_anchor_ratio(self) -> float:
+        """对话气泡尾巴指向窗口高 14% 处 —— Q版 GIF 全部 500×500，头顶留白一致。"""
+        return 0.14
+
+    def handle_hover_menu_shown(self):
+        """菜单弹出来了 → 停掉长悬停计时，免得用户看菜单时她突然冒「问号」。
+
+        **不重启**：菜单收起时鼠标多半还在她身上，立刻重新计时会让「问号」
+        紧跟着菜单关闭冒出来。等她离开再进入时 `handle_mouse_enter()` 自然重启。
+        """
+        self._hover_timer.stop()
 
     # ── 初始状态导出（供设置窗口用）──
 
@@ -252,7 +311,13 @@ class GifCharacter(CharacterController):
             else:
                 self._enter_idle()
         elif self._state == State.INTERACTING:
-            if self._dbl_click_step > 0:
+            if self._locked:
+                # 养成动作播完 → 解锁并回待机（**必须是本分支的第一件事**：
+                # 排在前面的双击链/队列分支会把喂食动画接成别的动作）
+                self._locked = False
+                self._dbl_click_step = 0
+                self._enter_idle()
+            elif self._dbl_click_step > 0:
                 # 双击链式播放中
                 self._dbl_click_step += 1
                 if self._dbl_click_step <= len(self._dbl_click_seq):
@@ -275,6 +340,8 @@ class GifCharacter(CharacterController):
     # ── 鼠标交互 ──
 
     def handle_mouse_enter(self):
+        if self._locked:
+            return
         if self._state in (State.STARTUP, State.INTERACTING):
             return
         self._state = State.HOVER_IDLE
@@ -283,6 +350,8 @@ class GifCharacter(CharacterController):
 
     def handle_mouse_leave(self):
         self._hover_timer.stop()
+        if self._locked:
+            return
         if self._state == State.HOVER_IDLE:
             if self._audio_is_playing:
                 self._state = State.INTERACTING
@@ -292,13 +361,15 @@ class GifCharacter(CharacterController):
 
     def _on_long_hover(self):
         """悬停达到 LONG_HOVER_MS → 问号"""
+        if self._locked:
+            return
         if self._state == State.HOVER_IDLE:
             self._play_once(self._long_hover_key)
             # 问号播完后回到悬停
             self._state = State.HOVER_IDLE  # 保持不变，finished 后回到 hover
 
     def handle_single_click(self):
-        if self._state == State.STARTUP:
+        if self._locked or self._state == State.STARTUP:
             return
         self._state = State.INTERACTING
         self._dbl_click_step = 0
@@ -306,7 +377,7 @@ class GifCharacter(CharacterController):
         self._play_once(self._click_key)
 
     def handle_double_click(self):
-        if self._state == State.STARTUP:
+        if self._locked or self._state == State.STARTUP:
             return
         self._state = State.INTERACTING
         self._hover_timer.stop()
@@ -314,13 +385,13 @@ class GifCharacter(CharacterController):
         self._play_once(self._dbl_click_seq[0])
 
     def handle_panel_button_clicked(self):
-        if self._state == State.STARTUP:
+        if self._locked or self._state == State.STARTUP:
             return
         self._state = State.INTERACTING
         self._play_once(self._panel_key)
 
     def handle_settings_close(self):
-        if self._state == State.STARTUP:
+        if self._locked or self._state == State.STARTUP:
             return
         self._state = State.INTERACTING
         self._play_once(self._close_key)
@@ -331,7 +402,7 @@ class GifCharacter(CharacterController):
     # ── 行为检测 ──
 
     def handle_key_press(self):
-        if not self._key_press_enabled:
+        if self._locked or not self._key_press_enabled:
             return
         if self._state == State.IDLE:
             self._state = State.INTERACTING
@@ -343,7 +414,7 @@ class GifCharacter(CharacterController):
             self._play_once(self._key_press_action)
 
     def handle_audio_playing(self):
-        if not self._audio_playing_enabled:
+        if self._locked or not self._audio_playing_enabled:
             return
         self._audio_is_playing = True
         if self._state == State.IDLE:
@@ -356,7 +427,7 @@ class GifCharacter(CharacterController):
             self._enter_idle()
 
     def handle_audio_muted(self):
-        if not self._audio_muted_enabled:
+        if self._locked or not self._audio_muted_enabled:
             return
         if self._state == State.IDLE:
             self._state = State.INTERACTING
@@ -365,13 +436,15 @@ class GifCharacter(CharacterController):
     # ── AFK ──
 
     def reset_afk(self):
+        if self._locked:
+            return
         if self._afk_enabled and self._afk_pool:
             self._afk_timer.stop()
             if self._state == State.IDLE:
                 self._afk_timer.start(self._afk_timeout_ms)
 
     def _on_afk_tick(self):
-        if self._state != State.IDLE:
+        if self._locked or self._state != State.IDLE:
             return
         if not self._afk_pool:
             return

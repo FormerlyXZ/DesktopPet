@@ -1,0 +1,19 @@
+{
+  "scene": "checkin_already",
+  "tone": "gentle",
+  "cooldown_sec": 60,
+  "min_gap_sec": 0,
+  "_说明": [
+    "今天已经签过了又点一次。只说事实，不抱怨、不说「你怎么又点」。",
+    "不准说「签到成功」这类系统口吻（机器自查会拦）。"
+  ],
+  "lines": [
+    { "text": "今天已经签过了。", "weight": 3 },
+    { "text": "唔，一天只有一次。", "weight": 3 },
+    { "text": "签过了，明天再来。", "weight": 2 },
+    { "text": "今天这份已经收了。", "weight": 2 },
+    { "text": "明天还有的。", "weight": 2 },
+    { "text": "别急，明天早上再来。", "weight": 1 },
+    { "text": "我在这儿，跑不掉的。", "weight": 1, "min_level": 50 }
+  ]
+}

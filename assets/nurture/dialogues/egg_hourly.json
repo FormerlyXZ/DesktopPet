@@ -1,0 +1,19 @@
+{
+  "scene": "egg_hourly",
+  "tone": "gentle",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "整点彩蛋（每小时掷一次，命中 25%，01 文档 4.3）。",
+    "「捡到的」这个说法比「奖励你」轻，符合她随手塞给你的感觉。"
+  ],
+  "lines": [
+    { "text": "整点了，这个给你。", "weight": 3 },
+    { "text": "刚好整点，捡到一个。", "weight": 3 },
+    { "text": "钟响了，归你。", "weight": 2 },
+    { "text": "一小时又过去了。", "weight": 2 },
+    { "text": "整点的小惊喜。", "weight": 2 },
+    { "text": "刚好路过，顺手拿的。", "weight": 1 },
+    { "text": "放着也是放着，给你。", "weight": 1, "min_level": 50 }
+  ]
+}

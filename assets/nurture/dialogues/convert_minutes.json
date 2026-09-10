@@ -1,0 +1,20 @@
+{
+  "scene": "convert_minutes",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "陪伴时长兑换达成（每 60 分钟活动时间 → 普通食物 ×1，01 文档 4.2）。",
+    "可用占位符：{count} 本次个数、{name} 物品名。",
+    "**不许说「这么久」**（听感上像抱怨），机器自查里有这条黑名单。"
+  ],
+  "lines": [
+    { "text": "你陪我好久了。", "weight": 3, "tone": "proud" },
+    { "text": "这个给你，歇一会儿。", "weight": 3 },
+    { "text": "陪我一段了，收下吧。", "weight": 2 },
+    { "text": "唔，又攒够一份了。", "weight": 2, "tone": "proud" },
+    { "text": "你在这边忙，我记着呢。", "weight": 2 },
+    { "text": "时间到了，这份是奖励。", "weight": 1 },
+    { "text": "拿去吧，辛苦费。", "weight": 1, "min_level": 120 }
+  ]
+}

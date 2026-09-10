@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "_说明": [
+    "节日 / 纪念日表。命中当天首次启动或首次跨天检查时，发放对应物品 + 专属台词（每天最多一次）。",
+    "date 格式：MM-DD（每年重复）；特殊值 birthday = 用户在设置里填的生日。",
+    "items 里的名称必须存在于 items.json，否则该项发放被跳过（不会崩溃）。",
+    "affection 为额外好感度（仍受每日上限截断）。"
+  ],
+  "events": [
+    {
+      "id": "valentine",
+      "date": "02-14",
+      "name": "情人节",
+      "scene": "event_valentine",
+      "items": [{ "name": "巧克力", "count": 1 }],
+      "affection": 4
+    },
+    {
+      "id": "tanabata",
+      "date": "07-07",
+      "name": "七夕",
+      "scene": "event_tanabata",
+      "items": [{ "name": "玫瑰花", "count": 1 }],
+      "affection": 4
+    },
+    {
+      "id": "christmas",
+      "date": "12-25",
+      "name": "圣诞节",
+      "scene": "event_christmas",
+      "items": [{ "name": "生日蛋糕", "count": 1 }],
+      "affection": 4
+    },
+    {
+      "id": "new_year",
+      "date": "01-01",
+      "name": "新年",
+      "scene": "event_new_year",
+      "items": [{ "name": "压岁钱", "count": 1 }],
+      "affection": 4
+    },
+    {
+      "id": "birthday",
+      "date": "birthday",
+      "name": "生日",
+      "scene": "event_birthday",
+      "items": [{ "name": "生日蛋糕", "count": 1 }],
+      "affection": 10
+    }
+  ]
+}

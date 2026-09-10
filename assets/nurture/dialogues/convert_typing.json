@@ -1,0 +1,19 @@
+{
+  "scene": "convert_typing",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "打字量兑换达成（每 2000 次按键 → 普通食物 ×1，01 文档 4.2）。",
+    "可用占位符：{count} 本次个数、{name} 物品名。只观察，不评价、不催休息。"
+  ],
+  "lines": [
+    { "text": "你敲了好久了，歇一下。", "weight": 3 },
+    { "text": "敲得真快，这个给你。", "weight": 3, "tone": "proud" },
+    { "text": "攒够一份了。", "weight": 2 },
+    { "text": "打字的声音还挺好听。", "weight": 2 },
+    { "text": "这个给你补一补。", "weight": 2 },
+    { "text": "手指也要休息的。", "weight": 1 },
+    { "text": "唔，我安静地放在这儿。", "weight": 1, "min_level": 120 }
+  ]
+}

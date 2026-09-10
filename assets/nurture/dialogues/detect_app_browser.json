@@ -1,0 +1,20 @@
+{
+  "scene": "detect_app_browser",
+  "tone": "gentle",
+  "cooldown_sec": 1200,
+  "min_gap_sec": 0,
+  "_说明": [
+    "前台是浏览器时（阶段 G，20 分钟冷却）。",
+    "**不提你打开了什么**（禁区 1）：她能看到的只有「开着很多页」这件事本身。"
+  ],
+  "lines": [
+    { "text": "翻得挺快的。", "weight": 3 },
+    { "text": "我不偷看的。", "weight": 3 },
+    { "text": "慢慢看，不急。", "weight": 2 },
+    { "text": "开着好多页呢。", "weight": 2 },
+    { "text": "我在旁边等你。", "weight": 2 },
+    { "text": "眼睛也要休息的。", "weight": 1 },
+    { "text": "看累了就歇会儿。", "weight": 1, "min_level": 50 },
+    { "text": "需要的话我帮你记着。", "weight": 1, "min_level": 120 }
+  ]
+}

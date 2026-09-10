@@ -1,0 +1,22 @@
+{
+  "scene": "idle_random",
+  "tone": "gentle",
+  "cooldown_sec": 360,
+  "min_gap_sec": 0,
+  "_说明": [
+    "待机时随机闲聊（默认 8~20 分钟一次，间隔在 config.json 里调）。",
+    "**这个场景最容易写坏**：她只陪伴，不评价、不催促、不提问你在做什么。",
+    "写新台词前对照 01 文档 7.1 的七条禁区自查。",
+    "允许留空 lines —— 那次就不说话（03 规范 9）。"
+  ],
+  "lines": [
+    { "text": "我在呢。", "weight": 3 },
+    { "text": "不用管我，你忙。", "weight": 2 },
+    { "text": "安静一会儿也不错。", "weight": 2 },
+    { "text": "窗外好像有风。", "weight": 2 },
+    { "text": "要一起发呆吗。", "weight": 1, "tone": "proud" },
+    { "text": "这个时间，光线刚刚好。", "weight": 1 },
+    { "text": "我什么都没想。", "weight": 1, "tone": "proud" },
+    { "text": "铅笔削好了。", "weight": 1, "min_level": 120 }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "scene": "checkin_done",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "签到成功后播报。可用占位符：{streak} 连签天数。",
+    "不说「已签到」「获取成功」这类系统口吻——报数字和产出就够了。"
+  ],
+  "lines": [
+    { "text": "连签 {streak} 天了。", "weight": 3, "tone": "proud" },
+    { "text": "这是今天的份。", "weight": 3 },
+    { "text": "唔，收好了。", "weight": 2, "tone": "proud" },
+    { "text": "今天也来了呀。", "weight": 2 },
+    { "text": "我数着的。", "weight": 1, "tone": "proud", "min_level": 50 },
+    { "text": "东西放在这里了。", "weight": 1 },
+    { "text": "又多了一天。", "weight": 1 },
+    { "text": "谢谢你每天都来。", "weight": 1, "min_level": 250 }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "_说明": [
+    "可送出物清单。用户可自由增删改名，不需要改代码。",
+    "kind  : food（喂食） / gift（送礼）",
+    "tier  : common / rare / precious —— 决定好感度增量、库存上限、签到产出档位",
+    "anim  : 播放的 GIF 动作名，必须与素材库里的动作名完全一致（takagi_{anim}_{时间戳}.gif）",
+    "        名字写错/素材缺失不会崩溃，会按「三级兜底链」降级：",
+    "        本项 anim → 类型默认（food=笑 / gift=点赞） → 全局兜底（害羞 2） → 只出气泡不播动画",
+    "icon_key: 对应 src/nurture_icons.py 里的矢量图标键；找不到就用 emoji/首字兜底",
+    "lines : 该物品的专属台词（可留空数组，留空则从 dialogues/feed_done.json 随机）",
+    "        台词仅中文，每条 ≤18 字，且不得出现调侃/评判用户的句式"
+  ],
+  "items": [
+    {
+      "name": "奶油面包",
+      "kind": "food",
+      "tier": "common",
+      "anim": "笑",
+      "icon_key": "bread",
+      "lines": ["奶油面包，给你留了一个。", "这个很顶饱的。"]
+    },
+    {
+      "name": "饭团",
+      "kind": "food",
+      "tier": "common",
+      "anim": "笑",
+      "icon_key": "onigiri",
+      "lines": ["饭团，最简单的那个。", "海苔要一起吃掉哦。"]
+    },
+    {
+      "name": "牛奶",
+      "kind": "food",
+      "tier": "common",
+      "anim": "笑",
+      "icon_key": "milk",
+      "lines": ["喝点牛奶吧。", "温的，刚合适。"]
+    },
+    {
+      "name": "炒面面包",
+      "kind": "food",
+      "tier": "common",
+      "anim": "笑",
+      "icon_key": "yakisoba",
+      "lines": ["小卖部最后一个，我抢到了。", "炒面面包……其实很好吃吧？"]
+    },
+    {
+      "name": "草莓蛋糕",
+      "kind": "food",
+      "tier": "rare",
+      "anim": "蛋糕",
+      "icon_key": "shortcake",
+      "lines": ["……草莓的。", "蜡烛就不点了，会烧到手的。", "唔，你居然知道我喜欢这个。"]
+    },
+    {
+      "name": "冰淇淋",
+      "kind": "food",
+      "tier": "rare",
+      "anim": "点赞",
+      "icon_key": "icecream",
+      "lines": ["再不吃就要化了。", "夏天的话，这个最合适。"]
+    },
+    {
+      "name": "苹果糖",
+      "kind": "food",
+      "tier": "rare",
+      "anim": "庆祝",
+      "icon_key": "candyapple",
+      "lines": ["……好甜。", "夏日祭的味道。"]
+    },
+    {
+      "name": "巧克力",
+      "kind": "food",
+      "tier": "rare",
+      "anim": "通知_提示 爱心_喜欢",
+      "icon_key": "chocolate",
+      "lines": ["……这个，是给我的吗。", "我会慢慢吃的。"]
+    },
+    {
+      "name": "生日蛋糕",
+      "kind": "food",
+      "tier": "precious",
+      "anim": "蛋糕",
+      "icon_key": "birthday",
+      "lines": ["今天是我的日子，对吧。", "那……许愿也是可以的吧。", "谢谢你记得。"]
+    },
+    {
+      "name": "复活节彩蛋篮",
+      "kind": "gift",
+      "tier": "precious",
+      "anim": "复活节",
+      "icon_key": "easterbasket",
+      "lines": ["里面藏了几个？我数数看。", "提着这个走路会有点晃。"]
+    },
+    {
+      "name": "压岁钱",
+      "kind": "gift",
+      "tier": "precious",
+      "anim": "红包 1",
+      "icon_key": "redpacket",
+      "lines": ["……这个我可以收下吗？", "新的一年也要一起。"]
+    },
+    {
+      "name": "玫瑰花",
+      "kind": "gift",
+      "tier": "precious",
+      "anim": "玫瑰",
+      "icon_key": "rose",
+      "lines": ["……你从哪弄来的。", "刺我剪掉了，放心。", "我找个瓶子插起来。"]
+    },
+    {
+      "name": "夏日祭礼包",
+      "kind": "gift",
+      "tier": "precious",
+      "anim": "荧光棒 2",
+      "icon_key": "festivalbag",
+      "lines": ["晚上一起去看烟花吧。", "祭典的话，要穿浴衣才行。"]
+    }
+  ]
+}

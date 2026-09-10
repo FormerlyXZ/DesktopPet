@@ -1,0 +1,19 @@
+{
+  "scene": "first_run",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "首次使用彩蛋：第一次跑养成系统当天送 1 个珍贵食物（01 文档 4.3，引导用）。",
+    "一辈子只说一次，所以可以稍微正式一点，但仍然不用「主人」这类称呼。"
+  ],
+  "lines": [
+    { "text": "第一次见面，这个给你。", "weight": 3, "tone": "proud" },
+    { "text": "初次见面，收下吧。", "weight": 3 },
+    { "text": "这算是见面礼。", "weight": 2 },
+    { "text": "以后就一起待着了。", "weight": 2, "tone": "proud" },
+    { "text": "第一次，我请你。", "weight": 2 },
+    { "text": "先拿着，别客气。", "weight": 1 },
+    { "text": "从今天开始算起。", "weight": 1, "tone": "proud" }
+  ]
+}

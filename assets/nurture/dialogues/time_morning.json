@@ -1,0 +1,18 @@
+{
+  "scene": "time_morning",
+  "tone": "gentle",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "06:00-09:00 首次活跃时说，每个时段每天一次（标记存在存档 flags 里）。",
+    "不催促起床、不评价作息，只是打招呼 + 轻轻提醒吃早饭。"
+  ],
+  "lines": [
+    { "text": "早上好。", "weight": 3 },
+    { "text": "今天的空气很好。", "weight": 2 },
+    { "text": "慢慢醒过来就好。", "weight": 2 },
+    { "text": "早饭要好好吃。", "weight": 2 },
+    { "text": "新的一天开始了。", "weight": 1 },
+    { "text": "我先陪你一会儿。", "weight": 1 }
+  ]
+}

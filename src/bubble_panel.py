@@ -1,12 +1,36 @@
-"""侧边气泡面板——亚克力半透明玻璃风格，带过渡动画"""
+"""左键功能面板 / 右键系统面板 —— 暖粉奶白手绘风（全自绘）。
+
+2026-09-10 **全局换肤**：这个文件以前是"冷蓝磨砂玻璃 + QSS 文字列表"，现在与养成面板
+（`nurture_panel.py`）、悬停菜单（`hover_menu.py`）、对话气泡（`speech_bubble.py`）
+共用同一套笔触与色板（`src/ui_theme.py`），内部改成**全自绘**：
+
+| 维度 | 改造前 | 现在 |
+|------|--------|------|
+| 底 | 冷蓝半透明（`rgba(227,242,253,228)`） | 暖奶白 `#FFF9F6`(242) + 2px 暖棕描边 + 暖色投影 |
+| 圆角 | 12px | 20px（四角不等，手绘感） |
+| 菜单项 | QLabel 文字条 | 行胶囊：**圆形图标** + 文字 +（可勾选项）右侧圆形勾选指示 |
+| Hover | 淡蓝底 | 粉底 + 粉描边 |
+| 关闭 | 16px 文字 `✕` | 28px 圆形按钮 + 自绘 `close` 图标 |
+
+**对外契约一行没变**（`pet_window.py` 因此零改动）：
+`item_clicked` 信号、`popup_at()` / `show_at()` / `hide_with_anim()` / `apply_language()` /
+`set_item_checked()` / `is_item_checked()`，以及"靠 `focusOutEvent` 自动收起"这条既有行为。
+模块级的 `_force_raise_topmost()` 也被 `nurture_panel` / `hover_menu` / `speech_bubble` 导入，
+**必须原样保留**。
+
+⚠️ **几何口径变了**：窗口比"看得见的面板"四周各多出 `MARGIN=6px`（留给投影，与养成面板同款）。
+所有落位都以 `visible_rect()` 为准，间距指的是**面板边缘**到人物边缘 —— 拿窗口尺寸去量会凭空多出 12px。
+"""
+
 import sys
 
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGraphicsOpacityEffect
-)
-from PySide6.QtCore import Qt, QEvent, Signal, QPoint, QPropertyAnimation, QEasingCurve
-from PySide6.QtGui import QPainter, QPen, QColor
-from src.panel_animator import animate_panel_show, animate_panel_hide, _stop_anim
+from PySide6.QtCore import QPoint, QPointF, QRect, QRectF, Qt, Signal
+from PySide6.QtGui import QColor, QPainter, QPolygonF
+from PySide6.QtWidgets import QWidget
+
+from src import nurture_icons as icons
+from src import ui_theme as theme
+from src.panel_animator import animate_panel_hide, animate_panel_show, _stop_anim
 from src.translations import tr
 
 
@@ -16,6 +40,8 @@ def _force_raise_topmost(widget: QWidget):
     Qt 的 raise() 在 HWND_TOP 模式下对同属 WS_EX_TOPMOST 的窗口
     无法可靠重排 z-order。这里用 Win32 API 先把窗口从 TOPMOST 层移除、
     再重新插入，确保它排在 TOPMOST 层的最顶部。
+
+    **被 `nurture_panel` / `hover_menu` / `speech_bubble` 三个组件导入**，改动前先看它们。
     """
     if sys.platform != 'win32':
         widget.raise_()
@@ -35,150 +61,172 @@ def _force_raise_topmost(widget: QWidget):
     # 2) 重新插入 TOPMOST 层 → 自动排到该层最顶部
     ctypes.windll.user32.SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, 0, 0, flags)
 
-STYLE = """
-QLabel#Item {
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #212121;
-    border-radius: 4px;
-    font-family: "Microsoft YaHei";
+
+# ────────────────────────── 规格常量（与 03 规范 5.1/5.2 同口径）──────────────────────────
+
+MARGIN = theme.MARGIN          # 6：窗口四边留给投影的空间
+PAD = 10                       # 内容内边距
+HEADER_H = 28                  # 顶部行（只放关闭按钮）
+HEADER_GAP = 6                 # 顶部行与列表的间距
+ROW_H = 36                     # 菜单行高（比圆形图标高 6px：让 hover 胶囊的描边
+                               # 与图标圆之间留出可见的间隙，否则两条线会糊在一起）
+ROW_GAP = 4                    # 行距
+ICON_D = 30                    # 圆形图标直径
+ICON_SIZE = 18                 # 圆内图标像素
+CHECK_D = 16                   # 勾选指示直径
+CLOSE_D = 28                   # 关闭按钮直径（规范 5.2）
+GAP_FROM_PET = 8               # 与人物窗口的间距（指**面板边缘**）
+MIN_WIDTH = 168                # 可见宽度下限
+MAX_WIDTH = 216                # 可见宽度上限（再宽就显得空）
+
+#: `item_id` → 图标键。**不在表里的 item_id 会自动降级成"名称首字"**（`nurture_icons`
+#: 的第 3 级兜底），所以 `pet_window` 里加新菜单项时**不需要**改这个文件。
+ITEM_ICONS: dict[str, str] = {
+    "clipboard": "clipboard",
+    "topmost": "pin",
+    "desktop_level": "monitor",
+    "minimize_tray": "tray",
+    "settings": "settings",
+    "exit": "power",
 }
-QLabel#Item:hover {
-    background: rgba(66, 165, 245, 0.15);
-}
-QLabel#DisabledItem {
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #BDBDBD;
-    border-radius: 4px;
-    font-family: "Microsoft YaHei";
-}
-QLabel#CloseLabel {
-    font-size: 16px;
-    color: #9E9E9E;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: "Microsoft YaHei";
-}
-QLabel#CloseLabel:hover {
-    background: rgba(0, 0, 0, 0.08);
-    color: #424242;
-}
-"""
 
 
 class BubblePanel(QWidget):
+    """可配置菜单面板。只负责"画出来 + 报告点击"，业务判断都在 `PetWindow`。
+
+    `items`：`[(item_id, 翻译键), ...]`，第三项可选 `{"checkable": True}`。
+    """
+
     item_clicked = Signal(str)  # 携带 item_id
 
     def __init__(self, items: list, parent=None):
-        """
-        items: [(item_id, translation_key), ...] 或
-               [(item_id, translation_key, {"checkable": True}), ...]
-        示例: [("clipboard", "bubble_clipboard")]
-        """
         super().__init__(parent)
         self._current_lang = "zh"
-        self._item_keys = items  # 保留原始定义
-        self._checked: dict[str, bool] = {}  # checkable 项的选中状态
+        self._item_keys = list(items or [])
+        self._checked: dict[str, bool] = {}
+        self._texts: dict[str, str] = {}
+        self._visible_w = MIN_WIDTH
+        self._visible_h = HEADER_H + ROW_H + 2 * PAD + HEADER_GAP
+        self._hovered_row: int | None = None
+        self._pressed_row: int | None = None
+        self._hovered_close = False
+
+        for entry in self._item_keys:
+            if len(entry) >= 3 and isinstance(entry[2], dict) and entry[2].get("checkable"):
+                self._checked[str(entry[0])] = False
+
         self.setObjectName("BubblePanel")
         self.setWindowFlags(
             Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool | Qt.SubWindow
         )
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setStyleSheet(STYLE)
-        self.setFixedWidth(170)
-
-        # 主布局
-        main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(6, 8, 6, 8)
-        main_layout.setSpacing(2)
-
-        # ── 顶部行：关闭按钮居右 ──
-        header = QHBoxLayout()
-        header.setContentsMargins(0, 0, 2, 0)
-        header.addStretch()
-        close_label = QLabel("✕")
-        close_label.setObjectName("CloseLabel")
-        close_label.setCursor(Qt.PointingHandCursor)
-        close_label.installEventFilter(self)
-        self._close_btn = close_label
-        header.addWidget(close_label)
-        main_layout.addLayout(header)
-
-        # ── 动态菜单项 ──
-        self._item_labels: dict[str, QLabel] = {}
-        for entry in items:
-            item_id = entry[0]
-            _tr_key = entry[1]
-            opts = entry[2] if len(entry) >= 3 else {}
-            if opts.get("checkable"):
-                self._checked[item_id] = False
-            label = QLabel("")
-            label.setObjectName("Item")
-            label.setCursor(Qt.PointingHandCursor)
-            label.installEventFilter(self)
-            self._item_labels[item_id] = label
-            main_layout.addWidget(label)
-
+        self.setMouseTracking(True)
         self._apply_language()
-        self.adjustSize()
+        self._resize_to_content()
+
+    # ────────────────── 对外接口（与改造前一致）──────────────────
 
     def apply_language(self, lang: str):
         self._current_lang = lang
         self._apply_language()
-
-    def _apply_language(self):
-        lang = self._current_lang
-        for entry in self._item_keys:
-            item_id = entry[0]
-            tr_key = entry[1]
-            opts = entry[2] if len(entry) >= 3 else {}
-            label = self._item_labels.get(item_id)
-            if label is None:
-                continue
-            text = tr(tr_key, lang)
-            if opts.get("checkable"):
-                checked = self._checked.get(item_id, False)
-                text = ("✓ " if checked else "    ") + text
-            label.setText(text)
-        self.adjustSize()
+        self._resize_to_content()
 
     def set_item_checked(self, item_id: str, checked: bool):
-        """设置 checkable 项的选中状态并刷新文本"""
+        """设置 checkable 项的选中状态并重绘"""
         if item_id in self._checked:
-            self._checked[item_id] = checked
-            self._apply_language()
+            self._checked[item_id] = bool(checked)
+            self.update()
 
     def is_item_checked(self, item_id: str) -> bool:
         """查询 checkable 项的选中状态"""
         return self._checked.get(item_id, False)
 
-    def paintEvent(self, event):
-        """绘制亚克力磨砂玻璃背景"""
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setBrush(QColor(227, 242, 253, 228))
-        painter.setPen(QPen(QColor(187, 222, 251, 160), 1))
-        painter.drawRoundedRect(self.rect().adjusted(1, 1, -1, -1), 12, 12)
+    def adjustSize(self):                                       # noqa: N802
+        """`QWidget.adjustSize()` 在本组件里没有意义（全自绘、无布局），转发到自算尺寸。
+
+        保留这个重写是为了兼容外部可能存在的调用：改造前它在这里是真有用的（QLabel 布局）。
+        """
+        self._resize_to_content()
+
+    # ────────────────── 几何 ──────────────────
+
+    def visible_rect(self) -> QRect:
+        """**看得见的面板**在本窗口内的矩形（窗口四边各留 `MARGIN` 给投影）。"""
+        return QRect(MARGIN, MARGIN, self._visible_w, self._visible_h)
+
+    def visible_size(self):
+        return self._visible_w, self._visible_h
+
+    def _close_rect(self) -> QRectF:
+        rect = self.visible_rect()
+        return QRectF(rect.right() + 1 - PAD - CLOSE_D, rect.top() + PAD, CLOSE_D, CLOSE_D)
+
+    def _row_rect(self, index: int) -> QRectF:
+        rect = self.visible_rect()
+        top = rect.top() + PAD + HEADER_H + HEADER_GAP + index * (ROW_H + ROW_GAP)
+        return QRectF(rect.left() + PAD - 4, top, rect.width() - 2 * PAD + 8, ROW_H)
+
+    def _icon_rect(self, row: QRectF) -> QRectF:
+        """行左侧的圆形图标位（中心对齐行中心，左边距 = 行左 + 4px）。"""
+        box = QRectF(0, 0, ICON_D, ICON_D)
+        box.moveCenter(QPointF(row.left() + 4 + ICON_D / 2.0, row.center().y()))
+        return box
+
+    def _check_rect(self, row: QRectF) -> QRectF:
+        """行右侧的勾选指示位。"""
+        box = QRectF(0, 0, CHECK_D, CHECK_D)
+        box.moveCenter(QPointF(row.right() - 4 - CHECK_D / 2.0, row.center().y()))
+        return box
+
+    def row_labels(self) -> list[str]:
+        """当前语言下的行文案（预览脚本与测试用）。"""
+        return [self._texts.get(str(e[0]), "") for e in self._item_keys]
+
+    def _resize_to_content(self) -> None:
+        """按内容算可见宽高，窗口 = 可见 + 2×`MARGIN`。"""
+        rows = len(self._item_keys)
+        label_font = theme.font(13)
+        widest = 0
+        for text in self.row_labels():
+            widest = max(widest, theme.text_width(text, label_font))
+        has_check = bool(self._checked)
+        chrome = PAD + 4 + ICON_D + 10 + (CHECK_D + 10 if has_check else 0) + PAD + 4
+        width = max(MIN_WIDTH, min(MAX_WIDTH, chrome + widest))
+        height = 2 * PAD + HEADER_H + HEADER_GAP
+        if rows:
+            height += rows * ROW_H + (rows - 1) * ROW_GAP
+        self._visible_w = int(width)
+        self._visible_h = int(height)
+        self.setFixedSize(self._visible_w + 2 * MARGIN, self._visible_h + 2 * MARGIN)
+        self.update()
+
+    def _apply_language(self):
+        for entry in self._item_keys:
+            item_id = str(entry[0])
+            self._texts[item_id] = tr(str(entry[1]), self._current_lang)
+
+    # ────────────────── 弹出 / 收起 ──────────────────
 
     def popup_at(self, pet_geometry):
-        self.adjustSize()
+        """贴人物**右侧**弹出（滑入方向随左右越界翻转）。落位以**面板边缘**为准。"""
+        self._resize_to_content()
         direction = "right"
-        x = pet_geometry.right() + 8
-        y = pet_geometry.center().y() - self.height() // 2
+        visible_w, visible_h = self._visible_w, self._visible_h
+        x = pet_geometry.right() + 1 + GAP_FROM_PET - MARGIN
+        y = pet_geometry.center().y() - visible_h // 2 - MARGIN
 
         from PySide6.QtWidgets import QApplication
         screen = QApplication.primaryScreen().availableGeometry()
-        if x + self.width() > screen.right():
-            x = pet_geometry.left() - self.width() - 8
+        if x + MARGIN + visible_w > screen.right() + 1:
+            x = pet_geometry.left() - GAP_FROM_PET - visible_w - MARGIN
             direction = "left"
-        if y < screen.top():
-            y = screen.top() + 4
-        elif y + self.height() > screen.bottom():
-            y = screen.bottom() - self.height() - 4
+        if y + MARGIN < screen.top():
+            y = screen.top() - MARGIN + 4
+        elif y + MARGIN + visible_h > screen.bottom() + 1:
+            y = screen.bottom() - visible_h - MARGIN - 3
 
         self._popup_direction = direction
-        animate_panel_show(self, QPoint(x, y), direction)
+        animate_panel_show(self, QPoint(int(x), int(y)), direction)
         self.raise_()
         self.activateWindow()
 
@@ -195,8 +243,9 @@ class BubblePanel(QWidget):
         5. 极端情况下仍越界 → 夹紧到该屏幕可用区域内。
 
         支持多显示器：优先使用鼠标所在的屏幕，避免在副屏上弹出错位。
+        **对准光标的是看得见的面板角，不是窗口角**（窗口还带着 6px 投影留白）。
         """
-        self.adjustSize()
+        self._resize_to_content()
 
         from PySide6.QtWidgets import QApplication
         app = QApplication.instance()
@@ -206,27 +255,27 @@ class BubblePanel(QWidget):
         screen = app.screenAt(pos) or app.primaryScreen()
         geom = screen.availableGeometry()
 
-        w, h = self.width(), self.height()
+        visible_w, visible_h = self._visible_w, self._visible_h
 
-        # 默认：左上角对准鼠标
-        x = pos.x()
-        y = pos.y()
+        # 默认：面板左上角对准鼠标
+        x = pos.x() - MARGIN
+        y = pos.y() - MARGIN
 
         # 超出右边界 → 翻转到鼠标左侧（右上角对准鼠标）
-        if x + w > geom.right() + 1:
-            x = pos.x() - w
+        if x + MARGIN + visible_w > geom.right() + 1:
+            x = pos.x() - visible_w - MARGIN
         # 超出下边界 → 翻转到鼠标上方（左下角对准鼠标）
-        if y + h > geom.bottom() + 1:
-            y = pos.y() - h
+        if y + MARGIN + visible_h > geom.bottom() + 1:
+            y = pos.y() - visible_h - MARGIN
 
-        # 极端越界兜底：夹紧到屏幕可用区域
-        x = max(geom.left(), min(x, geom.right() - w + 1))
-        y = max(geom.top(), min(y, geom.bottom() - h + 1))
+        # 极端越界兜底：夹紧到屏幕可用区域（按可见面板算）
+        x = max(geom.left() - MARGIN, min(x, geom.right() - visible_w - MARGIN + 1))
+        y = max(geom.top() - MARGIN, min(y, geom.bottom() - visible_h - MARGIN + 1))
 
         self._popup_direction = "none"  # 标记为非滑入模式
 
         _stop_anim(self)
-        self.move(QPoint(x, y))
+        self.move(QPoint(int(x), int(y)))
         self.show()
         _force_raise_topmost(self)  # Win32: 强制排到 TOPMOST 层最顶部
 
@@ -234,6 +283,9 @@ class BubblePanel(QWidget):
         """带动画隐藏面板"""
         if not self.isVisible():
             return
+        self._hovered_row = None
+        self._pressed_row = None
+        self._hovered_close = False
         direction = getattr(self, "_popup_direction", "right")
         if direction == "none":
             # 无滑入模式 → 直接隐藏（系统菜单风格，无动画）
@@ -242,18 +294,142 @@ class BubblePanel(QWidget):
         else:
             animate_panel_hide(self, direction)
 
-    def eventFilter(self, obj, event):
-        if event.type() == QEvent.MouseButtonPress:
-            for item_id, label in self._item_labels.items():
-                if obj is label:
-                    self.item_clicked.emit(item_id)
-                    self.hide_with_anim()
-                    return True
-            if obj is self._close_btn:
-                self.hide_with_anim()
-                return True
-        return super().eventFilter(obj, event)
+    # ────────────────── 绘制 ──────────────────
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        try:
+            painter.setRenderHint(QPainter.Antialiasing, True)
+            rect = self.visible_rect()
+            theme.paint_paper(painter, rect)
+            self._paint_close(painter)
+            self._paint_rows(painter)
+        finally:
+            painter.end()
+
+    def _paint_close(self, painter: QPainter) -> None:
+        rect = self._close_rect()
+        theme.paint_circle(painter, rect, fill=theme.CREAM,
+                           hovered=self._hovered_close,
+                           glow=self._hovered_close)
+        icon = icons.pixmap("close", 14, dpr=self.devicePixelRatioF())
+        target = QRect(0, 0, 14, 14)
+        target.moveCenter(rect.center().toPoint())
+        painter.drawPixmap(target, icon, QRect(icon.rect()))
+
+    def _paint_rows(self, painter: QPainter) -> None:
+        for index, entry in enumerate(self._item_keys):
+            item_id = str(entry[0])
+            row = self._row_rect(index)
+            hovered = (index == self._hovered_row)
+            pressed = (index == self._pressed_row)
+            checked = self._checked.get(item_id, False)
+
+            theme.paint_row(painter, row, hovered=hovered, pressed=pressed,
+                            selected=checked and not hovered)
+
+            # 圆形图标
+            icon_rect = self._icon_rect(row)
+            theme.paint_circle(painter, icon_rect, fill=theme.CREAM_DEEP,
+                               hovered=hovered, glow=False)
+            icon_key = ITEM_ICONS.get(item_id, "")
+            glyph = icons.pixmap(icon_key, ICON_SIZE, dpr=self.devicePixelRatioF(),
+                                 fallback_text=self._texts.get(item_id, "")[:1])
+            target = QRect(0, 0, ICON_SIZE, ICON_SIZE)
+            target.moveCenter(icon_rect.center().toPoint())
+            painter.drawPixmap(target, glyph, QRect(glyph.rect()))
+
+            # 文案
+            label_font = theme.font(13, bold=checked)
+            painter.setFont(label_font)
+            painter.setPen(QColor(theme.NAVY if checked else theme.TEXT))
+            text_left = int(icon_rect.right()) + 10
+            text_right = int(self._check_rect(row).left()) - 8 if item_id in self._checked \
+                else int(row.right()) - 6
+            text_rect = QRect(text_left, int(row.top()),
+                              max(8, text_right - text_left), int(row.height()))
+            painter.drawText(text_rect, Qt.AlignLeft | Qt.AlignVCenter,
+                             theme.elide(self._texts.get(item_id, ""), label_font,
+                                         text_rect.width()))
+
+            if item_id in self._checked:
+                self._paint_check(painter, self._check_rect(row), checked)
+
+    def _paint_check(self, painter: QPainter, rect: QRectF, checked: bool) -> None:
+        """勾选指示：选中 = 粉底 + 暖棕勾；未选 = 空圆 + 浅描边。"""
+        theme.paint_circle(painter, rect,
+                           fill=theme.PINK if checked else theme.CREAM,
+                           outline=theme.OUTLINE if checked else theme.OUTLINE_LIGHT,
+                           width=1.8 if checked else 1.5)
+        if not checked:
+            return
+        pen = theme.pen(theme.OUTLINE, 1.8)
+        painter.setPen(pen)
+        painter.setBrush(Qt.NoBrush)
+        cx, cy = rect.center().x(), rect.center().y()
+        painter.drawPolyline(QPolygonF([
+            QPointF(cx - 3.4, cy - 0.4),
+            QPointF(cx - 1.0, cy + 2.2),
+            QPointF(cx + 3.6, cy - 2.4),
+        ]))
+
+    # ────────────────── 交互 ──────────────────
+
+    def _row_at(self, pos) -> int | None:
+        for index in range(len(self._item_keys)):
+            if self._row_rect(index).contains(float(pos.x()), float(pos.y())):
+                return index
+        return None
+
+    def mouseMoveEvent(self, event):
+        pos = event.position()
+        row = self._row_at(pos)
+        close = self._close_rect().contains(pos)
+        if row != self._hovered_row or close != self._hovered_close:
+            self._hovered_row = row
+            self._hovered_close = bool(close)
+            self.update()
+        super().mouseMoveEvent(event)
+
+    def leaveEvent(self, event):
+        if self._hovered_row is not None or self._hovered_close:
+            self._hovered_row = None
+            self._hovered_close = False
+            self.update()
+        super().leaveEvent(event)
+
+    def mousePressEvent(self, event):
+        if event.button() != Qt.LeftButton:
+            super().mousePressEvent(event)
+            return
+        pos = event.position()
+        if self._close_rect().contains(pos):
+            self.hide_with_anim()
+            return
+        row = self._row_at(pos)
+        if row is None:
+            return
+        self._pressed_row = row
+        self.update()
+
+    def mouseReleaseEvent(self, event):
+        if event.button() != Qt.LeftButton:
+            super().mouseReleaseEvent(event)
+            return
+        row = self._row_at(event.position())
+        pressed = self._pressed_row
+        self._pressed_row = None
+        self.update()
+        if row is not None and row == pressed:
+            self.item_clicked.emit(str(self._item_keys[row][0]))
+            self.hide_with_anim()
+        super().mouseReleaseEvent(event)
 
     def focusOutEvent(self, event):
+        """失去了焦点 → 收起。
+
+        **这条是既有行为，不能删**：面板会 `activateWindow()` 拿焦点，
+        所以"点别处"靠这里收起（悬停菜单/养成面板刻意相反：它们从不拿焦点）。
+        """
         self.hide_with_anim()
         super().focusOutEvent(event)

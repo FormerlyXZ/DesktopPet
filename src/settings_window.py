@@ -1,101 +1,38 @@
-"""设置窗口——PNG / Q版 双页面，亚克力磨砂玻璃风格"""
+"""设置窗口——PNG / Q版 双页面，暖粉奶白手绘风（全自绘外壳 + 主题 QSS）。
+
+2026-09-10 **全局换肤**：原本是"冷蓝磨砂玻璃 + 亮蓝强调色"，现在与悬停菜单、
+养成面板、左键/右键面板统一成同一套视觉：
+
+- 外壳：奶白纸片 + 2px 暖棕描边 + 20px 圆角（四角不等）+ 暖色投影，全是 `ui_theme` 画的
+- 分区：`QGroupBox` 变成"纸片小卡"（奶白-深底 + 1.5px 浅描边 + 12px 圆角 + 藏青粗体标题）
+- 控件：下拉/数字框/滑块/勾选框/列表统一由 `ui_theme.app_stylesheet()` 上色
+  —— **自绘负责造型，QSS 负责配色**（把标准控件全改写成自绘是天级工作量，收益却很小）
+
+**对外契约一行没变**：所有信号（`height_changed` / `save_clicked` / …）、
+`set_animations()` / `set_height()` / `set_auto_start()` / `load_gif_settings()` /
+`get_gif_settings()` / `set_character_type()` / `set_language()` / `popup_at()` /
+`hide_with_anim()` 全部保持原样，`pet_window.py` 因此零改动。
+
+⚠️ 窗口比"看得见的纸片"四周各多 `MARGIN`（默认 6px，留给投影），
+`popup_at()` 里按**可见尺寸**定位，别拿 `self.width()` 直接对着人物摆。
+"""
+
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel,
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGroupBox,
     QSlider, QPushButton, QComboBox, QSpinBox, QMessageBox,
     QStackedWidget,
 )
 from PySide6.QtCore import Qt, Signal, QPoint, QEvent
-from PySide6.QtGui import QPainter, QPen, QColor
+from PySide6.QtGui import QPainter
+from src import ui_theme as theme
 from src.panel_animator import animate_panel_show, animate_panel_hide
 from src.gif_settings_page import GifSettingsPage
 from src.translations import tr
 
-STYLE = """
-QLabel#Title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #212121;
-    font-family: "Microsoft YaHei";
-    padding: 8px 0 2px 0;
-}
-QLabel#SectionLabel {
-    font-size: 13px;
-    color: #424242;
-    font-family: "Microsoft YaHei";
-}
-QLabel#SubLabel {
-    font-size: 12px;
-    color: #757575;
-    font-family: "Microsoft YaHei";
-    min-width: 42px;
-}
-QLabel#ValueLabel {
-    font-size: 12px;
-    color: #757575;
-    font-family: "Microsoft YaHei";
-    min-width: 50px;
-}
-QPushButton#CloseBtn {
-    background: #42A5F5;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 28px;
-    font-size: 13px;
-    font-family: "Microsoft YaHei";
-}
-QPushButton#CloseBtn:hover {
-    background: #1E88E5;
-}
-QSlider::groove:horizontal {
-    background: #E0E0E0;
-    height: 6px;
-    border-radius: 3px;
-}
-QSlider::handle:horizontal {
-    background: #42A5F5;
-    width: 16px;
-    height: 16px;
-    margin: -5px 0;
-    border-radius: 8px;
-}
-QSlider::sub-page:horizontal {
-    background: #BBDEFB;
-    border-radius: 3px;
-}
-QComboBox {
-    background: rgba(245, 245, 245, 0.7);
-    border: 1px solid #E0E0E0;
-    border-radius: 4px;
-    padding: 6px 10px;
-    font-size: 12px;
-    font-family: "Microsoft YaHei";
-    color: #212121;
-}
-QComboBox:hover {
-    border: 1px solid #42A5F5;
-}
-QComboBox QAbstractItemView {
-    selection-background-color: #E3F2FD;
-    color: #212121;
-}
-QSpinBox {
-    background: rgba(245, 245, 245, 0.7);
-    border: 1px solid #E0E0E0;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 13px;
-    font-family: "Microsoft YaHei";
-    color: #212121;
-    min-width: 80px;
-}
-QSpinBox:hover {
-    border: 1px solid #42A5F5;
-}
-QSpinBox::up-button, QSpinBox::down-button {
-    width: 16px;
-}
-"""
+#: 看得见的纸片尺寸（窗口 = 这个 + 四边各留 `MARGIN` 给投影）
+VISIBLE_W = 420
+VISIBLE_H = 640
+MARGIN = theme.MARGIN
 
 
 class SettingsWindow(QWidget):
@@ -116,11 +53,11 @@ class SettingsWindow(QWidget):
         )
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setAttribute(Qt.WA_ShowWithoutActivating)
-        self.setStyleSheet(STYLE)
-        self.setFixedSize(420, 640)
+        self.setStyleSheet(theme.app_stylesheet())
+        self.setFixedSize(VISIBLE_W + 2 * MARGIN, VISIBLE_H + 2 * MARGIN)
 
         main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(18, 14, 18, 16)
+        main_layout.setContentsMargins(MARGIN + 16, MARGIN + 8, MARGIN + 16, MARGIN + 14)
         main_layout.setSpacing(10)
 
         # ── 标题 ──
@@ -142,11 +79,10 @@ class SettingsWindow(QWidget):
         char_row.addWidget(self._char_combo, 1)
         main_layout.addLayout(char_row)
 
-        # ── 桌宠大小 ──
-        self._size_label = QLabel("")
-        self._size_label.setObjectName("SectionLabel")
-        main_layout.addWidget(self._size_label)
-
+        # ── 桌宠大小（纸片卡）──
+        self._size_group = QGroupBox("")
+        size_layout = QVBoxLayout(self._size_group)
+        size_layout.setSpacing(8)
         size_row = QHBoxLayout()
         size_row.setSpacing(10)
         self._slider = QSlider(Qt.Horizontal)
@@ -161,12 +97,13 @@ class SettingsWindow(QWidget):
         self._spin.setSingleStep(10)
         self._spin.valueChanged.connect(self._on_spin_changed)
         size_row.addWidget(self._spin)
-        main_layout.addLayout(size_row)
+        size_layout.addLayout(size_row)
+        main_layout.addWidget(self._size_group)
 
-        # ── 通用设置 ──
-        self._general_label = QLabel("")
-        self._general_label.setObjectName("SectionLabel")
-        main_layout.addWidget(self._general_label)
+        # ── 通用设置（纸片卡）──
+        self._general_group = QGroupBox("")
+        general_layout = QVBoxLayout(self._general_group)
+        general_layout.setSpacing(8)
 
         lang_row = QHBoxLayout()
         lang_row.setSpacing(6)
@@ -179,7 +116,7 @@ class SettingsWindow(QWidget):
         self._language_combo.addItem("日本語", "ja")
         self._language_combo.currentIndexChanged.connect(self._on_language_changed)
         lang_row.addWidget(self._language_combo, 1)
-        main_layout.addLayout(lang_row)
+        general_layout.addLayout(lang_row)
 
         auto_start_row = QHBoxLayout()
         self._auto_start_label = QLabel("")
@@ -188,11 +125,12 @@ class SettingsWindow(QWidget):
         auto_start_row.addStretch()
         self._auto_start_btn = QPushButton("")
         self._auto_start_btn.setCheckable(True)
-        self._auto_start_btn.setFixedSize(50, 26)
+        self._auto_start_btn.setFixedSize(56, 28)
         self._auto_start_btn.clicked.connect(self._on_auto_start_toggle)
         style_toggle(self._auto_start_btn, False)
         auto_start_row.addWidget(self._auto_start_btn)
-        main_layout.addLayout(auto_start_row)
+        general_layout.addLayout(auto_start_row)
+        main_layout.addWidget(self._general_group)
 
         # ── QStackedWidget ──
         self._stack = QStackedWidget()
@@ -211,11 +149,10 @@ class SettingsWindow(QWidget):
         btn_row.setSpacing(10)
         btn_row.addStretch()
         self._save_btn = QPushButton("")
-        self._save_btn.setObjectName("CloseBtn")
+        self._save_btn.setObjectName("PrimaryBtn")
         self._save_btn.clicked.connect(self._on_save_and_exit)
         btn_row.addWidget(self._save_btn)
         self._close_btn = QPushButton("")
-        self._close_btn.setObjectName("CloseBtn")
         self._close_btn.clicked.connect(self._try_close)
         btn_row.addWidget(self._close_btn)
         btn_row.addStretch()
@@ -223,7 +160,7 @@ class SettingsWindow(QWidget):
 
         self._apply_language()
 
-    # ── PNG 页面（保留原有内容）──
+    # ── PNG 页面 ──
 
     def _build_png_page(self) -> QWidget:
         page = QWidget()
@@ -231,9 +168,9 @@ class SettingsWindow(QWidget):
         layout.setContentsMargins(0, 4, 0, 0)
         layout.setSpacing(12)
 
-        self._anim_label = QLabel("")
-        self._anim_label.setObjectName("SectionLabel")
-        layout.addWidget(self._anim_label)
+        self._anim_group = QGroupBox("")
+        inner = QVBoxLayout(self._anim_group)
+        inner.setSpacing(8)
 
         idle_row = QHBoxLayout()
         self._idle_sub = QLabel("")
@@ -242,7 +179,7 @@ class SettingsWindow(QWidget):
         self._idle_combo = QComboBox()
         self._idle_combo.currentTextChanged.connect(self._on_animations_changed)
         idle_row.addWidget(self._idle_combo, 1)
-        layout.addLayout(idle_row)
+        inner.addLayout(idle_row)
 
         hover_row = QHBoxLayout()
         self._hover_sub = QLabel("")
@@ -251,40 +188,49 @@ class SettingsWindow(QWidget):
         self._hover_combo = QComboBox()
         self._hover_combo.currentTextChanged.connect(self._on_animations_changed)
         hover_row.addWidget(self._hover_combo, 1)
-        layout.addLayout(hover_row)
+        inner.addLayout(hover_row)
 
+        layout.addWidget(self._anim_group)
         layout.addStretch()
         return page
 
     # ── 绘制 ──
 
     def paintEvent(self, event):
+        """奶白纸片 + 2px 暖棕描边 + 暖色投影（与所有弹层同一套笔触）。"""
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-        painter.setBrush(QColor(255, 255, 255, 238))
-        painter.setPen(QPen(QColor(187, 222, 251, 160), 1))
-        painter.drawRoundedRect(self.rect().adjusted(1, 1, -1, -1), 12, 12)
+        try:
+            painter.setRenderHint(QPainter.Antialiasing, True)
+            theme.paint_paper(painter, self.visible_rect())
+        finally:
+            painter.end()
+
+    def visible_rect(self):
+        """看得见的纸片在本窗口内的矩形。"""
+        from PySide6.QtCore import QRect
+        return QRect(MARGIN, MARGIN, VISIBLE_W, VISIBLE_H)
 
     # ── 弹出 ──
 
     def popup_at(self, pet_geometry):
         from PySide6.QtWidgets import QApplication
         screen = QApplication.primaryScreen().availableGeometry()
+        width, height = VISIBLE_W, VISIBLE_H
         direction = "up"
-        y = pet_geometry.top() - self.height() - 10
-        if y < screen.top():
-            y = pet_geometry.bottom() + 10
+        y = pet_geometry.top() - height - 10 - MARGIN
+        if y + MARGIN < screen.top():
+            y = pet_geometry.bottom() + 10 - MARGIN
             direction = "down"
-        x = pet_geometry.center().x() - self.width() // 2
-        if x < screen.left():
-            x = screen.left() + 4
-        elif x + self.width() > screen.right():
-            x = screen.right() - self.width() - 4
+        x = pet_geometry.center().x() - width // 2 - MARGIN
+        if x + MARGIN < screen.left():
+            x = screen.left() - MARGIN + 4
+        elif x + MARGIN + width > screen.right() + 1:
+            x = screen.right() - width - MARGIN - 3
 
         self._popup_direction = direction
         self._take_snapshot()
         self.activateWindow()
-        animate_panel_show(self, QPoint(x, y), direction)
+        animate_panel_show(self, QPoint(int(x), int(y)), direction)
 
     def hide_with_anim(self):
         if not self.isVisible():
@@ -334,24 +280,22 @@ class SettingsWindow(QWidget):
 
     def _apply_language(self):
         """刷新所有 UI 文字为当前语言"""
-        lang = self._current_lang
         # 标题
         self._title_label.setText(self._tr("title"))
         # 角色
         self._char_label.setText(self._tr("char_label"))
         self._char_combo.setItemText(0, self._tr("char_png"))
         self._char_combo.setItemText(1, self._tr("char_gif"))
-        # 大小
-        self._size_label.setText(self._tr("size_label"))
-        # 通用设置
-        self._general_label.setText(self._tr("general_label"))
+        # 分组标题（纸片卡上的藏青粗体）
+        self._size_group.setTitle(self._tr("size_label"))
+        self._general_group.setTitle(self._tr("general_label"))
         self._lang_label.setText(self._tr("lang_label"))
         self._auto_start_label.setText(self._tr("auto_start_label"))
         self._auto_start_btn.setText(
             self._tr("auto_on") if self._auto_start_btn.isChecked() else self._tr("auto_off"))
         # PNG 页面
-        if hasattr(self, '_anim_label'):
-            self._anim_label.setText(self._tr("anim_label"))
+        if hasattr(self, '_anim_group'):
+            self._anim_group.setTitle(self._tr("anim_label"))
             self._idle_sub.setText(self._tr("idle_label"))
             self._hover_sub.setText(self._tr("hover_label"))
         # 按钮
@@ -495,13 +439,18 @@ class SettingsWindow(QWidget):
 
 
 def style_toggle(btn: QPushButton, active: bool):
+    """「开机自启」那类二元按钮的开关配色（规范 1.1：开=樱花粉，关=奶白-深）。"""
     if active:
         btn.setStyleSheet(
-            "QPushButton { background: #42A5F5; color: white; border: none; "
-            "border-radius: 13px; font-size: 12px; font-family: 'Microsoft YaHei'; }"
+            f"QPushButton {{ background: {theme.PINK}; color: {theme.NAVY};"
+            f" border: 2px solid {theme.PINK_DEEP}; border-radius: 14px;"
+            " font-size: 12px; font-weight: bold; font-family: 'Microsoft YaHei'; }"
+            f"QPushButton:hover {{ background: {theme.PINK_DEEP}; color: #FFFFFF; }}"
         )
     else:
         btn.setStyleSheet(
-            "QPushButton { background: #E0E0E0; color: #757575; border: none; "
-            "border-radius: 13px; font-size: 12px; font-family: 'Microsoft YaHei'; }"
+            f"QPushButton {{ background: {theme.CREAM}; color: {theme.TEXT_DIM};"
+            f" border: 2px solid {theme.OUTLINE_LIGHT}; border-radius: 14px;"
+            " font-size: 12px; font-family: 'Microsoft YaHei'; }"
+            f"QPushButton:hover {{ border-color: {theme.PINK_DEEP}; }}"
         )

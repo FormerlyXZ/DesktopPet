@@ -1,0 +1,19 @@
+{
+  "scene": "event_valentine",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "2/14 情人节（events.json 命中 → 产出巧克力 + 专属好感度）。",
+    "可用占位符：{name} 产出物品名。节日台词可以稍微主动一点，但仍不质问、不评判。"
+  ],
+  "lines": [
+    { "text": "今天是情人节呢。", "weight": 3, "tone": "proud" },
+    { "text": "巧克力给你，一人一半。", "weight": 3 },
+    { "text": "唔，是甜的。", "weight": 2 },
+    { "text": "2 月 14 日，我记着的。", "weight": 2, "tone": "proud" },
+    { "text": "今天有点特别。", "weight": 2 },
+    { "text": "这份是专门留的。", "weight": 1 },
+    { "text": "你猜我准备了多久。", "weight": 1, "min_level": 250 }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "scene": "event_tanabata",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "7/7 七夕（events.json 命中 → 产出玫瑰 + 专属好感度）。",
+    "可用占位符：{name} 产出物品名。"
+  ],
+  "lines": [
+    { "text": "今天是七夕。", "weight": 3, "tone": "proud" },
+    { "text": "玫瑰给你，别弄丢了。", "weight": 3 },
+    { "text": "许个愿吧，我也有一个。", "weight": 3 },
+    { "text": "今晚的星星应该不错。", "weight": 2 },
+    { "text": "牛郎和织女今天见面。", "weight": 2 },
+    { "text": "这个给你，七夕的份。", "weight": 1 },
+    { "text": "院子里挂短册了吗。", "weight": 1, "min_level": 120 }
+  ]
+}

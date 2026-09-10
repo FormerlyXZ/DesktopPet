@@ -1,0 +1,20 @@
+{
+  "scene": "event_birthday",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "用户生日（设置里填的 birthday 命中 events.json 的 birthday 条目 → 产出生日蛋糕，好感度 +10）。",
+    "留空则不触发。「生日快乐」是对你说的，不是她自己过生日。",
+    "可用占位符：{name} 产出物品名。"
+  ],
+  "lines": [
+    { "text": "生日快乐。", "weight": 3, "tone": "proud" },
+    { "text": "今天是你的生日吧。", "weight": 3 },
+    { "text": "蛋糕给你，蜡烛插好了。", "weight": 2 },
+    { "text": "这一天我记着。", "weight": 2, "tone": "proud" },
+    { "text": "许个愿再吹蜡烛。", "weight": 2 },
+    { "text": "生日蛋糕，专门留的。", "weight": 1 },
+    { "text": "又长了一岁，恭喜。", "weight": 1, "min_level": 250 }
+  ]
+}

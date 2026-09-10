@@ -1,0 +1,18 @@
+{
+  "scene": "time_late",
+  "tone": "gentle",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "00:00-06:00 仍活跃时说，每天一次。这一时段**绝不出 tease**（禁区 3）。",
+    "核心是「我陪你」而不是「你怎么还不睡」—— 关心，不催。"
+  ],
+  "lines": [
+    { "text": "还没睡呀。", "weight": 3 },
+    { "text": "夜里很安静的。", "weight": 2 },
+    { "text": "我陪你到你想睡。", "weight": 2 },
+    { "text": "别太勉强自己。", "weight": 2 },
+    { "text": "困了就眯一会儿。", "weight": 1 },
+    { "text": "我一直都在。", "weight": 2 }
+  ]
+}

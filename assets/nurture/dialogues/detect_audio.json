@@ -1,0 +1,18 @@
+{
+  "scene": "detect_audio",
+  "tone": "gentle",
+  "cooldown_sec": 900,
+  "min_gap_sec": 0,
+  "_说明": [
+    "系统开始播放音频时说（复用现有 AudioMonitor，不碰播放内容）",
+    "**不评价听的是什么**：禁区 1 要求感知类台词只到「你在忙/你在听」这一层级。"
+  ],
+  "lines": [
+    { "text": "在听歌吗。", "weight": 3 },
+    { "text": "这首我好像听过。", "weight": 2 },
+    { "text": "旋律挺好的。", "weight": 2 },
+    { "text": "我也安静听一会儿。", "weight": 1 },
+    { "text": "音量小一点对耳朵好。", "weight": 1 },
+    { "text": "下次放给我听吧。", "weight": 1 }
+  ]
+}

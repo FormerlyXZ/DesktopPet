@@ -104,6 +104,51 @@ class CharacterController(QObject):
     def reset_afk(self):
         """用户有活动，重置AFK计时"""
 
+    # ── 养成系统扩展（Nurture）──
+    #
+    # 这四个方法**都带默认实现**，两个角色控制器都不用改就能被 NurtureController 调用：
+    # 默认服装（PngCharacter）走默认值即为"不支持养成动作"，由上层走兜底链。
+
+    def play_action(self, action: str, lock: bool = True) -> bool:
+        """播一段指定动作（喂食 / 摸头 / 送礼等养成交互用）。
+
+        `lock=True` 表示这段动画期间**不接受任何交互打断**（喂食专用）——
+        她正在吃东西的时候不该被按键/悬停/点击切走。
+        返回 `True` 表示动作确实开始播了，`False` 表示这个角色不支持或动作不存在。
+        """
+        return False
+
+    def is_busy(self) -> bool:
+        """角色是否正在做"不可打断"的事（启动序列、喂食动画）。
+
+        悬停菜单与对话气泡用**同一个判断**决定要不要弹/要不要说话：
+        她正在做开场动作或正在吃东西时，都不要往外冒东西。
+        """
+        return False
+
+    def release_lock(self) -> None:
+        """解除 `play_action(lock=True)` 的锁定。
+
+        只用于兜底（切换角色、退出时），正常路径由动画播完自己解锁。
+        """
+        return None
+
+    def handle_hover_menu_shown(self):
+        """悬停菜单弹出（01 文档 5.4）。
+
+        角色可以借此停掉自己的"长悬停"计时 —— 不停的话，用户正盯着菜单看时
+        她会突然冒一个「问号」。默认空实现。
+        """
+        return None
+
+    def speech_anchor_ratio(self) -> float:
+        """对话气泡尾巴应指向的位置，按角色高度的比例表示（0 = 窗口顶端）。
+
+        默认 0.14（头顶略偏下）。角色可按素材留白覆盖 ——
+        PNG 帧的头顶留白与 GIF 不同，硬编码会让尾巴指到头发里或飘在头顶上方。
+        """
+        return 0.14
+
     # ── 配置 ──
 
     def get_settings(self) -> dict:

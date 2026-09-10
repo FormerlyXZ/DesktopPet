@@ -1,0 +1,22 @@
+{
+  "scene": "feed_done",
+  "tone": "gentle",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "喂食动画播放时同步弹出。每条 ≤18 字。",
+    "tone: gentle=温柔 / proud=小得意 / tease=调皮（此场景不用 tease）",
+    "weight: 权重，越大越常抽到。min_level: 好感度等级门槛（0 起）。",
+    "此场景是用户主动触发，不受「主动台词全局最小间隔」限制。"
+  ],
+  "lines": [
+    { "text": "……谢谢。", "weight": 3 },
+    { "text": "唔，好吃。", "weight": 2, "tone": "proud" },
+    { "text": "我慢慢吃，你别看着我。", "weight": 2 },
+    { "text": "这个我收下了。", "weight": 2, "tone": "proud" },
+    { "text": "味道还不错。", "weight": 2 },
+    { "text": "啊——甜的。", "weight": 1 },
+    { "text": "下次也这个，可以吗。", "weight": 1, "min_level": 120 },
+    { "text": "你居然知道我喜欢这个。", "weight": 1, "tone": "proud", "min_level": 250 }
+  ]
+}

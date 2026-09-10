@@ -1,0 +1,20 @@
+{
+  "scene": "startup_hello",
+  "tone": "gentle",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "程序启动、启动序列播完后说一次。",
+    "**不要写「早上好」这类时段问候** —— 启动可能在任意时刻，时段问候属于 time_* 场景。",
+    "也**不要写**「等你好久了」这类暗示你在等他的话，那会变成变相的抱怨。"
+  ],
+  "lines": [
+    { "text": "我来了。", "weight": 3 },
+    { "text": "今天也在。", "weight": 2 },
+    { "text": "又是新的一天。", "weight": 2 },
+    { "text": "又见面了。", "weight": 2 },
+    { "text": "我坐这里，可以吗。", "weight": 1, "tone": "proud" },
+    { "text": "唔，这里风景还可以。", "weight": 1 },
+    { "text": "我准备好了。", "weight": 1, "tone": "proud" }
+  ]
+}

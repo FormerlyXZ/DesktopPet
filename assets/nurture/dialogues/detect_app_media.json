@@ -1,0 +1,21 @@
+{
+  "scene": "detect_app_media",
+  "tone": "gentle",
+  "cooldown_sec": 1200,
+  "min_gap_sec": 0,
+  "_说明": [
+    "前台是播放器时（阶段 G，20 分钟冷却）。",
+    "和 `detect_audio` 的区别：那条是「系统在出声」，这条是「你在用播放器」。",
+    "同样不提你在听/看什么（禁区 1）—— 声音大不大她倒是知道，因为那不需要读标题。"
+  ],
+  "lines": [
+    { "text": "有声音呢。", "weight": 3 },
+    { "text": "我一起听。", "weight": 3 },
+    { "text": "我也在听着。", "weight": 2 },
+    { "text": "这个节奏不错。", "weight": 2 },
+    { "text": "慢慢享受吧。", "weight": 2 },
+    { "text": "声音别开太大。", "weight": 1 },
+    { "text": "戴上耳机更好。", "weight": 1, "min_level": 50 },
+    { "text": "好听的话，笑一下。", "weight": 1, "min_level": 120 }
+  ]
+}

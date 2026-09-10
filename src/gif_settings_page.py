@@ -1,4 +1,13 @@
-"""Q版专用设置页——启动序列、行为映射、鼠标映射、AFK 池"""
+"""Q版专用设置页——启动序列、行为映射、鼠标映射、AFK 池。
+
+2026-09-10 全局换肤：**删掉了这里原有的 ~13 处内联样式表**（全是冷蓝底那套）。
+现在配色统一来自 `ui_theme.app_stylesheet()`（由 `SettingsWindow` 设在自己身上，
+子控件继承），单靠 `setObjectName` 就能对上样式。
+
+**为什么不全改成自绘控件**：这一页有 9 个下拉框、4 个数字框、若干勾选框与列表，
+逐个自绘是天级工作量，而 QSS 能覆盖 95% 的观感。分工是：
+**自绘负责"造型"（纸片、圆角、描边、投影），QSS 负责"配色"。**
+"""
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QComboBox, QPushButton, QListWidget, QListWidgetItem,
@@ -17,7 +26,6 @@ class GifSettingsPage(QScrollArea):
         self._current_lang = "zh"
         self.setWidgetResizable(True)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.setStyleSheet("QScrollArea { border: none; background: transparent; }")
 
         self._all_actions: list[str] = []
         self._mapping_labels: list[tuple[QLabel, str]] = []  # (label, tr_key)
@@ -47,18 +55,6 @@ class GifSettingsPage(QScrollArea):
         self.setWidget(container)
         self._apply_language()
 
-    # ── 样式常量 ──
-    SECTION_LABEL_STYLE = (
-        "font-size: 13px; font-weight: bold; color: #424242;"
-        "font-family: 'Microsoft YaHei'; padding: 2px 0;"
-    )
-    SMALL_BTN_STYLE = (
-        "QPushButton { background: #E3F2FD; color: #1976D2; border: none;"
-        "border-radius: 3px; padding: 2px 4px; font-size: 12px;"
-        "font-family: 'Microsoft YaHei'; }"
-        "QPushButton:hover { background: #BBDEFB; }"
-    )
-
     # ── 启动序列 ──
 
     def _build_startup_section(self):
@@ -69,39 +65,32 @@ class GifSettingsPage(QScrollArea):
 
         self._startup_list = QListWidget()
         self._startup_list.setMaximumHeight(100)
-        self._startup_list.setStyleSheet(
-            "QListWidget { background: rgba(245,245,245,0.7); border: 1px solid #E0E0E0;"
-            "border-radius: 4px; font-size: 12px; font-family: 'Microsoft YaHei'; }"
-        )
         ly.addWidget(self._startup_list)
 
         btn_row = QHBoxLayout()
         btn_row.setSpacing(4)
         self._startup_add_combo = QComboBox()
         self._startup_add_combo.setMinimumHeight(24)
-        self._startup_add_combo.setStyleSheet(
-            "QComboBox { font-size: 11px; font-family: 'Microsoft YaHei'; }"
-        )
         btn_row.addWidget(self._startup_add_combo, 1)
 
         self._add_btn = QPushButton("")
-        self._add_btn.setStyleSheet(self.SMALL_BTN_STYLE)
+        self._add_btn.setObjectName("SmallBtn")
         self._add_btn.clicked.connect(self._on_startup_add)
         btn_row.addWidget(self._add_btn)
 
         self._remove_btn = QPushButton("")
-        self._remove_btn.setStyleSheet(self.SMALL_BTN_STYLE)
+        self._remove_btn.setObjectName("SmallBtn")
         self._remove_btn.clicked.connect(self._on_startup_remove)
         btn_row.addWidget(self._remove_btn)
 
         up_btn = QPushButton("▲")
-        up_btn.setStyleSheet(self.SMALL_BTN_STYLE)
+        up_btn.setObjectName("SmallBtn")
         up_btn.setFixedWidth(30)
         up_btn.clicked.connect(self._on_startup_up)
         btn_row.addWidget(up_btn)
 
         down_btn = QPushButton("▼")
-        down_btn.setStyleSheet(self.SMALL_BTN_STYLE)
+        down_btn.setObjectName("SmallBtn")
         down_btn.setFixedWidth(30)
         down_btn.clicked.connect(self._on_startup_down)
         btn_row.addWidget(down_btn)
@@ -142,9 +131,6 @@ class GifSettingsPage(QScrollArea):
         self._combo_idle = self._add_mapping_row(ly, "idle_action")
         # 夜间睡眠待机仅保留开关（时段固定：23:00-24:00 准备 / 0:00-6:00 睡觉）
         self._chk_sleep_enabled = QCheckBox("")
-        self._chk_sleep_enabled.setStyleSheet(
-            "QCheckBox { font-size: 12px; color: #424242; font-family: 'Microsoft YaHei'; spacing: 6px; }"
-        )
         ly.addWidget(self._chk_sleep_enabled)
 
     # ── 行为检测映射（勾选启用，取消禁用）──
@@ -155,20 +141,13 @@ class GifSettingsPage(QScrollArea):
         ly = QVBoxLayout(self._behavior_gb)
         ly.setSpacing(6)
 
-        chk_style = (
-            "QCheckBox { font-size: 12px; color: #424242;"
-            "font-family: 'Microsoft YaHei'; spacing: 6px; }"
-        )
         self._chk_key_press = QCheckBox("")
-        self._chk_key_press.setStyleSheet(chk_style)
         ly.addWidget(self._chk_key_press)
 
         self._chk_audio_play = QCheckBox("")
-        self._chk_audio_play.setStyleSheet(chk_style)
         ly.addWidget(self._chk_audio_play)
 
         self._chk_audio_muted = QCheckBox("")
-        self._chk_audio_muted.setStyleSheet(chk_style)
         ly.addWidget(self._chk_audio_muted)
 
         # 保存引用以支持语言切换
@@ -182,17 +161,10 @@ class GifSettingsPage(QScrollArea):
         row = QHBoxLayout()
         row.setSpacing(6)
         lbl = QLabel("")
-        lbl.setStyleSheet(
-            "font-size: 12px; color: #616161; font-family: 'Microsoft YaHei'; min-width: 72px;"
-        )
+        lbl.setObjectName("MapLabel")
         row.addWidget(lbl)
         self._mapping_labels.append((lbl, tr_key))
         combo = QComboBox()
-        combo.setStyleSheet(
-            "QComboBox { font-size: 11px; font-family: 'Microsoft YaHei';"
-            "background: rgba(245,245,245,0.7); border: 1px solid #E0E0E0; border-radius: 3px;"
-            "padding: 2px 6px; }"
-        )
         row.addWidget(combo, 1)
         parent_layout.addLayout(row)
         return combo
@@ -215,27 +187,15 @@ class GifSettingsPage(QScrollArea):
         dbl_row = QHBoxLayout()
         dbl_row.setSpacing(6)
         self._dbl_label = QLabel("")
-        self._dbl_label.setStyleSheet(
-            "font-size: 12px; color: #616161; font-family: 'Microsoft YaHei'; min-width: 72px;"
-        )
+        self._dbl_label.setObjectName("MapLabel")
         dbl_row.addWidget(self._dbl_label)
         self._combo_dbl_1 = QComboBox()
-        self._combo_dbl_1.setStyleSheet(
-            "QComboBox { font-size: 11px; font-family: 'Microsoft YaHei';"
-            "background: rgba(245,245,245,0.7); border: 1px solid #E0E0E0; border-radius: 3px;"
-            "padding: 2px 6px; }"
-        )
         dbl_row.addWidget(self._combo_dbl_1, 1)
         arrow = QLabel("→")
-        arrow.setStyleSheet("font-size: 12px; color: #9E9E9E;")
+        arrow.setObjectName("DimLabel")
         arrow.setFixedWidth(16)
         dbl_row.addWidget(arrow)
         self._combo_dbl_2 = QComboBox()
-        self._combo_dbl_2.setStyleSheet(
-            "QComboBox { font-size: 11px; font-family: 'Microsoft YaHei';"
-            "background: rgba(245,245,245,0.7); border: 1px solid #E0E0E0; border-radius: 3px;"
-            "padding: 2px 6px; }"
-        )
         dbl_row.addWidget(self._combo_dbl_2, 1)
         ly.addLayout(dbl_row)
 
@@ -248,24 +208,17 @@ class GifSettingsPage(QScrollArea):
         ly.setSpacing(6)
 
         self._afk_enabled_check = QCheckBox("")
-        self._afk_enabled_check.setStyleSheet(
-            "QCheckBox { font-size: 12px; color: #424242; font-family: 'Microsoft YaHei'; }"
-        )
         ly.addWidget(self._afk_enabled_check)
 
         # 超时
         tout_row = QHBoxLayout()
         tout_row.setSpacing(6)
         self._afk_timeout_label = QLabel("")
+        self._afk_timeout_label.setObjectName("MapLabel")
         tout_row.addWidget(self._afk_timeout_label)
         self._afk_timeout_spin = QSpinBox()
         self._afk_timeout_spin.setRange(5, 300)
         self._afk_timeout_spin.setSuffix("")
-        self._afk_timeout_spin.setStyleSheet(
-            "QSpinBox { font-size: 11px; font-family: 'Microsoft YaHei';"
-            "background: rgba(245,245,245,0.7); border: 1px solid #E0E0E0; border-radius: 3px;"
-            "padding: 2px 6px; }"
-        )
         tout_row.addWidget(self._afk_timeout_spin)
         tout_row.addStretch()
         ly.addLayout(tout_row)
@@ -274,34 +227,23 @@ class GifSettingsPage(QScrollArea):
         intv_row = QHBoxLayout()
         intv_row.setSpacing(6)
         self._afk_interval_label = QLabel("")
+        self._afk_interval_label.setObjectName("MapLabel")
         intv_row.addWidget(self._afk_interval_label)
         self._afk_min_spin = QSpinBox()
         self._afk_min_spin.setRange(10, 600)
         self._afk_min_spin.setSuffix("")
-        self._afk_min_spin.setStyleSheet(
-            "QSpinBox { font-size: 11px; font-family: 'Microsoft YaHei';"
-            "background: rgba(245,245,245,0.7); border: 1px solid #E0E0E0; border-radius: 3px;"
-            "padding: 2px 6px; }"
-        )
         intv_row.addWidget(self._afk_min_spin)
         intv_row.addWidget(QLabel("~"))
         self._afk_max_spin = QSpinBox()
         self._afk_max_spin.setRange(10, 600)
         self._afk_max_spin.setSuffix("")
-        self._afk_max_spin.setStyleSheet(
-            "QSpinBox { font-size: 11px; font-family: 'Microsoft YaHei';"
-            "background: rgba(245,245,245,0.7); border: 1px solid #E0E0E0; border-radius: 3px;"
-            "padding: 2px 6px; }"
-        )
         intv_row.addWidget(self._afk_max_spin)
         intv_row.addStretch()
         ly.addLayout(intv_row)
 
         # 动画池
         self._afk_pool_label = QLabel("")
-        self._afk_pool_label.setStyleSheet(
-            "font-size: 12px; color: #616161; font-family: 'Microsoft YaHei';"
-        )
+        self._afk_pool_label.setObjectName("MapLabel")
         ly.addWidget(self._afk_pool_label)
 
         self._afk_grid = QGridLayout()
@@ -366,10 +308,7 @@ class GifSettingsPage(QScrollArea):
         cols = 3
         for i, action in enumerate(actions):
             cb = QCheckBox(action)
-            cb.setStyleSheet(
-                "QCheckBox { font-size: 11px; color: #616161;"
-                "font-family: 'Microsoft YaHei'; spacing: 2px; }"
-            )
+            cb.setObjectName("PoolCheck")
             self._afk_checkboxes[action] = cb
             self._afk_grid.addWidget(cb, i // cols, i % cols)
 

@@ -1,0 +1,19 @@
+{
+  "scene": "event_christmas",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "12/25 圣诞节（events.json 命中 → 产出生日蛋糕 + 专属好感度）。",
+    "可用占位符：{name} 产出物品名。"
+  ],
+  "lines": [
+    { "text": "圣诞快乐。", "weight": 3, "tone": "proud" },
+    { "text": "今天有蛋糕呢。", "weight": 3 },
+    { "text": "12 月 25 日，一起吃吧。", "weight": 2 },
+    { "text": "这个是我准备的。", "weight": 2, "tone": "proud" },
+    { "text": "冬天的蛋糕也很好吃。", "weight": 2 },
+    { "text": "外面冷，进来吃。", "weight": 1 },
+    { "text": "只切一块，剩下的留着。", "weight": 1, "min_level": 120 }
+  ]
+}

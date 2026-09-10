@@ -1,0 +1,19 @@
+{
+  "scene": "event_new_year",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "1/1 新年（events.json 命中 → 产出压岁钱 + 专属好感度）。",
+    "可用占位符：{name} 产出物品名。"
+  ],
+  "lines": [
+    { "text": "新年好。", "weight": 3, "tone": "proud" },
+    { "text": "压岁钱，给你。", "weight": 3 },
+    { "text": "新的一年也请多指教。", "weight": 3 },
+    { "text": "今年也一起吧。", "weight": 2, "tone": "proud" },
+    { "text": "第一天就有好东西。", "weight": 2 },
+    { "text": "这是新年的份。", "weight": 1 },
+    { "text": "去年的事就放在去年。", "weight": 1, "min_level": 250 }
+  ]
+}

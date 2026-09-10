@@ -1,0 +1,19 @@
+{
+  "scene": "checkin_milestone",
+  "tone": "proud",
+  "cooldown_sec": 0,
+  "min_gap_sec": 0,
+  "_说明": [
+    "连签达成里程碑（3/7/14/30 天）时的额外一句，紧跟 checkin_done 之后。",
+    "可用占位符：{streak}。这条比平时稍微开心一点，但不说教、不夸人努力。"
+  ],
+  "lines": [
+    { "text": "第 {streak} 天，记一下。", "weight": 3, "tone": "proud" },
+    { "text": "唔，第 {streak} 天了。", "weight": 3, "tone": "proud" },
+    { "text": "这个算奖励。", "weight": 2 },
+    { "text": "我数到 {streak} 了。", "weight": 2, "tone": "proud" },
+    { "text": "今天可以多拿一份。", "weight": 2, "min_level": 50 },
+    { "text": "你记得，我也记得。", "weight": 1, "min_level": 120 },
+    { "text": "这样下去也不错。", "weight": 1, "tone": "proud", "min_level": 250 }
+  ]
+}

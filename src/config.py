@@ -47,6 +47,71 @@ DEFAULTS = {
         "sleep_prep_action": "睡觉(准备阶段1)",   # 23:00-24:00
         "sleep_normal_action": "睡觉(普通)",       # 0:00-6:00
     },
+    # ── 养成高木同学（Nurture）──
+    # 设置写在这里；状态（好感度/库存/连签）在 data/nurture.json，两者刻意分离。
+    # 老 config.json 无需迁移：deep_merge 会自动补全缺失键。
+    "nurture": {
+        # 总开关（四项互相独立，任意一项关掉不影响其余功能与桌宠本体）
+        "enabled": True,
+        "bubble_enabled": True,             # 对话气泡总开关
+        "proactive_enabled": True,          # 主动说话（关掉后仅保留用户触发台词）
+        "allow_foreground_detection": False,  # 隐私开关：默认关闭，需用户明确开启
+
+        # 语气（01 文档 7.1）
+        "tease_frequency": "sometimes",     # off / sometimes / normal
+        "tease_daily_cap": 6,               # tease 台词 24 小时上限
+        "tease_scene_cooldown_sec": 1800,   # 同场景 tease 冷却（30 分钟）
+
+        # 数值（01 文档 2.2 / 2.3）
+        "affection_daily_cap": 20,
+        "gift_daily_cap": 3,
+        "tier_caps": {"common": 20, "rare": 10, "precious": 5},
+
+        # 获取途径（01 文档 4）
+        "checkin_enabled": True,
+        "checkin_anim": "庆祝",             # 签到成功播的动作
+        "companion_minutes_per_item": 60,   # 每 N 分钟活动时间 → 1 个普通食物
+        "companion_daily_cap": 3,
+        "typing_keys_per_item": 2000,       # 每 N 次按键 → 1 个普通食物
+        "typing_daily_cap": 2,
+        "convert_anim": "点头",             # 兑换达成 / 彩蛋掉落时播的动作
+        "afk_bonus_minutes": 10,            # 连续 AFK 超过 N 分钟 → 稀有食物 ×1（每天 1 次）
+        "afk_bonus_tier": "rare",           # 长待机彩蛋的档位
+        "first_run_bonus_tier": "precious",  # 首次使用彩蛋的档位
+        "hourly_bonus_chance": 0.25,        # 整点彩蛋概率
+        "hourly_bonus_enabled": True,
+        "hourly_bonus_daily_cap": 3,        # 整点彩蛋每天最多触发几次（文档未写，实现补的上限）
+        "birthday": "",                     # "MM-DD"，留空则不发生日彩蛋
+
+        # 悬停菜单（01 文档 5）
+        "hover_menu_delay_ms": 600,
+        "hover_grace_ms": 350,
+        "disable_long_hover_when_menu": True,   # 菜单弹出后禁用长悬停「问号」
+        "suppress_after_drag_ms": 400,          # 拖拽结束后多久内不弹菜单
+        "hover_long_ms": 5000,                  # 悬停多久算「长悬停」（会说一句台词）
+
+        # 对话气泡与台词（01 文档 7）
+        "bubble_duration_ms": 3500,
+        # 气泡尾巴锚点 = 人物高度 × 该比例。**保持 0.14 表示"用角色自报的比例"**
+        # （PNG 与 GIF 的头顶留白不同，角色自己最清楚）；调成别的值才表示用户要覆盖
+        "bubble_anchor_ratio": 0.14,
+        "bubble_min_width": 120,
+        "bubble_max_width": 220,
+        "proactive_min_gap_sec": 90,        # 两条主动台词之间的全局最小间隔
+        "idle_talk_min_minutes": 8,         # 待机闲聊间隔下限
+        "idle_talk_max_minutes": 20,        # 待机闲聊间隔上限
+        "mute_hours_enabled": False,        # 免打扰时段
+        "mute_hours_start": 23,
+        "mute_hours_end": 7,
+        "typing_rate_threshold": 120,       # 30 秒内按键数超过此值 = 专注
+        "continuous_min_threshold": 90,     # 连续活跃超过此分钟数 = 专注
+        "send_cooldown_ms": 300,            # 送出的连点防护（送出瞬间起算）
+        "headpat_anim": "害羞 2",            # 「摸头」播的动作（不锁交互）
+
+        # 动画映射的用户覆盖项（运行时与 items.json 合并，override 优先）
+        # 刻意不写回 assets/，避免打包后只读
+        "food_anim_override": {},
+    },
     # ── 历史粘贴板 ──
     "clipboard": {
         "cleanup_days": 7,

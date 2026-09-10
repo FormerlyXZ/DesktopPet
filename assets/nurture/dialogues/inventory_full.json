@@ -1,0 +1,19 @@
+{
+  "scene": "inventory_full",
+  "tone": "gentle",
+  "cooldown_sec": 60,
+  "min_gap_sec": 0,
+  "_说明": [
+    "库存到档位上限时的统一提示（01 文档 4.4）：签到 / 兑换 / 彩蛋共用一条。",
+    "重点是给出路（先送掉一些），不埋怨用户不整理。"
+  ],
+  "lines": [
+    { "text": "拿不下啦，先送掉一些吧。", "weight": 3 },
+    { "text": "柜子满了。", "weight": 3 },
+    { "text": "放不下了呢。", "weight": 2 },
+    { "text": "先吃一点，这里塞不进了。", "weight": 2 },
+    { "text": "留着下次给你。", "weight": 2 },
+    { "text": "堆得有点高了。", "weight": 1 },
+    { "text": "我记在账上了，东西先欠着。", "weight": 1, "min_level": 120 }
+  ]
+}

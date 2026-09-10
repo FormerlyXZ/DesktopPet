@@ -1,0 +1,22 @@
+{
+  "scene": "detect_app_meeting",
+  "tone": "gentle",
+  "cooldown_sec": 1800,
+  "min_gap_sec": 0,
+  "_说明": [
+    "前台是会议软件时（阶段 G，30 分钟冷却）。",
+    "01 文档 7.2 的定位是「在开会呀」（+ 建议静音模式）—— 所以有一条真的在提静音。",
+    "这条场景是 `FOCUS_EXEMPT_SCENES` 的成员：切到会议软件的那一刻，",
+    "正是这句话唯一的时机场合（否则专注保护会把它永远压住）。"
+  ],
+  "lines": [
+    { "text": "在开会呀。", "weight": 3 },
+    { "text": "我先不说话。", "weight": 3 },
+    { "text": "静音会更稳些。", "weight": 2 },
+    { "text": "我等你开完。", "weight": 2 },
+    { "text": "不打扰你了。", "weight": 2 },
+    { "text": "我坐在角落里。", "weight": 1 },
+    { "text": "慢慢说，我在。", "weight": 1, "min_level": 50 },
+    { "text": "有需要再喊我。", "weight": 1, "min_level": 120 }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "_说明": [
+    "签到产出表。用户可调数值；规则（能否签、连签怎么算、时间回退保护）在 nurture_model 里，不在此处。",
+    "base_items   : 每次签到都给的基础产出，键为档位 common/rare/precious，值为数量",
+    "first_affection: 连签第 1 天（首次，或断签后重新开始）额外给的好感度",
+    "milestones   : 连签达到该天数时的一次性额外奖励（键为天数，字符串）",
+    "                items 里的数量按档位随机换成 items.json 中的具体食物"
+  ],
+  "base_items": { "common": 2 },
+  "base_affection": 0,
+  "first_affection": 2,
+  "milestones": {
+    "3": { "items": { "rare": 1 }, "affection": 5, "note": "第 3 天：稀有 ×1" },
+    "7": { "items": { "precious": 1 }, "affection": 10, "note": "第 7 天：珍贵 ×1" },
+    "14": { "items": { "precious": 1 }, "affection": 20, "note": "第 14 天：珍贵 ×1" },
+    "30": { "items": { "precious": 1 }, "affection": 50, "note": "第 30 天：珍贵 ×1" }
+  }
+}

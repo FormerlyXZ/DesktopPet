@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "_说明": [
+    "好感度等级表。threshold 为累计好感度门槛（升序），title 为称号。",
+    "unlocks 是【本级新增】解锁的功能标识，运行时由 nurture_model.unlocked_features() 做并集。",
+    "已知标识：idle_random=待机闲聊 / small_talk=陪她聊聊 / tone_proud=小得意语气",
+    "         event_lines=节日台词 / headpat=摸头 / late_talk=深夜谈心",
+    "数值可自由调整；只增不减的规则与每日上限在 nurture_model 里，不受本表影响。"
+  ],
+  "levels": [
+    {
+      "threshold": 0,
+      "title": "认识",
+      "unlocks": [],
+      "note": "默认台词组"
+    },
+    {
+      "threshold": 50,
+      "title": "同桌",
+      "unlocks": ["idle_random"],
+      "note": "解锁「待机闲聊」"
+    },
+    {
+      "threshold": 120,
+      "title": "朋友",
+      "unlocks": ["small_talk"],
+      "note": "悬停菜单新增「陪她聊聊」"
+    },
+    {
+      "threshold": 250,
+      "title": "要好",
+      "unlocks": ["tone_proud", "event_lines"],
+      "note": "解锁「小得意」语气 + 节日台词组"
+    },
+    {
+      "threshold": 450,
+      "title": "特别",
+      "unlocks": ["headpat"],
+      "note": "悬停菜单新增「摸头」"
+    },
+    {
+      "threshold": 700,
+      "title": "最重要的人",
+      "unlocks": ["late_talk"],
+      "note": "解锁「深夜谈心」台词组 + 菜单项全部解锁"
+    }
+  ]
+}
